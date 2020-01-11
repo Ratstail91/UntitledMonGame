@@ -1,0 +1,53 @@
+{
+  "name": "untitledmongame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "forever -a -o forever.log -e error.log start server/index.js",
+    "restart": "forever -a -o forever.log -e error.log restart server/index.js",
+    "stop": "forever stop server/index.js",
+    "node": "node server/index.js",
+    "webpack": "webpack --mode=development --env=development",
+    "webpack-production": "webpack --mode=production --env=production",
+    "pull": "git pull && npm run webpack-production && npm restart"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ratstail91/UntitledMonGame.git"
+  },
+  "author": "Kayne Ruse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ratstail91/UntitledMonGame/issues"
+  },
+  "homepage": "https://github.com/Ratstail91/UntitledMonGame#readme",
+  "dependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "forever": "^2.0.0",
+    "formidable": "^1.2.1",
+    "mysql": "^2.17.1",
+    "query-string": "^6.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-loadable": "^5.5.0",
+    "react-redux": "^7.1.3",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-devtools": "^3.5.0",
+    "redux-devtools-dock-monitor": "^1.1.3",
+    "redux-devtools-log-monitor": "^1.4.0",
+    "redux-thunk": "^2.3.0",
+    "sendmail": "^1.6.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
