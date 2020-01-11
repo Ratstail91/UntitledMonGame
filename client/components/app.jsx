@@ -2,7 +2,11 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
+//styling
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 //other stuff
+import Header from './panels/header.jsx';
 import Footer from './panels/footer.jsx';
 
 //lazy route loading (with error handling)
@@ -53,7 +57,8 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className = 'central'>
+				<Header />
+				<div className='central'>
 					<BrowserRouter>
 						<Switch>
 							<LazyRoute exact path='/' component={() => import('./pages/home.jsx')} />

@@ -21,6 +21,10 @@ module.exports = env => {
 							plugins: ['react-loadable/babel', '@babel/plugin-syntax-dynamic-import']
 						}
 					}
+				},
+				{
+					test: /\.css$/,
+					use: ['style-loader', 'css-loader'],
 				}
 			]
 		},

@@ -7,8 +7,8 @@
 
 body {
 	font: 12pt Helvetica, Arial;
-	width: 100vw;
-	height: 100vh;
+	min-width: 100vw;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	overflow-x: hidden;
@@ -19,18 +19,15 @@ body {
 
 h1 {
 	font-size: 24pt;
-	color: red;
 }
 
 h2 {
 	font-size: 14pt;
-	color: lightblue;
 }
 
 h3 {
 	font-size: 12pt;
 	font-weight: bold;
-	color: red;
 }
 
 div.break.half {
@@ -47,6 +44,11 @@ ul {
 	padding-bottom: .5em;
 }
 
+p {
+	margin-bottom: 0 !important;
+	padding-bottom: 1em;
+}
+
 a {
 	color: blue;
 }
@@ -59,6 +61,23 @@ a {
 	text-align: right;
 }
 
+/* header */
+header {
+	flex: 0 1 auto;
+	justify-self: flex-start;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	/* debugging */
+	background: #c7bfff;
+}
+
+header div.navbar {
+	justify-content: center;
+}
+
 /* footer */
 footer {
 	flex: 0 1 auto;
@@ -67,7 +86,9 @@ footer {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	background: red;
+
+	/* debugging */
+	background: #c7bfff;
 }
 
 /* central display */
@@ -76,7 +97,7 @@ footer {
 	display: flex;
 	flex-direction: column;
 	padding: 0 10px;
-	min-height: calc(100vh - 1em - 2px);
+	min-height: calc(100vh - 9.5em);
 	margin: 0 10%;
 }
 

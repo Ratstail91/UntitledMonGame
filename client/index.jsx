@@ -6,7 +6,8 @@ import thunk from 'redux-thunk';
 
 import App from './components/app.jsx';
 
-import reducer from './reducers/reducer.js';
+//import reducer from './reducers/reducer.js';
+const reducer = x => x; //TODO: implement proper reducers
 
 //persistence
 let ITEM_NAME = 'account.mon';
