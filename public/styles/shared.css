@@ -126,10 +126,22 @@ footer {
 	justify-content: flex-start;
 }
 
+.constrained {
+	align-self: center;
+	max-width: 320px;
+}
+
+@media screen and (max-width: 480px) {
+	.constrained {
+		align-self: stretch;
+		max-width: none;
+	}
+}
+
 /* warning message */
 .warning {
 	flex: 0 1 auto;
-	display: none;
+	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-content: flex-end;
