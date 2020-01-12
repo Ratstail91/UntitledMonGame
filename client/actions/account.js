@@ -18,6 +18,8 @@ export const logout = () => {
 	};
 }
 
+//TODO: change session when password changed?
+//TODO: expire sessions
 export const sessionChange = token => {
 	return {
 		type: SESSION_CHANGE,

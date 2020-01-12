@@ -2,40 +2,37 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { sessionChange } from '../../actions/account.js';
+import { setWarning } from '../../actions/warning.js';
 
 class PasswordChange extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			password: '',
-			retype: '',
-			warning: ''
+			oldPassword: '',
+			newPassword: '',
+			retype: ''
 		};
 	}
 
 	render() {
-		let warningStyle = { //TODO: lift the warning out to the page?
-			display: this.state.warning.length > 0 ? 'flex' : 'none'
-		};
-
 		return (
 			<div className='panel right'>
 				<h1>Change Password</h1>
 
-				<div className='warning' style={warningStyle}>
-					<p>{this.state.warning}</p>
-				</div>
-
 				<form action='/passwordchangerequest' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
-						<label htmlFor='password'>Password:</label>
-						<input id='password' type='password' name='password' value={this.state.password} onChange={this.updatePassword.bind(this)} />
+						<label htmlFor='oldpassword'>Old Password:</label>
+						<input id='oldpassword' type='password' name='oldpassword' value={this.state.oldPassword} onChange={this.updateOldPassword.bind(this)} />
 					</div>
 
 					<div>
-						<label htmlFor='retype'>Retype Password:</label>
+						<label htmlFor='newpassword'>New Password:</label>
+						<input id='newpassword' type='password' name='newpassword' value={this.state.newPassword} onChange={this.updateNewPassword.bind(this)} />
+					</div>
+
+					<div>
+						<label htmlFor='retype'>Retype New Password:</label>
 						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
@@ -67,15 +64,13 @@ class PasswordChange extends React.Component {
 					let json = JSON.parse(xhr.responseText);
 
 					//on success
-					this.props.sessionChange(json.token);
-
 					if (this.props.onSuccess) {
 						this.props.onSuccess(json.msg);
 					}
 				}
 
 				else if (xhr.status === 400) {
-					this.setWarning(xhr.responseText);
+					this.props.setWarning(xhr.responseText);
 				}
 			}
 		};
@@ -88,13 +83,13 @@ class PasswordChange extends React.Component {
 	}
 
 	validateInput(e) {
-		if (this.state.password.length < 8) {
-			this.setWarning('Minimum password length is 8 characters');
+		if (this.state.newPassword.length < 8) {
+			this.props.setWarning('Minimum password length is 8 characters');
 			return false;
 		}
 
-		if (this.state.password !== this.state.retype) {
-			this.setWarning('Passwords do not match');
+		if (this.state.newPassword !== this.state.retype) {
+			this.props.setWarning('Passwords do not match');
 			return false;
 		}
 
@@ -102,26 +97,25 @@ class PasswordChange extends React.Component {
 	}
 
 	clearInput() {
-		this.setState({ password: '', retype: '', warning: '' });
+		this.setState({ oldPassword: '', newPassword: '', retype: '' });
 	}
 
-	updatePassword(evt) {
-		this.setState({ password: evt.target.value });
+	updateOldPassword(evt) {
+		this.setState({ oldPassword: evt.target.value });
+	}
+
+	updateNewPassword(evt) {
+		this.setState({ newPassword: evt.target.value });
 	}
 
 	updateRetype(evt) {
 		this.setState({ retype: evt.target.value });
-	}
-
-	setWarning(s) {
-		this.setState({ warning: s });
 	}
 };
 
 PasswordChange.propTypes = {
 	id: PropTypes.number.isRequired,
 	token: PropTypes.number.isRequired,
-	sessionChange: PropTypes.func.isRequired,
 
 	onSuccess: PropTypes.func
 };
@@ -135,7 +129,7 @@ const mapStoreToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		sessionChange: (token) => dispatch(sessionChange(token))
+		setWarning: msg => dispatch(setWarning(msg))
 	};
 };
 

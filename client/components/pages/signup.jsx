@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 //panels
 import SignupPanel from '../panels/signup.jsx';
@@ -12,6 +14,12 @@ class Signup extends React.Component {
 		}
 
 		//TODO: referral links
+	}
+
+	componentDidMount() {
+		if (this.props.loggedIn) {
+			this.props.history.push('/');
+		}
 	}
 
 	render() {
@@ -38,4 +46,18 @@ class Signup extends React.Component {
 	}
 };
 
-export default Signup;
+const mapStoreToProps = (store) => {
+	return {
+		loggedIn: store.account.id !== 0
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		//
+	};
+};
+
+Signup = connect(mapStoreToProps, mapDispatchToProps)(Signup);
+
+export default withRouter(Signup);

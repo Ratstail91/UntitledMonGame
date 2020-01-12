@@ -20,6 +20,7 @@ class Header extends React.Component {
 				<h1>Untitled Mon Game</h1>
 				<div className='navbar'>
 					<LogoutButton onClick={() => this.props.history.push('/')} />
+					<Button to='/passwordchange'>Password</Button>
 				</div>
 			</header>
 		);

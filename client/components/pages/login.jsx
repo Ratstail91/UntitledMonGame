@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 //panels
 import LoginPanel from '../panels/login.jsx';
@@ -8,6 +9,12 @@ class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
+	}
+
+	componentDidMount() {
+		if (this.props.loggedIn) {
+			this.props.history.push('/');
+		}
 	}
 
 	//TODO: redirect to profile
@@ -20,5 +27,19 @@ class Login extends React.Component {
 		);
 	}
 };
+
+const mapStoreToProps = (store) => {
+	return {
+		loggedIn: store.account.id !== 0
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		//
+	};
+};
+
+Login = connect(mapStoreToProps, mapDispatchToProps)(Login);
 
 export default withRouter(Login);

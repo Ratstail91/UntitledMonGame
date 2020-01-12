@@ -54,6 +54,7 @@ const validatePassword = (connection) => (fields) => new Promise( async (resolve
 	const accountQuery = 'SELECT id, email, username, hash FROM accounts WHERE email = ?;';
 	const accountRecord = await connection.query(accountQuery, [fields.email])
 		.then(results => results[0])
+		.catch(() => null)
 	;
 
 	if (!accountRecord) {
@@ -63,8 +64,8 @@ const validatePassword = (connection) => (fields) => new Promise( async (resolve
 	const compare = util.promisify(bcrypt.compare);
 
 	return compare(fields.password, accountRecord.hash)
-		.then(() => resolve(accountRecord))
-		.catch(() => reject({msg: 'Incorrect email or password', extra: [fields.email, 'Did not find this password']}))
+		.then(match => match ? resolve(accountRecord) : reject({msg: 'Incorrect email or password', extra: [fields.email, 'Did not find this password']}))
+		.catch(e => reject({ msg: 'Error in compare', extra: e}))
 	;
 });
 
