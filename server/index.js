@@ -9,10 +9,21 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 //utilities
-//...
+let { log } = require('./utilities/logging.js');
+
+//database
+const connectToDatabase = require('./utilities/database.js');
+const connection = connectToDatabase(); //uses .env
 
 //configuration
-//...
+app.use(bodyParser.json());
+
+//accounts
+const accounts = require('./accounts/accounts.js');
+app.post('/signuprequest', accounts.signupRequest(connection));
+app.get('/verifyrequest', accounts.verifyRequest(connection));
+app.post('/loginrequest', accounts.loginRequest(connection));
+app.post('/logoutrequest', accounts.logoutRequest(connection));
 
 //static directories
 app.use('/styles', express.static(path.resolve(__dirname, '../public/styles')) );
@@ -34,5 +45,5 @@ app.get('*', (req, res) => {
 
 //startup
 http.listen(6000, () => {
-	console.log('listening to *:6000');
+	log('listening to *:6000');
 });

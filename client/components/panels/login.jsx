@@ -2,31 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { setWarning } from '../../actions/warning.js';
 import { login } from '../../actions/account.js';
-import { validateEmail } from '../../../common/utilities.js';
+import { validateEmail } from '../../utilities/validate_email.js';
 
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			email: '',
-			password: '',
-			warning: ''
+			password: ''
 		};
 	}
 
 	render() {
-		let warningStyle = { //TODO: lift the warning out to the page?
-			display: this.state.warning.length > 0 ? 'flex' : 'none'
-		};
-
 		return (
 			<div className='panel right'>
 				<h1>Login</h1>
-
-				<div className='warning' style={warningStyle}>
-					<p>{this.state.warning}</p>
-				</div>
 
 				<form action='/loginrequest' method='post' onSubmit={ this.submit.bind(this) } >
 					<div>
@@ -76,7 +68,7 @@ class Login extends React.Component {
 				}
 
 				else if (xhr.status === 400) {
-					this.setWarning(xhr.responseText);
+					this.props.setWarning(xhr.responseText);
 				}
 			}
 		};
@@ -90,20 +82,16 @@ class Login extends React.Component {
 
 	validateInput(e) {
 		if (!validateEmail(this.state.email)) {
-			this.setWarning('Invalid Email');
+			this.props.setWarning('Invalid Email');
 			return false;
 		}
 
 		if (this.state.password.length < 8) {
-			this.setWarning('Minimum password length is 8 characters');
+			this.props.setWarning('Minimum password length is 8 characters');
 			return false;
 		}
 
 		return true;
-	}
-
-	setWarning(s) {
-		this.setState({ warning: s });
 	}
 
 	clearInput() {
@@ -133,7 +121,8 @@ const mapStoreToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		login: (id, email, username, token) => dispatch(login(id, email, username, token))
+		login: (id, email, username, token) => dispatch(login(id, email, username, token)),
+		setWarning: msg => dispatch(setWarning(msg))
 	}
 };
 

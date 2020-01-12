@@ -7,15 +7,14 @@ import LoginPanel from '../panels/login.jsx';
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			//
-		}
+		this.state = {};
 	}
 
+	//TODO: redirect to profile
 	render() {
 		return (
 			<div className='page constrained'>
-				<LoginPanel onSuccess={(msg) => this.props.history.push('/profile')} />
+				<LoginPanel onSuccess={(msg) => this.props.history.push('/')} />
 				<Link to='/' className='centered'>Return Home</Link>
 			</div>
 		);
