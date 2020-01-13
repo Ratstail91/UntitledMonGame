@@ -4,7 +4,6 @@ require('dotenv').config();
 //libraries
 const util = require('util');
 const bcrypt = require('bcryptjs');
-const sendmail = require('sendmail')({silent: true});
 
 //utilities
 const { log } = require('../utilities/logging.js');
@@ -68,4 +67,9 @@ const changePassword = (connection) => (fields) => new Promise(async (resolve, r
 
 module.exports = {
 	passwordChangeRequest: passwordChangeRequest,
+
+	//for testing
+	validateAccount,
+	validatePassword,
+	changePassword,
 };

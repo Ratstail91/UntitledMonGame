@@ -75,6 +75,8 @@ class App extends React.Component {
 						<LazyRoute path='/signup' component={() => import('./pages/signup.jsx')} />
 						<LazyRoute path='/login' component={() => import('./pages/login.jsx')} />
 						<LazyRoute path='/passwordchange' component={() => import('./pages/password_change.jsx')} />
+						<LazyRoute path='/passwordrecover' component={() => import('./pages/password_recover.jsx')} />
+						<LazyRoute path='/passwordreset' component={() => import('./pages/password_reset.jsx')} />
 
 						<LazyRoute path='*' component={() => import('./pages/page_not_found.jsx')} />
 					</Switch>

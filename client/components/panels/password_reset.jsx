@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { sessionChange } from '../../actions/account.js';
 import PropTypes from 'prop-types';
 
+import { setWarning } from '../../actions/warning.js';
+
 class PasswordReset extends React.Component {
 	constructor(props) {
 		super(props);
@@ -10,22 +12,13 @@ class PasswordReset extends React.Component {
 		this.state = {
 			password: '',
 			retype: '',
-			warning: ''
 		};
 	}
 
 	render() {
-		let warningStyle = {
-			display: this.state.warning.length > 0 ? 'flex' : 'none'
-		};
-
 		return (
 			<div className='panel right'>
-				<h1>Change Password</h1>
-
-				<div className='warning' style={warningStyle}>
-					<p>{this.state.warning}</p>
-				</div>
+				<h1 className='centered'>New Password</h1>
 
 				<form action='/passwordresetrequest' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
@@ -38,7 +31,7 @@ class PasswordReset extends React.Component {
 						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
-					<button type='submit'>Change Password</button>
+					<button type='submit'>New Password</button>
 				</form>
 			</div>
 		);
@@ -71,7 +64,7 @@ class PasswordReset extends React.Component {
 				}
 
 				else if (xhr.status === 400) {
-					this.setWarning(xhr.responseText);
+					this.props.setWarning(xhr.responseText);
 				}
 			}
 		};
@@ -79,28 +72,26 @@ class PasswordReset extends React.Component {
 		//send the XHR
 		xhr.open('POST', form.action, true);
 		xhr.send(formData);
+
+		this.clearInput();
 	}
 
 	validateInput(e) {
 		if (this.state.password.length < 8) {
-			this.setWarning('Minimum password length is 8 characters');
+			this.props.setWarning('Minimum password length is 8 characters');
 			return false;
 		}
 
 		if (this.state.password !== this.state.retype) {
-			this.setWarning('Passwords do not match');
+			this.props.setWarning('Passwords do not match');
 			return false;
 		}
 
 		return true;
 	}
 
-	setWarning(s) {
-		this.setState({ warning: s });
-	}
-
 	clearInput() {
-		this.setState({ password: '', retype: '', warning: '' });
+		this.setState({ password: '', retype: '' });
 	}
 
 	updatePassword(evt) {
@@ -118,5 +109,19 @@ PasswordReset.propTypes = {
 
 	onSuccess: PropTypes.func
 };
+
+const mapStoreToProps = (store) => {
+	return {
+		//
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setWarning: msg => dispatch(setWarning(msg))
+	};
+};
+
+PasswordReset = connect(mapStoreToProps, mapDispatchToProps)(PasswordReset);
 
 export default PasswordReset;

@@ -18,7 +18,7 @@ class Login extends React.Component {
 	render() {
 		return (
 			<div className='panel right'>
-				<h1>Login</h1>
+				<h1 className='centered'>Login</h1>
 
 				<form action='/loginrequest' method='post' onSubmit={ this.submit.bind(this) } >
 					<div>

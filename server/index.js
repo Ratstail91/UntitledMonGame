@@ -25,6 +25,8 @@ app.get('/verifyrequest', accounts.verifyRequest(connection));
 app.post('/loginrequest', accounts.loginRequest(connection));
 app.post('/logoutrequest', accounts.logoutRequest(connection));
 app.post('/passwordchangerequest', accounts.passwordChangeRequest(connection));
+app.post('/passwordrecoverrequest', accounts.passwordRecoverRequest(connection));
+app.post('/passwordresetrequest', accounts.passwordResetRequest(connection));
 
 //static directories
 app.use('/styles', express.static(path.resolve(__dirname, '../public/styles')) );

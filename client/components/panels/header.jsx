@@ -17,7 +17,7 @@ class Header extends React.Component {
 	renderLoggedIn() {
 		return (
 			<header className='page-header centered'>
-				<h1>Untitled Mon Game</h1>
+				<Link to='/'><h1>Egg Trainer</h1></Link>
 				<div className='navbar'>
 					<LogoutButton onClick={() => this.props.history.push('/')} />
 					<Button to='/passwordchange'>Password</Button>
@@ -29,11 +29,11 @@ class Header extends React.Component {
 	renderLoggedOut() {
 		return (
 			<header className='page-header centered'>
-				<h1>Untitled Mon Game</h1>
+				<Link to='/'><h1>Egg Trainer</h1></Link>
 				<div className='navbar'>
 					<Button to='/login'>Login</Button>
 					<Button to='/signup'>Signup</Button>
-					<Button to='/recover'>Recover</Button>
+					<Button to='/passwordrecover'>Recover</Button>
 				</div>
 			</header>
 		);

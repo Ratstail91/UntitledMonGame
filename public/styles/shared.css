@@ -128,12 +128,12 @@ footer {
 
 .constrained {
 	align-self: center;
-	max-width: 320px;
+	max-width: 400px;
 }
 
 @media screen and (max-width: 480px) {
 	.constrained {
-		align-self: stretch;
+	/*	align-self: stretch; */
 		max-width: none;
 	}
 }

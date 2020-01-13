@@ -1,29 +1,23 @@
 import React from 'react';
-import { validateEmail } from '../../../common/utilities.js'; //TODO: move utilities to a better position
+import { connect } from 'react-redux';
+import { validateEmail } from '../../utilities/validate_email.js';
 import PropTypes from 'prop-types';
+
+import { setWarning } from '../../actions/warning.js';
 
 class PasswordRecover extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			email: '',
-			warning: ''
+			email: ''
 		};
 	}
 
 	render() {
-		let warningStyle = {
-			display: this.state.warning.length > 0 ? 'flex' : 'none'
-		};
-
 		return (
 			<div className='panel right'>
-				<h1>Recover Password</h1>
-
-				<div className='warning' style={warningStyle}>
-					<p>{this.state.warning}</p>
-				</div>
+				<h1 className='centered'>Recover Password</h1>
 
 				<form action='/passwordrecoverrequest' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
@@ -61,7 +55,7 @@ class PasswordRecover extends React.Component {
 				}
 
 				else if (xhr.status === 400) {
-					this.setWarning(xhr.responseText);
+					this.props.setWarning(xhr.responseText);
 				}
 			}
 		};
@@ -75,19 +69,15 @@ class PasswordRecover extends React.Component {
 
 	validateInput(e) {
 		if (!validateEmail(this.state.email)) {
-			this.setWarning('Invalid Email');
+			this.props.setWarning('Invalid Email');
 			return false;
 		}
 
 		return true;
 	}
 
-	setWarning(s) {
-		this.setState({ warning: s });
-	}
-
 	clearInput() {
-		this.setState({ email: '', warning: '' });
+		this.setState({ email: '' });
 	}
 
 	updateEmail(evt) {
@@ -98,5 +88,19 @@ class PasswordRecover extends React.Component {
 PasswordRecover.propTypes = {
 	onSuccess: PropTypes.func
 };
+
+const mapStoreToProps = (store) => {
+	return {
+		//
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setWarning: msg => dispatch(setWarning(msg))
+	};
+};
+
+PasswordRecover = connect(mapStoreToProps, mapDispatchToProps)(PasswordRecover);
 
 export default PasswordRecover;

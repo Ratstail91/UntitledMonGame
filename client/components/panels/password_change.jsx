@@ -18,7 +18,7 @@ class PasswordChange extends React.Component {
 	render() {
 		return (
 			<div className='panel right'>
-				<h1>Change Password</h1>
+				<h1 className='centered'>Change Password</h1>
 
 				<form action='/passwordchangerequest' method='post' onSubmit={this.submit.bind(this)}>
 					<div>

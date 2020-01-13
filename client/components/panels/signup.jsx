@@ -22,7 +22,7 @@ class Signup extends React.Component {
 	render() {
 		return (
 			<div className='panel right'>
-				<h1>Sign Up</h1>
+				<h1 className='centered'>Sign Up</h1>
 
 				<form action='/signuprequest' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
