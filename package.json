@@ -1,5 +1,5 @@
 {
-  "name": "untitledmongame",
+  "name": "EggTrainer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ratstail91/UntitledMonGame.git"
+    "url": "git+https://github.com/Ratstail91/EggTrainer.git"
   },
   "author": "Kayne Ruse",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ratstail91/UntitledMonGame/issues"
+    "url": "https://github.com/Ratstail91/EggTrainer/issues"
   },
-  "homepage": "https://github.com/Ratstail91/UntitledMonGame#readme",
+  "homepage": "https://github.com/Ratstail91/EggTrainer#readme",
   "dependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
