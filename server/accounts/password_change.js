@@ -66,7 +66,7 @@ const changePassword = (connection) => (fields) => new Promise(async (resolve, r
 });
 
 module.exports = {
-	passwordChangeRequest: passwordChangeRequest,
+	passwordChangeRequest,
 
 	//for testing
 	validateAccount,

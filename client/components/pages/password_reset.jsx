@@ -14,6 +14,12 @@ class PasswordReset extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		if (!this.props.location.search) {
+			this.props.history.push('/');
+		}
+	}
+
 	render() {
 		let Panel;
 

@@ -28,6 +28,11 @@ app.post('/passwordchangerequest', accounts.passwordChangeRequest(connection));
 app.post('/passwordrecoverrequest', accounts.passwordRecoverRequest(connection));
 app.post('/passwordresetrequest', accounts.passwordResetRequest(connection));
 
+//privacy
+const privacy = require('./privacy/privacy.js');
+app.post('/privacysettingsrequest', privacy.settingsRequest(connection));
+app.post('/privacysettingsupdaterequest', privacy.settingsUpdateRequest(connection));
+
 //static directories
 app.use('/styles', express.static(path.resolve(__dirname, '../public/styles')) );
 

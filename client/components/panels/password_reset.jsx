@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { sessionChange } from '../../actions/account.js';
 import PropTypes from 'prop-types';
+import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
 
@@ -31,7 +32,7 @@ class PasswordReset extends React.Component {
 						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
-					<button type='submit'>New Password</button>
+					<Button type='submit'>New Password</Button>
 				</form>
 			</div>
 		);

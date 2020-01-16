@@ -113,10 +113,10 @@ const sendSignupEmail = () => ({rand, fields}) => new Promise(async (resolve, re
 
 module.exports = {
 	//public API
-	signupRequest: signupRequest,
+	signupRequest,
 
 	//for testing
-	validateSignup: validateSignup,
-	saveToDatabase: saveToDatabase,
-	sendSignupEmail: sendSignupEmail
+	validateSignup,
+	saveToDatabase,
+	sendSignupEmail,
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
 import { login } from '../../actions/account.js';
@@ -31,7 +32,7 @@ class Login extends React.Component {
 						<input id='password' type='password' name='password' value={this.state.password} onChange={ this.updatePassword.bind(this) } />
 					</div>
 
-					<button type='submit' disabled={!this.state.email}>Login</button>
+					<Button type='submit' disabled={!this.state.email}>Login</Button>
 				</form>
 			</div>
 		);

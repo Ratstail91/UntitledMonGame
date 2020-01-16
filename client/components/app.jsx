@@ -78,6 +78,8 @@ class App extends React.Component {
 						<LazyRoute path='/passwordrecover' component={() => import('./pages/password_recover.jsx')} />
 						<LazyRoute path='/passwordreset' component={() => import('./pages/password_reset.jsx')} />
 
+						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings.jsx')} />
+
 						<LazyRoute path='*' component={() => import('./pages/page_not_found.jsx')} />
 					</Switch>
 				</div>

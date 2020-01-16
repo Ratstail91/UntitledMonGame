@@ -66,11 +66,11 @@ const createAccount = (connection) => (record) => new Promise( async (resolve, r
 
 module.exports = {
 	//public API
-	verifyRequest: verifyRequest,
+	verifyRequest,
 
 	//for testing
-	getInformationFromDatabase: getInformationFromDatabase,
-	verifyToken: verifyToken,
-	createAccount: createAccount
+	getInformationFromDatabase,
+	verifyToken,
+	createAccount,
 };
 

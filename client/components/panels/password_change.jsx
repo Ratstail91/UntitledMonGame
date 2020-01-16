@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
 
@@ -36,7 +37,7 @@ class PasswordChange extends React.Component {
 						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
-					<button type='submit'>Change Password</button>
+					<Button type='submit'>Change Password</Button>
 				</form>
 			</div>
 		);

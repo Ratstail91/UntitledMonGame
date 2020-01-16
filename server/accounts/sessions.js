@@ -92,7 +92,7 @@ const createNewSession = (connection) => (accountRecord) => new Promise( async (
 
 const logoutRequest = (connection) => (req, res) => {
 	let deleteQuery = 'DELETE FROM sessions WHERE sessions.accountId = ? AND token = ?;'; //NOTE: The user now loses this access token
-	connection.query(deleteQuery, [req.body.id, req.body.token])
+	return connection.query(deleteQuery, [req.body.id, req.body.token])
 		.then(() => {
 			//logging
 			log('Logged out', req.body.id, req.body.token);
@@ -102,15 +102,24 @@ const logoutRequest = (connection) => (req, res) => {
 	;
 };
 
+//reusable
+const validateSession = (connection) => ({ fields }) => new Promise(async (resolve, reject) => {
+	const query = 'SELECT * FROM sessions WHERE accountId = ? AND token = ?;';
+	return connection.query(query, [fields.id, fields.token])
+		.then(results => results.length >= 0 ? resolve(fields) : reject({ msg: 'Invalid session', extra: fields }))
+		.catch(e => reject({ msg: 'validateSession error', extra: e }))
+	;
+});
+
 module.exports = {
 	//public API
-	loginRequest: loginRequest,
-	logoutRequest: logoutRequest,
-	//TODO: checked logged in
+	loginRequest,
+	logoutRequest,
+	validateSession,
 
 	//for testing
-	validateFields: validateFields,
-	validatePassword: validatePassword,
-	createNewSession: createNewSession
+	validateFields,
+	validatePassword,
+	createNewSession,
 };
 

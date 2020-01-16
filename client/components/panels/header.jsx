@@ -21,6 +21,7 @@ class Header extends React.Component {
 				<div className='navbar'>
 					<LogoutButton onClick={() => this.props.history.push('/')} />
 					<Button to='/passwordchange'>Password</Button>
+					<Button to='/privacysettings'>Privacy</Button>
 				</div>
 			</header>
 		);

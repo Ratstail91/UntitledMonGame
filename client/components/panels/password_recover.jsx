@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { validateEmail } from '../../utilities/validate_email.js';
 import PropTypes from 'prop-types';
+import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
 
@@ -25,7 +26,7 @@ class PasswordRecover extends React.Component {
 						<input id='email' type='text' name='email' value={this.state.email} onChange={this.updateEmail.bind(this)} />
 					</div>
 
-					<button type='submit' disabled={!this.state.email}>Send Email</button>
+					<Button type='submit' disabled={!this.state.email}>Send Email</Button>
 				</form>
 			</div>
 		);

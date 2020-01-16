@@ -82,10 +82,10 @@ const sendEmail = (connection) => ({ accountRecord, rand }) => new Promise(async
 });
 
 module.exports = {
-	passwordRecoverRequest: passwordRecoverRequest,
+	passwordRecoverRequest,
 
 	//for testing
-	checkEmail: checkEmail,
-	createRecoverRecord: createRecoverRecord,
-	sendEmail, sendEmail,
+	checkEmail,
+	createRecoverRecord,
+	sendEmail,
 }
