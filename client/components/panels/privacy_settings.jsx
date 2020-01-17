@@ -27,9 +27,9 @@ class PrivacySettings extends React.Component {
 				<h1 className='centered'>Privacy Settings</h1>
 
 				<form onSubmit={this.submitForm.bind(this)}>
-					<div>
+					<div className='checkboxContainer'>
 						<label htmlFor='promotions'>Allow Promotional Emails:</label>
-						<input id='promotions' type='checkbox' name='promotions' checked={this.state.promotions} onChange={ this.updatePromotions.bind(this) } />
+						<input id='promotions' type='checkbox' name='promotions' checked={this.state.promotions} onChange={ this.updatePromotions.bind(this) } className='checkbox' />
 					</div>
 
 					<Button type='submit'>Update</Button>

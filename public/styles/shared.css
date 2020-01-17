@@ -150,3 +150,14 @@ footer {
 	border-color: #ff0000;
 	background: #ff6666;
 }
+
+/* corrections */
+.checkboxContainer {
+	display: flex;
+	flex-direction: row;
+}
+
+.checkbox {
+	flex: 1;
+	margin-top: 0.5em;
+}

@@ -55,4 +55,7 @@ const handleDisconnect = () => {
 	return connectionWrapper;
 };
 
-module.exports = handleDisconnect;
+module.exports = {
+	connectToDatabase: handleDisconnect,
+	connection: connectionWrapper,
+};

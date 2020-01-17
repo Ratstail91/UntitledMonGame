@@ -12,7 +12,7 @@ const path = require('path');
 let { log } = require('./utilities/logging.js');
 
 //database
-const connectToDatabase = require('./utilities/database.js');
+const { connectToDatabase } = require('./utilities/database.js');
 const connection = connectToDatabase(); //uses .env
 
 //configuration
@@ -32,6 +32,7 @@ app.post('/passwordresetrequest', accounts.passwordResetRequest(connection));
 const privacy = require('./privacy/privacy.js');
 app.post('/privacysettingsrequest', privacy.settingsRequest(connection));
 app.post('/privacysettingsupdaterequest', privacy.settingsUpdateRequest(connection));
+app.post('/accountdeleterequest', privacy.accountDeleteRequest(connection));
 
 //static directories
 app.use('/styles', express.static(path.resolve(__dirname, '../public/styles')) );

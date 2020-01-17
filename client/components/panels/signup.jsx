@@ -45,9 +45,9 @@ class Signup extends React.Component {
 						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
-					<div style={{paddingLeft: '34px', alignSelf: 'flex-start', flex: '1', display:'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-						<label htmlFor='promotions'>Allow Emails:</label>
-						<input id='promotions' type='checkbox' name='promotions' value={this.state.promotions} onChange={this.updatePromotions.bind(this)} />
+					<div className='checkboxContainer'>
+						<label htmlFor='promotions' style={{marginLeft: '32px'}}>Allow Emails:</label>
+						<input id='promotions' type='checkbox' name='promotions' value={this.state.promotions} onChange={this.updatePromotions.bind(this)} className='checkbox' />
 					</div>
 
 					<Button type='submit' disabled={!this.state.email}>Sign Up</Button>

@@ -34,7 +34,7 @@ class PrivacySettings extends React.Component {
 		}
 
 		return (
-			<div className='page constrained'>
+			<div className='page constrained' style={{ minWidth: '400px' }}>
 				<Panel />
 				<Link to='/' className='centered'>Return Home</Link>
 				<div className='break' style={{paddingBottom:'5em'}} />

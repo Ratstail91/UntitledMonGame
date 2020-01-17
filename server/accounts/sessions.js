@@ -23,6 +23,7 @@ const loginRequest = (connection) => (req, res) => {
 	return formidablePromise(req)
 		.then(validateFields(connection))
 		.then(validatePassword(connection))
+		.then(unmarkAccountForDeletion(connection))
 		.then(createNewSession(connection))
 		.then(handleSuccess)
 		.catch(handleRejection)
@@ -66,6 +67,15 @@ const validatePassword = (connection) => (fields) => new Promise( async (resolve
 	return compare(fields.password, accountRecord.hash)
 		.then(match => match ? resolve(accountRecord) : reject({msg: 'Incorrect email or password', extra: [fields.email, 'Did not find this password']}))
 		.catch(e => reject({ msg: 'Error in compare', extra: e}))
+	;
+});
+
+const unmarkAccountForDeletion = (connection) => (fields) => new Promise(async (resolve, reject) => {
+	//for setting things back to normal
+	const query = 'UPDATE accounts SET deletionTime = NULL WHERE id = ?;';
+	return connection.query(query, [fields.id])
+		.then(() => resolve(fields))
+		.catch(e => reject({ msg: 'unmarkAccountForDeletion error', extra: e }))
 	;
 });
 
@@ -120,6 +130,7 @@ module.exports = {
 	//for testing
 	validateFields,
 	validatePassword,
+	unmarkAccountForDeletion,
 	createNewSession,
 };
 

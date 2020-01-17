@@ -10,7 +10,6 @@ const { validateSession } = require('../accounts/sessions.js');
 const settingsRequest = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		console.log(JSON.stringify(obj));
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
 		res.end();
 	};
