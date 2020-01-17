@@ -24,7 +24,7 @@ class Signup extends React.Component {
 			<div className='panel right'>
 				<h1 className='centered'>Sign Up</h1>
 
-				<form action='/signuprequest' method='post' onSubmit={this.submit.bind(this)}>
+				<form action='/api/signup' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
 						<label htmlFor='email'>Email:</label>
 						<input id='email' type='text' name='email' value={this.state.email} onChange={this.updateEmail.bind(this)} />

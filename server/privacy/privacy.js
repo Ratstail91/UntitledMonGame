@@ -1,9 +1,9 @@
-const { settingsRequest } = require('./settings_request.js');
-const { settingsUpdateRequest } = require('./settings_update_request.js');
-const { accountDeleteRequest } = require('./account_delete_request.js');
+const { apiSettings } = require('./settings.js');
+const { apiUpdateSettings } = require('./update_settings.js');
+const { apiDeleteAccount } = require('./delete_account.js');
 
 module.exports = {
-	settingsRequest,
-	settingsUpdateRequest,
-	accountDeleteRequest,
+	apiSettings,
+	apiUpdateSettings,
+	apiDeleteAccount,
 };

@@ -7,7 +7,7 @@ const { log, logActivity } = require('../utilities/logging.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
 
-const loginRequest = (connection) => (req, res) => {
+const apiLogin = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -100,7 +100,7 @@ const createNewSession = (connection) => (accountRecord) => new Promise( async (
 	return resolve(result);
 });
 
-const logoutRequest = (connection) => (req, res) => {
+const apiLogout = (connection) => (req, res) => {
 	let deleteQuery = 'DELETE FROM sessions WHERE sessions.accountId = ? AND token = ?;'; //NOTE: The user now loses this access token
 	return connection.query(deleteQuery, [req.body.id, req.body.token])
 		.then(() => {
@@ -123,8 +123,8 @@ const validateSession = (connection) => ({ fields }) => new Promise(async (resol
 
 module.exports = {
 	//public API
-	loginRequest,
-	logoutRequest,
+	apiLogin,
+	apiLogout,
 	validateSession,
 
 	//for testing

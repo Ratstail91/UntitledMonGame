@@ -11,7 +11,7 @@ const { throttle, isThrottled } = require('../utilities/throttling.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
 
-const passwordRecoverRequest = (connection) => (req, res) => {
+const apiPasswordRecover = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -82,7 +82,7 @@ const sendEmail = (connection) => ({ accountRecord, rand }) => new Promise(async
 });
 
 module.exports = {
-	passwordRecoverRequest,
+	apiPasswordRecover,
 
 	//for testing
 	checkEmail,

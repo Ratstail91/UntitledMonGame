@@ -20,7 +20,7 @@ class PasswordRecover extends React.Component {
 			<div className='panel right'>
 				<h1 className='centered'>Recover Password</h1>
 
-				<form action='/passwordrecoverrequest' method='post' onSubmit={this.submit.bind(this)}>
+				<form action='/api/passwordrecover' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
 						<label htmlFor='email'>Email:</label>
 						<input id='email' type='text' name='email' value={this.state.email} onChange={this.updateEmail.bind(this)} />

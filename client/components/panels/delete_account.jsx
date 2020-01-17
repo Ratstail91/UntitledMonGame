@@ -43,16 +43,16 @@ class DeleteAccount extends React.Component {
 
 	submit(e) {
 		e.preventDefault();
-		this.sendRequest('/accountdeleterequest');
+		this.sendRequest('DELETE', '/api/account');
 	}
 
 	logout() {
-		this.sendRequest('/logoutrequest');
+		this.sendRequest('POST', '/api/logout');
 		this.props.logout();
 		this.props.history.push('/');
 	}
 
-	sendRequest(url) {
+	sendRequest(method, url) {
 		//build the XHR
 		let xhr = new XMLHttpRequest();
 
@@ -69,7 +69,7 @@ class DeleteAccount extends React.Component {
 		};
 
 		//send the XHR
-		xhr.open('POST', url, true);
+		xhr.open(method, url, true);
 		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send(JSON.stringify({
 			id: this.props.id,

@@ -1,6 +1,6 @@
 const { log } = require('../utilities/logging.js');
 
-const verifyRequest = (connection) => (req, res) => {
+const apiVerify = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -66,7 +66,7 @@ const createAccount = (connection) => (record) => new Promise( async (resolve, r
 
 module.exports = {
 	//public API
-	verifyRequest,
+	apiVerify,
 
 	//for testing
 	getInformationFromDatabase,

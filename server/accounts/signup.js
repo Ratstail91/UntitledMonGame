@@ -12,7 +12,7 @@ const { throttle, isThrottled } = require('../utilities/throttling.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
 
-const signupRequest = (connection) => (req, res) => {
+const apiSignup = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -95,7 +95,7 @@ const saveToDatabase = (connection) => (fields) => new Promise(async (resolve, r
 const sendSignupEmail = () => ({rand, fields}) => new Promise(async (resolve, reject) => {
 	const send = util.promisify(sendmail);
 
-	const addr = `http://${process.env.WEB_ADDRESS}/verifyrequest?email=${fields.email}&verify=${rand}`
+	const addr = `http://${process.env.WEB_ADDRESS}/api/verify?email=${fields.email}&verify=${rand}`
 	const msg = 'Hello! Please visit the following address to verify your account: ';
 
 	await send({
@@ -113,7 +113,7 @@ const sendSignupEmail = () => ({rand, fields}) => new Promise(async (resolve, re
 
 module.exports = {
 	//public API
-	signupRequest,
+	apiSignup,
 
 	//for testing
 	validateSignup,

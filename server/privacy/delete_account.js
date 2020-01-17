@@ -6,7 +6,7 @@ const { log } = require('../utilities/logging.js');
 
 const { validateSession } = require('../accounts/sessions.js');
 
-const accountDeleteRequest = (connection) => (req, res) => {
+const apiDeleteAccount = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -53,6 +53,6 @@ let job = new CronJob('0 * * * * *', () => {
 job.start();
 
 module.exports = {
-	accountDeleteRequest,
+	apiDeleteAccount,
 	markAccountForDeletion,
 };

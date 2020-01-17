@@ -20,19 +20,19 @@ app.use(bodyParser.json());
 
 //accounts
 const accounts = require('./accounts/accounts.js');
-app.post('/signuprequest', accounts.signupRequest(connection));
-app.get('/verifyrequest', accounts.verifyRequest(connection));
-app.post('/loginrequest', accounts.loginRequest(connection));
-app.post('/logoutrequest', accounts.logoutRequest(connection));
-app.post('/passwordchangerequest', accounts.passwordChangeRequest(connection));
-app.post('/passwordrecoverrequest', accounts.passwordRecoverRequest(connection));
-app.post('/passwordresetrequest', accounts.passwordResetRequest(connection));
+app.post('/api/signup', accounts.apiSignup(connection));
+app.get('/api/verify', accounts.apiVerify(connection));
+app.post('/api/login', accounts.apiLogin(connection));
+app.post('/api/logout', accounts.apiLogout(connection));
+app.post('/api/passwordchange', accounts.apiPasswordChange(connection));
+app.post('/api/passwordrecover', accounts.apiPasswordRecover(connection));
+app.post('/api/passwordreset', accounts.apiPasswordReset(connection));
 
 //privacy
 const privacy = require('./privacy/privacy.js');
-app.post('/privacysettingsrequest', privacy.settingsRequest(connection));
-app.post('/privacysettingsupdaterequest', privacy.settingsUpdateRequest(connection));
-app.post('/accountdeleterequest', privacy.accountDeleteRequest(connection));
+app.post('/api/privacysettings', privacy.apiSettings(connection));
+app.put('/api/privacysettings', privacy.apiUpdateSettings(connection));
+app.delete('/api/account', privacy.apiDeleteAccount(connection));
 
 //static directories
 app.use('/styles', express.static(path.resolve(__dirname, '../public/styles')) );

@@ -7,7 +7,7 @@ const formidablePromise = require('../utilities/formidable_promise.js');
 
 const { validateSession } = require('../accounts/sessions.js');
 
-const settingsRequest = (connection) => (req, res) => {
+const apiSettings = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -38,6 +38,6 @@ const sendPrivacySettings = (connection, res) => (fields) => new Promise(async (
 });
 
 module.exports = {
-	settingsRequest,
+	apiSettings,
 	sendPrivacySettings,
 };

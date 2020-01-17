@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs');
 const { log } = require('../utilities/logging.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
 
-const passwordChangeRequest = (connection) => (req, res) => {
+const apiPasswordChange = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -66,7 +66,7 @@ const changePassword = (connection) => (fields) => new Promise(async (resolve, r
 });
 
 module.exports = {
-	passwordChangeRequest,
+	apiPasswordChange,
 
 	//for testing
 	validateAccount,

@@ -21,7 +21,7 @@ class PasswordChange extends React.Component {
 			<div className='panel right'>
 				<h1 className='centered'>Change Password</h1>
 
-				<form action='/passwordchangerequest' method='post' onSubmit={this.submit.bind(this)}>
+				<form action='/api/passwordchange' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
 						<label htmlFor='oldpassword'>Old Password:</label>
 						<input id='oldpassword' type='password' name='oldpassword' value={this.state.oldPassword} onChange={this.updateOldPassword.bind(this)} />

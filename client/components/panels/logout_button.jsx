@@ -13,7 +13,7 @@ class LogoutButton extends React.Component {
 
 	render() {
 		return (
-			<Button onClick={e => {e.preventDefault(); this.sendRequest('/logoutrequest')}}>Logout</Button>
+			<Button onClick={e => {e.preventDefault(); this.sendRequest('/api/logout')}}>Logout</Button>
 		);
 	}
 

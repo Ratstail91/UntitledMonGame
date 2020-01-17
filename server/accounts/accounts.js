@@ -1,19 +1,19 @@
-const { signupRequest } = require('./signup.js');
-const { verifyRequest } = require('./verify.js');
+const { apiSignup } = require('./signup.js');
+const { apiVerify } = require('./verify.js');
 
-const { loginRequest, logoutRequest } = require('./sessions.js');
+const { apiLogin, apiLogout } = require('./sessions.js');
 
-const { passwordChangeRequest } = require('./password_change.js');
-const { passwordRecoverRequest } = require('./password_recover.js');
-const { passwordResetRequest } = require('./password_reset.js');
+const { apiPasswordChange } = require('./password_change.js');
+const { apiPasswordRecover } = require('./password_recover.js');
+const { apiPasswordReset } = require('./password_reset.js');
 
 module.exports = {
-	signupRequest,
-	verifyRequest,
-	loginRequest,
-	logoutRequest,
+	apiSignup,
+	apiVerify,
+	apiLogin,
+	apiLogout,
 
-	passwordChangeRequest,
-	passwordRecoverRequest,
-	passwordResetRequest,
+	apiPasswordChange,
+	apiPasswordRecover,
+	apiPasswordReset,
 };

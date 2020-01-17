@@ -56,7 +56,7 @@ class PrivacySettings extends React.Component {
 			}
 		}
 
-		xhr.open('POST', '/privacysettingsupdaterequest', true);
+		xhr.open('PUT', '/api/privacysettings', true);
 		xhr.send(formData);
 	}
 
@@ -65,7 +65,7 @@ class PrivacySettings extends React.Component {
 		let xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = () => this.onReadyStateChange(xhr);
 
-		xhr.open('POST', '/privacysettingsrequest', true);
+		xhr.open('POST', '/api/privacysettings', true);
 		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send(JSON.stringify({
 			id: this.props.id,

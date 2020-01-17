@@ -11,7 +11,7 @@ const { throttle, isThrottled } = require('../utilities/throttling.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
 
-const passwordResetRequest = (connection) => (req, res) => {
+const apiPasswordReset = (connection) => (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -83,7 +83,7 @@ const removeFromRecovery = (connection) => ({ msg, accountRecord }) => new Promi
 });
 
 module.exports = {
-	passwordResetRequest,
+	apiPasswordReset,
 
 	//for testing
 	validateCredentials,
