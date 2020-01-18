@@ -1,11 +1,9 @@
 import { hot } from 'react-hot-loader/root';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-
 
 import DevTools from './dev_tools.jsx';
 import App from './components/app.jsx';
@@ -13,7 +11,7 @@ import App from './components/app.jsx';
 import reducer from './reducers/reducer.js';
 
 //persistence
-let ITEM_NAME = 'account.mon';
+let ITEM_NAME = 'account.eggtrainer';
 let account = localStorage.getItem(ITEM_NAME);
 account = account ? JSON.parse(account) : {};
 
@@ -31,16 +29,13 @@ store.subscribe(() => {
 	localStorage.setItem(ITEM_NAME, JSON.stringify(store.getState().account));
 });
 
-let HotApp = hot(App)
+const HotApp = hot(App)
 
 //start the process
 ReactDOM.render(
 	<Provider store={store}>
 		<div>
-		
 			<HotApp />
-		
-			
 			<DevTools />
 		</div>
 	</Provider>,

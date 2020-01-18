@@ -1,9 +1,8 @@
-#DATABASE_URL=mysql://mon:pikachu@localhost/mon
 DB_HOST=localhost
-DB_USER=mon
+DB_USER=eggtrainer
 DB_PASS=pikachu
-DB_NAME=mon
+DB_NAME=eggtrainer
 DB_PORT=3306
 
 WEB_ADDRESS=localhost
-PORT=3000
+WEB_PORT=3000

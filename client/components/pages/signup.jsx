@@ -48,7 +48,7 @@ class Signup extends React.Component {
 
 const mapStoreToProps = (store) => {
 	return {
-		loggedIn: store.account.id !== 0
+		loggedIn: !!store.account.id
 	};
 };
 

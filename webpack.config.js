@@ -6,8 +6,8 @@ module.exports = env => {
 		entry: `./client/index${env === 'production' ? '' : '_dev'}.jsx`,
 		output: {
 			path: __dirname + '/public/',
-			filename: 'app.bundle.[name].js',
-			sourceMapFilename: 'app.bundle.[name].js.map'
+			filename: 'app.bundle.js',
+			sourceMapFilename: 'app.bundle.js.map'
 		},
 		devServer: {
 			contentBase: path.join(__dirname, 'public'),

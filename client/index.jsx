@@ -9,7 +9,7 @@ import App from './components/app.jsx';
 import reducer from './reducers/reducer.js';
 
 //persistence
-let ITEM_NAME = 'account.mon';
+let ITEM_NAME = 'account.eggtrainer';
 let account = localStorage.getItem(ITEM_NAME);
 account = account ? JSON.parse(account) : {};
 
