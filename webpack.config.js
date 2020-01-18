@@ -1,3 +1,4 @@
+const path = require("path");
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = env => {
@@ -5,20 +6,31 @@ module.exports = env => {
 		entry: `./client/index${env === 'production' ? '' : '_dev'}.jsx`,
 		output: {
 			path: __dirname + '/public/',
-			filename: 'app.bundle.js',
-			sourceMapFilename: 'app.bundle.js.map'
+			filename: 'app.bundle.[name].js',
+			sourceMapFilename: 'app.bundle.[name].js.map'
+		},
+		devServer: {
+			contentBase: path.join(__dirname, 'public'),
+			compress: false,
+			port: 3001,
+			proxy: {
+				'/api/': 'http://localhost:3000/'
+			},
+			overlay: {
+				errors: true
+			},
+			host: '0.0.0.0'
 		},
 		devtool: 'source-map',
 		module: {
-			rules: [
-				{
+			rules: [{
 					test: /(\.js$|\.jsx$)/,
 					exclude: /(node_modules)/,
 					use: {
 						loader: 'babel-loader',
 						options: {
 							presets: ['@babel/preset-env', '@babel/preset-react'],
-							plugins: ['react-loadable/babel', '@babel/plugin-syntax-dynamic-import']
+							plugins: ['react-hot-loader/babel','react-loadable/babel', '@babel/plugin-syntax-dynamic-import']
 						}
 					}
 				},

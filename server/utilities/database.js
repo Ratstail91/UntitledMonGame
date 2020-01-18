@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 //libraries
-let mysql = require('mysql');
+let mysql = require('mysql2');
 
 //utilities
 let { log } = require('./logging.js');
