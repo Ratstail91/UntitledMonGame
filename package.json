@@ -11,7 +11,7 @@
     "webpack": "webpack --mode=development --env=development",
     "webpack-production": "webpack --mode=production --env=production",
     "pull": "git pull && npm run webpack-production && npm restart",
-    "dev": "npm run watch:server & npm run watch:client",
+    "dev": "start npm run watch:server & start npm run watch:client",
     "db:create": "node scripts/createdb.js",
     "watch:server": "nodemon --watch server server/index.js",
     "watch:client": "webpack-dev-server --hot --inline"

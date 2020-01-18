@@ -37,13 +37,12 @@ app.post('/api/privacysettings', privacy.apiSettings(connection));
 app.put('/api/privacysettings', privacy.apiUpdateSettings(connection));
 app.delete('/api/account', privacy.apiDeleteAccount(connection));
 
-
 //fallback to index.html
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, `../public/index.html`));
 });
 
 //startup
-http.listen(process.env.PORT || 3000, (err) => {
-	log(`listening to *:${process.env.PORT || 3000}`);
+http.listen(process.env.WEB_PORT || 3000, (err) => {
+	log(`listening to *:${process.env.WEB_PORT || 3000}`);
 });
