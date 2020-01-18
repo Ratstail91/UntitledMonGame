@@ -36,6 +36,7 @@
     "formidable": "^1.2.1",
     "mysql2": "^2.1.0",
     "query-string": "^6.9.0",
+    "react-markdown": "^4.3.1",
     "sendmail": "^1.6.1"
   },
   "devDependencies": {

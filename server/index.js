@@ -21,6 +21,10 @@ app.use('/', express.static(path.resolve(__dirname, '../public/'), {}));
 // Add body parser
 app.use(bodyParser.json());
 
+//news
+const news = require('./news/news.js');
+app.get('/api/newsfiles', news.apiNewsFiles(connection));
+
 //accounts
 const accounts = require('./accounts/accounts.js');
 app.post('/api/signup', accounts.apiSignup(connection));
