@@ -1,0 +1,32 @@
+version: '3'
+services:
+  dev:
+    image: node:13-alpine
+    volumes:
+      - .:/usr/src/service
+      - /usr/src/service/node_modules
+    working_dir: /usr/src/service
+    command: sh -c "npm install --quiet && npm run dev"
+    ports:
+      - 3000:3000
+      - 3001:3001
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://trainer:SuperSecretPassword@db/EggTrainer
+      - DB_HOST=db
+      - DB_USER=trainer
+      - DB_PASS=SuperSecretPassword
+      - DB_NAME=EggTrainer
+      - DB_PORT=3306
+    links: 
+      - db
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: RootPassword
+      MYSQL_DATABASE: EggTrainer
+      MYSQL_USER: trainer
+      MYSQL_PASSWORD: SuperSecretPassword

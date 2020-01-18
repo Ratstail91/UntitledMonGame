@@ -13,5 +13,5 @@ auth.json
 /**/*.log
 
 #output files
-*.bundle.js
+*.bundle*.js
 *.js.map

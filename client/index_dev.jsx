@@ -1,8 +1,11 @@
+import { hot } from 'react-hot-loader/root';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+
 
 import DevTools from './dev_tools.jsx';
 import App from './components/app.jsx';
@@ -28,11 +31,16 @@ store.subscribe(() => {
 	localStorage.setItem(ITEM_NAME, JSON.stringify(store.getState().account));
 });
 
+let HotApp = hot(App)
+
 //start the process
 ReactDOM.render(
 	<Provider store={store}>
 		<div>
-			<App />
+		
+			<HotApp />
+		
+			
 			<DevTools />
 		</div>
 	</Provider>,

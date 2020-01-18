@@ -15,7 +15,10 @@ let { log } = require('./utilities/logging.js');
 const { connectToDatabase } = require('./utilities/database.js');
 const connection = connectToDatabase(); //uses .env
 
-//configuration
+// Use express static as early as possible
+app.use('/', express.static(path.resolve(__dirname, '../public/'), {}));
+
+// Add body parser
 app.use(bodyParser.json());
 
 //accounts
@@ -34,18 +37,6 @@ app.post('/api/privacysettings', privacy.apiSettings(connection));
 app.put('/api/privacysettings', privacy.apiUpdateSettings(connection));
 app.delete('/api/account', privacy.apiDeleteAccount(connection));
 
-//static directories
-app.use('/styles', express.static(path.resolve(__dirname, '../public/styles')) );
-
-//the app file(s)
-app.get('/*app.bundle.js', (req, res) => {
-	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl.split('/').pop()}`));
-});
-
-//source map (for development)
-app.get('/app.bundle.js.map', (req, res) => {
-	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl}`));
-});
 
 //fallback to index.html
 app.get('*', (req, res) => {
@@ -53,6 +44,6 @@ app.get('*', (req, res) => {
 });
 
 //startup
-http.listen(6000, () => {
-	log('listening to *:6000');
+http.listen(process.env.PORT || 3000, (err) => {
+	log(`listening to *:${process.env.PORT || 3000}`);
 });
