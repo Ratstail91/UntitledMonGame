@@ -11,7 +11,7 @@
     "webpack": "webpack --mode=development --env=development",
     "webpack-production": "webpack --mode=production --env=production",
     "pull": "git pull && npm run webpack-production && npm restart",
-    "dev": "start npm run watch:server & start npm run watch:client",
+    "dev": "concurrently npm:watch:server npm:watch:client",
     "db:create": "node scripts/createdb.js",
     "watch:server": "nodemon --watch server server/index.js",
     "watch:client": "webpack-dev-server --hot --inline"
@@ -45,6 +45,7 @@
     "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
     "bootstrap": "^4.4.1",
+    "concurrently": "^5.0.2",
     "css-loader": "^3.4.2",
     "nodemon": "^2.0.2",
     "react": "^16.12.0",

@@ -4,6 +4,7 @@ import Loadable from 'react-loadable';
 
 //styling
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style/shared.css'
 
 //warning manipulation
 import { connect } from 'react-redux';
