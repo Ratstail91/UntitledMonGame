@@ -13,6 +13,7 @@
     "pull": "git pull && npm run webpack-production && npm restart",
     "dev": "concurrently npm:watch:server npm:watch:client",
     "db:create": "node scripts/createdb.js",
+    "db:clean": "node scripts/cleandb.js",
     "watch:server": "nodemon --watch server server/index.js",
     "watch:client": "webpack-dev-server --hot --inline"
   },

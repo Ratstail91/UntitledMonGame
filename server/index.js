@@ -11,9 +11,19 @@ const path = require('path');
 //utilities
 let { log } = require('./utilities/logging.js');
 
-//database
-const { connectToDatabase } = require('./utilities/database.js');
-const connection = connectToDatabase(); //uses .env
+// Initialise connection pool
+const pool = require('./utilities/database.js');
+
+// Test connection
+pool.getConnection((err,connection)=>{
+	if (err) {
+		log(err);
+	} else {
+		log("Connection is established")
+		connection.release()
+	}
+	
+})
 
 // Use express static as early as possible
 app.use('/', express.static(path.resolve(__dirname, '../public/'), {}));
@@ -23,23 +33,23 @@ app.use(bodyParser.json());
 
 //news
 const news = require('./news/news.js');
-app.get('/api/newsfiles', news.apiNewsFiles(connection));
+app.get('/api/newsfiles', news.apiNewsFiles);
 
 //accounts
 const accounts = require('./accounts/accounts.js');
-app.post('/api/signup', accounts.apiSignup(connection));
-app.get('/api/verify', accounts.apiVerify(connection));
-app.post('/api/login', accounts.apiLogin(connection));
-app.post('/api/logout', accounts.apiLogout(connection));
-app.post('/api/passwordchange', accounts.apiPasswordChange(connection));
-app.post('/api/passwordrecover', accounts.apiPasswordRecover(connection));
-app.post('/api/passwordreset', accounts.apiPasswordReset(connection));
+app.post('/api/signup', accounts.apiSignup);
+app.get('/api/verify', accounts.apiVerify);
+app.post('/api/login', accounts.apiLogin);
+app.post('/api/logout', accounts.apiLogout);
+app.post('/api/passwordchange', accounts.apiPasswordChange);
+app.post('/api/passwordrecover', accounts.apiPasswordRecover);
+app.post('/api/passwordreset', accounts.apiPasswordReset);
 
 //privacy
 const privacy = require('./privacy/privacy.js');
-app.post('/api/privacysettings', privacy.apiSettings(connection));
-app.put('/api/privacysettings', privacy.apiUpdateSettings(connection));
-app.delete('/api/account', privacy.apiDeleteAccount(connection));
+app.post('/api/privacysettings', privacy.apiSettings);
+app.put('/api/privacysettings', privacy.apiUpdateSettings);
+app.delete('/api/account', privacy.apiDeleteAccount);
 
 //fallback to index.html
 app.get('*', (req, res) => {

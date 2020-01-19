@@ -1,12 +1,14 @@
+const pool = require('./database.js')
+
 const log = (msg, ...args) => {
 	let dateString = Date().replace(/\s\(.*\)/i, ''); //dumb formatting
 	console.log(`log ${dateString}: ${msg} (${args.toString()})`);
 	return msg;
 }
 
-const logActivity = (connection, id) => {
+const logActivity = (id) => {
 	let query = 'UPDATE accounts SET lastActivityTime = CURRENT_TIMESTAMP() WHERE id = ?;';
-	connection.query(query, [id], (err) => {
+	pool.promise().query(query, [id], (err) => {
 		if (err) throw err;
 	});
 };

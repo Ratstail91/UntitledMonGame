@@ -10,8 +10,10 @@ const { log } = require('../utilities/logging.js');
 const { throttle, isThrottled } = require('../utilities/throttling.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
+const pool = require("../utilities/database.js")
 
-const apiPasswordRecover = (connection) => (req, res) => {
+
+const apiPasswordRecover = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -25,15 +27,15 @@ const apiPasswordRecover = (connection) => (req, res) => {
 	};
 
 	return formidablePromise(req)
-		.then(checkEmail(connection))
-		.then(createRecoverRecord(connection))
-		.then(sendEmail(connection))
+		.then(checkEmail)
+		.then(createRecoverRecord)
+		.then(sendEmail)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const checkEmail = (connection) => ({ fields }) => new Promise((resolve, reject) => {
+const checkEmail = ({ fields }) => new Promise((resolve, reject) => {
 	if (isThrottled(fields.email)) {
 		return reject({msg: 'Recover throttled', extra: [fields.email]});
 	}
@@ -47,22 +49,22 @@ const checkEmail = (connection) => ({ fields }) => new Promise((resolve, reject)
 
 	//check email is attached to an account
 	const query = 'SELECT * FROM accounts WHERE email = ?;';
-	return connection.query(query, [fields.email])
-		.then(results => results.length === 1 ? resolve(results[0]) : reject({ msg: 'Email not found', extra: '' }))
+	return pool.promise().query(query, [fields.email])
+		.then(results => results[0].length === 1 ? resolve(results[0][0]) : reject({ msg: 'Email not found', extra: '' }))
 		.catch(e => reject({ msg: 'Error in checkEmail', extra: e }))
 	;
 });
 
-const createRecoverRecord = (connection) => (accountRecord) => new Promise(async (resolve, reject) => {
+const createRecoverRecord = (accountRecord) => new Promise(async (resolve, reject) => {
 	const rand = Math.floor(Math.random() * 2000000000);
 
 	const query = 'REPLACE INTO passwordRecover (accountId, token) VALUES (?, ?);';
-	await connection.query(query, [accountRecord.id, rand]);
+	await pool.promise().query(query, [accountRecord.id, rand]);
 
 	resolve({ accountRecord, rand });
 });
 
-const sendEmail = (connection) => ({ accountRecord, rand }) => new Promise(async (resolve, reject) => {
+const sendEmail = ({ accountRecord, rand }) => new Promise(async (resolve, reject) => {
 	const send = util.promisify(sendmail);
 
 	const addr = `http://${process.env.WEB_ADDRESS}/passwordreset?email=${accountRecord.email}&token=${rand}`;
