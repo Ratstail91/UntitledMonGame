@@ -2,8 +2,8 @@
 require('dotenv').config();
 
 //libraries
-let fs = require('fs');
-let path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 const { log } = require('../utilities/logging.js');
 
@@ -28,12 +28,12 @@ const apiNewsFiles = (req, res) => {
 }
 
 const readFilenames = (req) => new Promise((resolve, reject) => {
-	let fpath = path.join(__dirname, '..', '..', 'public', 'news');
+	const fpath = path.join(__dirname, '..', '..', 'public', 'news');
 
 	let fileNames = fs.readdirSync(fpath);
 
 	//set the maximum
-	let max = parseInt(req.body.total) || 99;
+	let max = req.body.total !== -1 ? parseInt(req.body.total) || 99 : 9999;
 	if (isNaN(max) || max > fileNames.total) {
 		max = fileNames.total;
 	}
@@ -43,12 +43,10 @@ const readFilenames = (req) => new Promise((resolve, reject) => {
 	fileNames = fileNames.map(fn => `/news/${fn}`);
 
 	//actually send the data
-	return resolve({ msg: { fileNames }, extra: '' });
+	return resolve({ msg: { max, fileNames }, extra: '' });
 });
 
 module.exports = {
 	apiNewsFiles,
-
-	//for testing
 	readFilenames,
 };

@@ -1,37 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Markdown from './markdown.jsx';
 
 import { setWarning } from '../../actions/warning.js';
 
-class NewsFeed extends React.Component {
+class NewsSelector extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			max: 0,
 			fileNames: [],
+			firstLines: [],
 		};
 
-		this.sendNewsRequest(10);
+		this.sendNewsRequest(-1);
 	}
 
 	render() {
-		//maps over the filenames and converts them into elements of a 'list'
-		return (
-			<div className='panel'>
-			{
-				this.state.fileNames.reverse().map(fn => {
-					return (
-						<div key={fn}>
-							<hr />
-							<Markdown url={fn} />
-						</div>
-					);
-				})
-			}
-			</div>
-		);
+		console.log(this.state);
+		return null;
 	}
 
 	sendNewsRequest(total) {
@@ -51,12 +38,12 @@ class NewsFeed extends React.Component {
 			}
 		};
 
-		xhr.open('GET', '/api/newsfiles', true);
+		xhr.open('GET', '/api/newsheaders', true);
 		xhr.send(JSON.stringify({
 			total
 		}));
 	}
-};
+}
 
 const mapStoreToProps = (store) => {
 	return {
@@ -70,6 +57,6 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-NewsFeed = connect(mapStoreToProps, mapDispatchToProps)(NewsFeed);
+NewsSelector = connect(mapStoreToProps, mapDispatchToProps)(NewsSelector);
 
-export default NewsFeed;
+export default NewsSelector;

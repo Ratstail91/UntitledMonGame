@@ -1,6 +1,7 @@
 import React from 'react';
 import Markdown from '../panels/markdown.jsx';
 import NewsFeed from '../panels/news_feed.jsx';
+import Button from '../button.jsx';
 
 class Home extends React.Component {
 	constructor(props) {
@@ -14,6 +15,7 @@ class Home extends React.Component {
 					<Markdown url={'content/home.md'} />
 					<h2>News Feed</h2>
 					<NewsFeed />
+					<Button to='/news' className='right'>See more news...</Button>
 				</div>
 			</div>
 		);

@@ -15,18 +15,15 @@ let { log } = require('./utilities/logging.js');
 const pool = require('./utilities/database.js');
 
 // Test connection
-pool.getConnection((err,connection)=>{
-	if (err) {
-		log(err);
-	} else {
-		log("Connection is established")
-		connection.release()
-	}
-	
+pool.getConnection((err, connection) => {
+	if (err) throw err;
+
+	log("Connection is established");
+	connection.release();
 })
 
 // Use express static as early as possible
-app.use('/', express.static(path.resolve(__dirname, '../public/'), {}));
+//app.use('/', express.static(path.resolve(__dirname, '../public/')));
 
 // Add body parser
 app.use(bodyParser.json());
@@ -34,6 +31,7 @@ app.use(bodyParser.json());
 //news
 const news = require('./news/news.js');
 app.get('/api/newsfiles', news.apiNewsFiles);
+app.get('/api/newsheaders', news.apiNewsHeaders);
 
 //accounts
 const accounts = require('./accounts/accounts.js');
@@ -50,6 +48,16 @@ const privacy = require('./privacy/privacy.js');
 app.post('/api/privacysettings', privacy.apiSettings);
 app.put('/api/privacysettings', privacy.apiUpdateSettings);
 app.delete('/api/account', privacy.apiDeleteAccount);
+
+//the app file(s)
+app.get('/*app.bundle.js', (req, res) => {
+	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl.split('/').pop()}`));
+});
+
+//source map (for development)
+app.get('/app.bundle.js.map', (req, res) => {
+	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl}`));
+});
 
 //fallback to index.html
 app.get('*', (req, res) => {

@@ -15,6 +15,8 @@ class Warning extends React.Component {
 			);
 		}
 
+		console.log('WARNING: ', this.props.text);
+
 		//render the warning
 		return (
 			<div className='warning'>

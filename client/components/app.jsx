@@ -73,6 +73,8 @@ class App extends React.Component {
 					<Switch>
 						<LazyRoute exact path='/' component={() => import('./pages/home.jsx')} />
 
+						<LazyRoute exact path='/news' component={() => import('./pages/news.jsx')} />
+
 						<LazyRoute path='/signup' component={() => import('./pages/signup.jsx')} />
 						<LazyRoute path='/login' component={() => import('./pages/login.jsx')} />
 						<LazyRoute path='/passwordchange' component={() => import('./pages/password_change.jsx')} />
