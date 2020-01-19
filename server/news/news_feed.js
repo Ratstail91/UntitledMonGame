@@ -7,7 +7,7 @@ let path = require('path');
 
 const { log } = require('../utilities/logging.js');
 
-const apiNewsFiles = (connection) => (req, res) => {
+const apiNewsFiles = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -21,13 +21,13 @@ const apiNewsFiles = (connection) => (req, res) => {
 	}
 
 	//pass the process along
-	return readFilenames(connection, req)
+	return readFilenames(req)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 }
 
-const readFilenames = (connection, req) => new Promise((resolve, reject) => {
+const readFilenames = (req) => new Promise((resolve, reject) => {
 	let fpath = path.join(__dirname, '..', '..', 'public', 'news');
 
 	let fileNames = fs.readdirSync(fpath);

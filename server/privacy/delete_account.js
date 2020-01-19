@@ -3,10 +3,11 @@ require('dotenv').config();
 
 //utilities
 const { log } = require('../utilities/logging.js');
+const pool = require("../utilities/database.js")
 
 const { validateSession } = require('../accounts/sessions.js');
 
-const apiDeleteAccount = (connection) => (req, res) => {
+const apiDeleteAccount = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -20,16 +21,16 @@ const apiDeleteAccount = (connection) => (req, res) => {
 	};
 
 	return new Promise((resolve, reject) => resolve({ fields: req.body }))
-		.then(validateSession(connection))
-		.then(markAccountForDeletion(connection))
+		.then(validateSession)
+		.then(markAccountForDeletion)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const markAccountForDeletion = (connection) => (fields) => new Promise(async (resolve, reject) => {
+const markAccountForDeletion = (fields) => new Promise(async (resolve, reject) => {
 	const query = 'UPDATE accounts SET deletionTime = now() + interval 2 day WHERE id = ?;';
-	return connection.query(query, [fields.id])
+	return pool.promise().query(query, [fields.id])
 		.then(() => resolve({ msg: 'Account marked for deletion', extra: [fields.id] }))
 		.catch(e => reject({ msg: 'markAccountForDeletion error', extra: e }))
 	;
@@ -37,13 +38,12 @@ const markAccountForDeletion = (connection) => (fields) => new Promise(async (re
 
 //delete the accounts marked for deletion
 const { CronJob } = require('cron');
-const { connection } = require('../utilities/database.js');
 
-let job = new CronJob('0 * * * * *', () => {
+let job = new CronJob('0 * * * * *', async () => {
 	const query = 'DELETE FROM accounts WHERE deletionTime < now();';
-	connection.query(query)
+	pool.promise().query(query)
 		.then(results => {
-			if (results.affectedRows > 0) {
+			if (results[0].affectedRows > 0) {
 				log('Accounts deleted');
 			}
 		})

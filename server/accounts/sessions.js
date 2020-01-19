@@ -6,8 +6,9 @@ const bcrypt = require('bcryptjs');
 const { log, logActivity } = require('../utilities/logging.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
+const pool = require("../utilities/database.js")
 
-const apiLogin = (connection) => (req, res) => {
+const apiLogin = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -21,16 +22,16 @@ const apiLogin = (connection) => (req, res) => {
 	}
 
 	return formidablePromise(req)
-		.then(validateFields(connection))
-		.then(validatePassword(connection))
-		.then(unmarkAccountForDeletion(connection))
-		.then(createNewSession(connection))
+		.then(validateFields)
+		.then(validatePassword)
+		.then(unmarkAccountForDeletion)
+		.then(createNewSession)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const validateFields = (connection) => ({ fields }) => new Promise( async (resolve, reject) => {
+const validateFields = ({ fields }) => new Promise( async (resolve, reject) => {
 	//validate email, username and password
 	if (!validateEmail(fields.email) || fields.password.length < 8) {
 		return reject({msg: 'Invalid login data', extra: [fields.email] }); //WARNING: NEVER LOG PASSWORDS. EVER.
@@ -39,8 +40,8 @@ const validateFields = (connection) => ({ fields }) => new Promise( async (resol
 	//check to see if the email has been banned
 	const bannedQuery = 'SELECT COUNT(*) as total FROM bannedEmails WHERE email = ?;';
 
-	const banned = await connection.query(bannedQuery, [fields.email])
-		.then(results => results[0].total > 0)
+	const banned = await pool.promise().query(bannedQuery, [fields.email])
+		.then(results => results[0][0].total > 0)
 	;
 
 	if (banned) {
@@ -50,11 +51,11 @@ const validateFields = (connection) => ({ fields }) => new Promise( async (resol
 	return resolve(fields);
 });
 
-const validatePassword = (connection) => (fields) => new Promise( async (resolve, reject) => {
+const validatePassword = (fields) => new Promise( async (resolve, reject) => {
 	//find this email's account information
 	const accountQuery = 'SELECT id, email, username, hash FROM accounts WHERE email = ?;';
-	const accountRecord = await connection.query(accountQuery, [fields.email])
-		.then(results => results[0])
+	const accountRecord = await pool.promise().query(accountQuery, [fields.email])
+		.then(results => results[0][0])
 		.catch(() => null)
 	;
 
@@ -70,21 +71,21 @@ const validatePassword = (connection) => (fields) => new Promise( async (resolve
 	;
 });
 
-const unmarkAccountForDeletion = (connection) => (fields) => new Promise(async (resolve, reject) => {
+const unmarkAccountForDeletion = (fields) => new Promise(async (resolve, reject) => {
 	//for setting things back to normal
 	const query = 'UPDATE accounts SET deletionTime = NULL WHERE id = ?;';
-	return connection.query(query, [fields.id])
+	return pool.promise().query(query, [fields.id])
 		.then(() => resolve(fields))
 		.catch(e => reject({ msg: 'unmarkAccountForDeletion error', extra: e }))
 	;
 });
 
-const createNewSession = (connection) => (accountRecord) => new Promise( async (resolve, reject) => {
+const createNewSession = (accountRecord) => new Promise( async (resolve, reject) => {
 	//create the new session
 	const rand = Math.floor(Math.random() * 2000000000); //TODO: uuid
 
 	const sessionQuery = 'INSERT INTO sessions (accountId, token) VALUES (?, ?);';
-	await connection.query(sessionQuery, [accountRecord.id, rand]);
+	await pool.promise().query(sessionQuery, [accountRecord.id, rand]);
 
 	const result = {
 		id: accountRecord.id,
@@ -95,27 +96,27 @@ const createNewSession = (connection) => (accountRecord) => new Promise( async (
 		extra: [accountRecord.email, rand]
 	};
 
-	logActivity(connection, accountRecord.id);
+	logActivity(accountRecord.id);
 
 	return resolve(result);
 });
 
-const apiLogout = (connection) => (req, res) => {
+const apiLogout = (req, res) => {
 	let deleteQuery = 'DELETE FROM sessions WHERE sessions.accountId = ? AND token = ?;'; //NOTE: The user now loses this access token
-	return connection.query(deleteQuery, [req.body.id, req.body.token])
+	return pool.promise().query(deleteQuery, [req.body.id, req.body.token])
 		.then(() => {
 			//logging
 			log('Logged out', req.body.id, req.body.token);
-			logActivity(connection, req.body.id);
+			logActivity(req.body.id);
 			res.end();
 		})
 	;
 };
 
 //reusable
-const validateSession = (connection) => ({ fields }) => new Promise(async (resolve, reject) => {
+const validateSession = ({ fields }) => new Promise(async (resolve, reject) => {
 	const query = 'SELECT * FROM sessions WHERE accountId = ? AND token = ?;';
-	return connection.query(query, [fields.id, fields.token])
+	return pool.promise().query(query, [fields.id, fields.token])
 		.then(results => results.length >= 0 ? resolve(fields) : reject({ msg: 'Invalid session', extra: fields }))
 		.catch(e => reject({ msg: 'validateSession error', extra: e }))
 	;

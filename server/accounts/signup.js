@@ -1,6 +1,3 @@
-//environment variables
-require('dotenv').config();
-
 //libraries
 const util = require('util');
 const bcrypt = require('bcryptjs');
@@ -11,8 +8,9 @@ const { log } = require('../utilities/logging.js');
 const { throttle, isThrottled } = require('../utilities/throttling.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
+const pool = require("../utilities/database.js")
 
-const apiSignup = (connection) => (req, res) => {
+const apiSignup = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -26,15 +24,15 @@ const apiSignup = (connection) => (req, res) => {
 	}
 
 	return formidablePromise(req)
-		.then(validateSignup(connection))
-		.then(saveToDatabase(connection))
+		.then(validateSignup)
+		.then(saveToDatabase)
 		.then(sendSignupEmail())
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const validateSignup = (connection) => ({ fields }) => new Promise(async (resolve, reject) => {
+const validateSignup = ({ fields }) => new Promise(async (resolve, reject) => {
 	//prevent too many clicks via throttle tool
 	if (isThrottled(fields.email)) {
 		return reject({msg: 'Signup throttled', extra: [fields.email]});
@@ -49,8 +47,8 @@ const validateSignup = (connection) => ({ fields }) => new Promise(async (resolv
 
 	//check to see if the email has been banned
 	const bannedQuery = 'SELECT COUNT(*) as total FROM bannedEmails WHERE email = ?;';
-	const banned = await connection.query(bannedQuery, [fields.email])
-		.then((results) => results[0].total > 0)
+	const banned = await pool.promise().query(bannedQuery, [fields.email])
+		.then((results) => results[0][0].total > 0)
 	;
 
 	//if the email has been banned
@@ -60,12 +58,12 @@ const validateSignup = (connection) => ({ fields }) => new Promise(async (resolv
 
 	//check if email, username already exists
 	const existsQuery = 'SELECT (SELECT COUNT(*) FROM accounts WHERE email = ?) AS email, (SELECT COUNT(*) FROM accounts WHERE username = ?) AS username;';
-	const exists = await connection.query(existsQuery, [fields.email, fields.username])
+	const exists = await pool.promise().query(existsQuery, [fields.email, fields.username])
 		.then((results) => new Promise((resolve, reject) => {
-			results[0].email === 0 ? resolve(results) : reject('Email already registered!')
+		  results[0][0].email === 0 ? resolve(results) : reject('Email already registered!')
 		} ))
 		.then((results) => new Promise((resolve, reject) => {
-			results[0].username === 0 ? resolve(results) : reject('Username already registered!')
+			results[0][0].username === 0 ? resolve(results) : reject('Username already registered!')
 		} ))
 		.catch(e => e)
 	;
@@ -78,7 +76,7 @@ const validateSignup = (connection) => ({ fields }) => new Promise(async (resolv
 	return resolve(fields);
 });
 
-const saveToDatabase = (connection) => (fields) => new Promise(async (resolve, reject) => {
+const saveToDatabase = (fields) => new Promise(async (resolve, reject) => {
 	const salt = await bcrypt.genSalt(11);
 	const hash = await bcrypt.hash(fields.password, salt);
 
@@ -87,7 +85,7 @@ const saveToDatabase = (connection) => (fields) => new Promise(async (resolve, r
 
 	//save the generated data to the signups table
 	const signupQuery = 'REPLACE INTO signups (email, username, hash, promotions, verify) VALUES (?, ?, ?, ?, ?);';
-	await connection.query(signupQuery, [fields.email, fields.username, hash, fields.promotions ? true : false, rand]);
+	await pool.promise().query(signupQuery, [fields.email, fields.username, hash, fields.promotions ? true : false, rand]);
 
 	return resolve({rand, fields});
 });

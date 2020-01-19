@@ -10,8 +10,9 @@ const { log } = require('../utilities/logging.js');
 const { throttle, isThrottled } = require('../utilities/throttling.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
+const pool = require("../utilities/database.js")
 
-const apiPasswordReset = (connection) => (req, res) => {
+const apiPasswordReset = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -25,16 +26,16 @@ const apiPasswordReset = (connection) => (req, res) => {
 	};
 
 	return formidablePromise(req)
-		.then(validateCredentials(connection))
-		.then(validateToken(connection))
-		.then(changePassword(connection))
-		.then(removeFromRecovery(connection))
+		.then(validateCredentials)
+		.then(validateToken)
+		.then(changePassword)
+		.then(removeFromRecovery)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const validateCredentials = (connection) => ({ fields }) => new Promise((resolve, reject) => {
+const validateCredentials = ({ fields }) => new Promise((resolve, reject) => {
 	if (isThrottled(fields.email)) {
 		return reject({msg: 'Reset throttled', extra: [fields.email]});
 	}
@@ -54,29 +55,29 @@ const validateCredentials = (connection) => ({ fields }) => new Promise((resolve
 	return resolve(fields);
 });
 
-const validateToken = (connection) => (fields) => new Promise((resolve, reject) => {
+const validateToken = (fields) => new Promise((resolve, reject) => {
 	//get the account from this email
 	const query = 'SELECT * FROM accounts WHERE email = ? AND id IN (SELECT passwordRecover.accountId FROM passwordRecover WHERE token = ?);';
-	return connection.query(query, [fields.email, fields.token])
-		.then(results => results.length === 1 ? resolve({ accountRecord: results[0], fields: fields }) : reject({ msg: 'Invalid reset data (incorrect parameters/database state)', extra: fields.email }))
+	return pool.promise().query(query, [fields.email, fields.token])
+		.then(results => results[0].length === 1 ? resolve({ accountRecord: results[0][0], fields: fields }) : reject({ msg: 'Invalid reset data (incorrect parameters/database state)', extra: fields.email }))
 		.catch(e => reject({ msg: 'validateToken error', extra: e }))
 	;
 });
 
-const changePassword = (connection) => ({ accountRecord, fields }) => new Promise(async (resolve, reject) => {
+const changePassword = ({ accountRecord, fields }) => new Promise(async (resolve, reject) => {
 	const salt = await bcrypt.genSalt(11);
 	const hash = await bcrypt.hash(fields.password, salt);
 
 	const updateQuery = 'UPDATE IGNORE accounts SET hash = ? WHERE id = ?;';
-	return connection.query(updateQuery, [hash, accountRecord.id])
-		.then(result => result.affectedRows > 0 ? resolve({ msg: 'Password updated successfully ', accountRecord: accountRecord }) : reject({msg: 'Failed to update password', extra: 'affectedRows == 0' }))
+	return pool.promise().query(updateQuery, [hash, accountRecord.id])
+		.then(result => result[0].affectedRows > 0 ? resolve({ msg: 'Password updated successfully ', accountRecord: accountRecord }) : reject({msg: 'Failed to update password', extra: 'affectedRows == 0' }))
 		.catch(e => reject({ msg: 'Failed to update password', extra: e }))
 	;
 });
 
-const removeFromRecovery = (connection) => ({ msg, accountRecord }) => new Promise((resolve, reject) => {
+const removeFromRecovery = ({ msg, accountRecord }) => new Promise((resolve, reject) => {
 	const query = 'DELETE FROM passwordRecover WHERE accountId = ?;';
-	return connection.query(query, [accountRecord.id])
+	return pool.promise().query(query, [accountRecord.id])
 		.then(result => resolve({ msg: msg, extra: '' }))
 		.catch(e => reject({ msg: 'removeFromRecovery error', extra: e }))
 	;

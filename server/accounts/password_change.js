@@ -8,8 +8,9 @@ const bcrypt = require('bcryptjs');
 //utilities
 const { log } = require('../utilities/logging.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
+const pool = require("../utilities/database.js")
 
-const apiPasswordChange = (connection) => (req, res) => {
+const apiPasswordChange = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -23,18 +24,18 @@ const apiPasswordChange = (connection) => (req, res) => {
 	};
 
 	return formidablePromise(req)
-		.then(validateAccount(connection))
-		.then(validatePassword(connection))
-		.then(changePassword(connection))
+		.then(validateAccount)
+		.then(validatePassword)
+		.then(changePassword)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const validateAccount = (connection) => ({ fields }) => new Promise(async (resolve, reject) => {
+const validateAccount = ({ fields }) => new Promise(async (resolve, reject) => {
 	const validateQuery = 'SELECT accounts.id AS id, accounts.hash AS hash, sessions.token AS token FROM accounts JOIN sessions ON accounts.id = sessions.accountId WHERE accounts.id = ?;';
-	const accountRecord = await connection.query(validateQuery, [fields.id])
-		.then(results => results[0])
+	const accountRecord = await pool.promise().query(validateQuery, [fields.id])
+		.then(results => results[0][0])
 		.catch(() => reject({ msg: 'Failed to validate account' }))
 	;
 
@@ -46,7 +47,7 @@ const validateAccount = (connection) => ({ fields }) => new Promise(async (resol
 	;
 });
 
-const validatePassword = (connection) => (fields) => new Promise((resolve, reject) => {
+const validatePassword = (fields) => new Promise((resolve, reject) => {
 	if (fields.newpassword.length < 8 || fields.newpassword !== fields.retype) {
 		return reject({msg: 'The new password is invalid', extra: [fields.email, fields.username]});
 	}
@@ -54,13 +55,13 @@ const validatePassword = (connection) => (fields) => new Promise((resolve, rejec
 	return resolve(fields);
 });
 
-const changePassword = (connection) => (fields) => new Promise(async (resolve, reject) => {
+const changePassword = (fields) => new Promise(async (resolve, reject) => {
 	const salt = await bcrypt.genSalt(11);
 	const hash = await bcrypt.hash(fields.newpassword, salt);
 
 	const updateQuery = 'UPDATE IGNORE accounts SET hash = ? WHERE id = ?;';
-	return connection.query(updateQuery, [hash, fields.id])
-		.then(result => result.affectedRows > 0 ? resolve({ msg: 'Password updated successfully ', extra: '' }) : reject({msg: 'Failed to update password', extra: 'affectedRows == 0' }))
+	return pool.promise().query(updateQuery, [hash, fields.id])
+		.then(result => result[0].affectedRows > 0 ? resolve({ msg: 'Password updated successfully ', extra: '' }) : reject({msg: 'Failed to update password', extra: 'affectedRows == 0' }))
 		.catch(e => reject({ msg: 'Failed to update password', extra: e }))
 	;
 });
