@@ -25,7 +25,7 @@ class NewsFeed extends React.Component {
 					return (
 						<div key={fn}>
 							<hr />
-							<Markdown url={fn} />
+							<Markdown url={`/content/news/${fn}`} />
 						</div>
 					);
 				})
@@ -51,10 +51,8 @@ class NewsFeed extends React.Component {
 			}
 		};
 
-		xhr.open('GET', '/api/newsfiles', true);
-		xhr.send(JSON.stringify({
-			total
-		}));
+		xhr.open('GET', `/api/newsfiles?total=${total}`, true);
+		xhr.send();
 	}
 };
 

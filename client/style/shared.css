@@ -38,6 +38,14 @@ div.break {
 	padding-bottom: .5em;
 }
 
+div.gap {
+	margin-left: .25em;
+}
+
+div.gap {
+	margin-left: .5em;
+}
+
 ul {
 	list-style-type: disc;
 	list-style-position: inside;

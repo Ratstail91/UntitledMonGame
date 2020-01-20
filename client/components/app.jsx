@@ -4,7 +4,7 @@ import Loadable from 'react-loadable';
 
 //styling
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../style/shared.css'
+import '../style/shared.css';
 
 //warning manipulation
 import { connect } from 'react-redux';
@@ -74,6 +74,7 @@ class App extends React.Component {
 						<LazyRoute exact path='/' component={() => import('./pages/home.jsx')} />
 
 						<LazyRoute exact path='/news' component={() => import('./pages/news.jsx')} />
+						<LazyRoute exact path='/news/:article' component={() => import('./pages/news.jsx')} />
 
 						<LazyRoute path='/signup' component={() => import('./pages/signup.jsx')} />
 						<LazyRoute path='/login' component={() => import('./pages/login.jsx')} />

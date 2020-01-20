@@ -1,17 +1,16 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-import queryString from 'query-string';
+import { withRouter } from 'react-router-dom';
 import Button from '../button.jsx';
 
 import NewsSelector from '../panels/news_selector.jsx';
-import Markdown from '../panels/news_selector.jsx';
+import Markdown from '../panels/markdown.jsx';
 
 class News extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			params: queryString.parse(props.location.search)
+			params: this.props.match.params
 		};
 	}
 
@@ -20,15 +19,21 @@ class News extends React.Component {
 			return (
 				<div className='page'>
 					<NewsSelector />
+					<div className='panel' style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+						<Button to='/' className='right' style={{maxWidth: '300px'}}>Return Home</Button>
+					</div>
 				</div>
 			);
 		}
 
 		return (
 			<div className='page'>
-				<Markdown url={this.state.params.article} />
-				<Button to='/news'>Back To News</Button>
-				<Button to='/'>Return Home</Button>
+				<Markdown url={`/content/news/${this.state.params.article}`} />
+				<div className='panel' style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+					<Button to='/news' className='right' style={{maxWidth: '300px'}}>Back To News</Button>
+					<div className='break' />
+					<Button to='/' className='right' style={{maxWidth: '300px'}}>Return Home</Button>
+				</div>
 			</div>
 		);
 	}

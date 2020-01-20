@@ -15,7 +15,9 @@ class Home extends React.Component {
 					<Markdown url={'content/home.md'} />
 					<h2>News Feed</h2>
 					<NewsFeed />
-					<Button to='/news' className='right'>See more news...</Button>
+					<div className='panel' style={{justifyContent: 'flex-end', alignItems:'flex-end'}}>
+						<Button to='/news' className='right' style={{maxWidth:'300px'}}>See more news...</Button>
+					</div>
 				</div>
 			</div>
 		);

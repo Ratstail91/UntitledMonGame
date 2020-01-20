@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { setWarning } from '../../actions/warning.js';
@@ -17,8 +18,22 @@ class NewsSelector extends React.Component {
 	}
 
 	render() {
-		console.log(this.state);
-		return null;
+		let lines = [];
+
+		for (let i = 0; i < this.state.max; i++) {
+			lines.push(
+				<div key={this.state.fileNames[i]}>
+					<hr />
+					<Link to={`/news/${this.state.fileNames[i]}`}>{this.state.firstLines[i]}</Link>
+				</div>
+			);
+		}
+
+		return (
+			<div className='panel'>
+				{lines}
+			</div>
+		);
 	}
 
 	sendNewsRequest(total) {
@@ -38,10 +53,8 @@ class NewsSelector extends React.Component {
 			}
 		};
 
-		xhr.open('GET', '/api/newsheaders', true);
-		xhr.send(JSON.stringify({
-			total
-		}));
+		xhr.open('GET', `/api/newsheaders?total=${total}`, true);
+		xhr.send();
 	}
 }
 
@@ -59,4 +72,4 @@ const mapDispatchToProps = (dispatch) => {
 
 NewsSelector = connect(mapStoreToProps, mapDispatchToProps)(NewsSelector);
 
-export default NewsSelector;
+export default withRouter(NewsSelector);

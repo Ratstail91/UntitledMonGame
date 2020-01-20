@@ -22,9 +22,6 @@ pool.getConnection((err, connection) => {
 	connection.release();
 })
 
-// Use express static as early as possible
-//app.use('/', express.static(path.resolve(__dirname, '../public/')));
-
 // Add body parser
 app.use(bodyParser.json());
 
@@ -48,6 +45,10 @@ const privacy = require('./privacy/privacy.js');
 app.post('/api/privacysettings', privacy.apiSettings);
 app.put('/api/privacysettings', privacy.apiUpdateSettings);
 app.delete('/api/account', privacy.apiDeleteAccount);
+
+//static directories
+app.use('/content', express.static(path.resolve(__dirname + '/../public/content')) );
+app.use('/content/news', express.static(path.resolve(__dirname + '/../public/content/news')) );
 
 //the app file(s)
 app.get('/*app.bundle.js', (req, res) => {

@@ -20,7 +20,9 @@ class Header extends React.Component {
 				<Link to='/'><h1>Egg Trainer</h1></Link>
 				<div className='navbar'>
 					<LogoutButton onClick={() => this.props.history.push('/')} />
+					<div className='gap' />
 					<Button to='/passwordchange'>Password</Button>
+					<div className='gap' />
 					<Button to='/privacysettings'>Privacy</Button>
 				</div>
 			</header>
@@ -33,7 +35,9 @@ class Header extends React.Component {
 				<Link to='/'><h1>Egg Trainer</h1></Link>
 				<div className='navbar'>
 					<Button to='/login'>Login</Button>
+					<div className='gap' />
 					<Button to='/signup'>Signup</Button>
+					<div className='gap' />
 					<Button to='/passwordrecover'>Recover</Button>
 				</div>
 			</header>

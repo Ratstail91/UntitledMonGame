@@ -7,19 +7,22 @@ module.exports = env => {
 		output: {
 			path: __dirname + '/public/',
 			filename: 'app.bundle.js',
-			sourceMapFilename: 'app.bundle.js.map'
+			sourceMapFilename: 'app.bundle.js.map',
+			publicPath: '/'
 		},
 		devServer: {
 			contentBase: path.join(__dirname, 'public'),
 			compress: false,
 			port: 3001,
 			proxy: {
-				'/api/': 'http://localhost:3000/'
+				'/api/': 'http://localhost:3000/',
+				'/news/': 'http://localhost:3000/'
 			},
 			overlay: {
 				errors: true
 			},
-			host: '0.0.0.0'
+			host: '0.0.0.0',
+			historyApiFallback: true
 		},
 		devtool: 'source-map',
 		module: {

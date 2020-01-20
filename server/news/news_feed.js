@@ -12,13 +12,13 @@ const apiNewsFiles = (req, res) => {
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
 		res.end();
-	}
+	};
 
 	const handleSuccess = (obj) => {
 		log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 		res.end();
-	}
+	};
 
 	//pass the process along
 	return readFilenames(req)
@@ -28,19 +28,18 @@ const apiNewsFiles = (req, res) => {
 }
 
 const readFilenames = (req) => new Promise((resolve, reject) => {
-	const fpath = path.join(__dirname, '..', '..', 'public', 'news');
+	const fpath = path.join(__dirname, '..', '..', 'public', 'content', 'news');
 
 	let fileNames = fs.readdirSync(fpath);
 
 	//set the maximum
-	let max = req.body.total !== -1 ? parseInt(req.body.total) || 99 : 9999;
-	if (isNaN(max) || max > fileNames.total) {
-		max = fileNames.total;
+	let max = parseInt(req.query.total);
+	if (isNaN(max) || max > fileNames.total || max <= 0) {
+		max = fileNames.length;
 	}
 
 	//process the result
 	fileNames = fileNames.slice(-1 * max);
-	fileNames = fileNames.map(fn => `/news/${fn}`);
 
 	//actually send the data
 	return resolve({ msg: { max, fileNames }, extra: '' });

@@ -31,11 +31,19 @@ const apiNewsHeaders = (req, res) => {
 }
 
 const readFileHeaders = ({ msg }) => new Promise((resolve, reject) => {
-	const fpath = path.join(__dirname, '..', '..', 'public');
+	const fpath = path.join(__dirname, '..', '..', 'public', 'content', 'news');
 
 	const firstLinePromises = msg.fileNames.map( fn => firstline(path.join(fpath, fn)) );
 
+	const firstNot = (str, char) => {
+		let i = 0;
+		while (str[i] && str[i] == char) i++;
+		return i;
+	};
+
 	return Promise.all(firstLinePromises)
+		.then(firstlines => firstlines.map( fl => fl.slice(firstNot(fl, '#')) ))
+		.then(firstlines => firstlines.map( fl => fl.trim() ))
 		.then(firstLines => resolve({ msg: { ...msg, firstLines }, extra: '' }))
 		.catch(e => reject({ msg: 'readFileHeaders error', extra: e }))
 	;
