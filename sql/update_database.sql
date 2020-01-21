@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS accounts (
 	id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY UNIQUE,
 	td TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
 
+	accountType ENUM ('administrator', 'moderator', 'alpha', 'beta', 'normal') DEFAULT 'normal',
+
 	email VARCHAR(320) UNIQUE,
 	username VARCHAR(100) UNIQUE,
 	hash VARCHAR(100),
@@ -53,3 +55,13 @@ CREATE TABLE IF NOT EXISTS bannedEmails (
 	#TODO: banned for a specific timespan
 );
 
+#signup reward system
+CREATE TABLE IF NOT EXISTS rewardCodes (
+	id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY UNIQUE,
+	td TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+
+	code INTEGER UNSIGNED NOT NULL UNIQUE,
+	used BOOLEAN DEFAULT FALSE,
+
+	flag VARCHAR(100) NOT NULL
+);
