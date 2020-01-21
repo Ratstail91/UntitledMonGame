@@ -41,7 +41,7 @@ const validateSignup = ({ fields }) => new Promise(async (resolve, reject) => {
 	throttle(fields.email);
 
 	//validate email, username and password
-	if (!validateEmail(fields.email) || fields.username.length < 4 || fields.username.length > 100 || fields.password.length < 8 || fields.password !== fields.retype) {
+	if (!validateEmail(fields.email) || fields.username.length < 4 || fields.username.length > 100 || fields.password.length < 8 || fields.password !== fields.retype || fields.code.length > 100 || (fields.referral && fields.referral.length > 100)) {
 		return reject({msg: 'Invalid signup data', extra: [fields.email, fields.username]});
 	}
 
@@ -84,8 +84,8 @@ const saveToDatabase = (fields) => new Promise(async (resolve, reject) => {
 	const rand = Math.floor(Math.random() * 2000000000);
 
 	//save the generated data to the signups table
-	const signupQuery = 'REPLACE INTO signups (email, username, hash, promotions, verify) VALUES (?, ?, ?, ?, ?);';
-	await pool.promise().query(signupQuery, [fields.email, fields.username, hash, fields.promotions ? true : false, rand]);
+	const signupQuery = 'REPLACE INTO signups (email, username, hash, promotions, code, referral, verify) VALUES (?, ?, ?, ?, ?, ?, ?);';
+	await pool.promise().query(signupQuery, [fields.email, fields.username, hash, fields.promotions ? true : false, fields.code, !!fields.referral ? fields.referral : null, rand]);
 
 	return resolve({rand, fields});
 });

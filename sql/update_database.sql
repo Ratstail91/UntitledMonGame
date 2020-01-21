@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS signups (
 	username VARCHAR(100) UNIQUE,
 	hash VARCHAR(100),
 	promotions BOOLEAN DEFAULT FALSE,
+	code VARCHAR(100),
+	referral VARCHAR(100),
 
 	verify INTEGER DEFAULT 0
 );

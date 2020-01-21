@@ -1,5 +1,7 @@
 const { log } = require('../utilities/logging.js');
-const pool = require("../utilities/database.js")
+const pool = require("../utilities/database.js");
+
+const { grantSignupRewards } = require('./signup_rewards.js');
 
 const apiVerify = async (req, res) => {
 	//handle all outcomes
@@ -18,6 +20,7 @@ const apiVerify = async (req, res) => {
 	return getInformationFromDatabase(req)
 		.then(verifyToken(req))
 		.then(createAccount)
+		.then(grantSignupRewards)
 		.then(() => handleSuccess({msg: log('<p>Verification succeeded!</p><p><a href="/">Return Home</a></p>'), extra: [req.query.email]})) //TODO: prettier success page
 		.catch(handleRejection)
 	;
@@ -58,11 +61,10 @@ const createAccount = (record) => new Promise( async (resolve, reject) => {
 		let deleteQuery = 'DELETE FROM signups WHERE email = ?;';
 		await pool.promise().query(deleteQuery, [record.email]);
 
+		resolve(record);
+
 		log('Account created', record.email);
 	}, 3000); //3 second delay on account creation
-
-	//skip out and leave setTimeout to do it's thing
-	resolve();
 });
 
 module.exports = {

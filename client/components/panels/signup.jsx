@@ -15,7 +15,8 @@ class Signup extends React.Component {
 			username: '',
 			password: '',
 			retype: '',
-			promotions: false
+			code: props.code,
+			promotions: false,
 		};
 	}
 
@@ -45,8 +46,13 @@ class Signup extends React.Component {
 						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
+					<div>
+						<label htmlFor='code'>Bonus Code (Optional):</label>
+						<input id='code' type='text' name='code' value={this.state.code} onChange={this.updateCode.bind(this)} />
+					</div>
+
 					<div className='checkboxContainer'>
-						<label htmlFor='promotions' style={{marginLeft: '32px'}}>Allow Emails:</label>
+						<label htmlFor='promotions' style={{paddingLeft: '20px'}}>Allow Promo Emails:</label>
 						<input id='promotions' type='checkbox' name='promotions' value={this.state.promotions} onChange={this.updatePromotions.bind(this)} className='checkbox' />
 					</div>
 
@@ -66,6 +72,10 @@ class Signup extends React.Component {
 		//build the XHR
 		let form = e.target;
 		let formData = new FormData(form);
+
+		if (this.props.referral) {
+			formData.append('referral', this.props.referral);
+		}
 
 		let xhr = new XMLHttpRequest();
 
@@ -120,7 +130,7 @@ class Signup extends React.Component {
 
 	//text controllers
 	clearInput() {
-		this.setState({ email: '', username: '', password: '', retype: '', promotions: false });
+		this.setState({ email: '', username: '', password: '', retype: '', promotions: false, code: '' });
 	}
 
 	updateEmail(evt) {
@@ -137,6 +147,10 @@ class Signup extends React.Component {
 
 	updateRetype(evt) {
 		this.setState({ retype: evt.target.value });
+	}
+
+	updateCode(evt) {
+		this.setState({ code: evt.target.value });
 	}
 
 	updatePromotions(evt) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 //panels
 import SignupPanel from '../panels/signup.jsx';
@@ -9,11 +10,11 @@ import SignupPanel from '../panels/signup.jsx';
 class Signup extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			signedUp: '' //the signup message from the server
-		}
 
-		//TODO: referral links
+		this.state = {
+			signedUp: '', //the signup message from the server
+			search: queryString.parse(this.props.location.search),
+		};
 	}
 
 	componentDidMount() {
@@ -27,7 +28,7 @@ class Signup extends React.Component {
 
 		if (!this.state.signedUp) {
 			Panel = () => {
-				return (<SignupPanel onSuccess={msg => this.setState({signedUp: msg}) } />);
+				return (<SignupPanel onSuccess={msg => this.setState({signedUp: msg}) } code={this.state.search.code} referral={this.state.search.referral} />);
 			}
 		} else {
 			Panel = () => {
@@ -38,6 +39,7 @@ class Signup extends React.Component {
 		return (
 			<div className='page constrained'>
 				<Panel />
+				<div className='break' />
 				<Button href='/' className='centered'>Return Home</Button>
 				<div className='break' />
 				<p className='centered'><em>(Remember to verify your email!)</em></p>
