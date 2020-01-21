@@ -27,6 +27,10 @@
     "url": "https://github.com/Ratstail91/EggTrainer/issues"
   },
   "homepage": "https://github.com/Ratstail91/EggTrainer#readme",
+  "browserslist": [
+    "Chrome >= 60",
+    "Firefox >= 70"
+  ],
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",

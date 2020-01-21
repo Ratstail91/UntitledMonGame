@@ -15,6 +15,8 @@ import Warning from './panels/warning.jsx';
 import Header from './panels/header.jsx';
 import Footer from './panels/footer.jsx';
 
+import MarkdownWrapper from './pages/markdown_wrapper.jsx';
+
 //lazy route loading (with error handling)
 let LazyRoute = (lazyProps) => {
 	const component = Loadable({
@@ -83,6 +85,8 @@ class App extends React.Component {
 						<LazyRoute path='/passwordreset' component={() => import('./pages/password_reset.jsx')} />
 
 						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings.jsx')} />
+
+						<LazyRoute path='/privacypolicy' component={async () => () => <MarkdownWrapper url={'/content/privacy_policy.md'} />} />
 
 						<LazyRoute path='*' component={() => import('./pages/page_not_found.jsx')} />
 					</Switch>
