@@ -8,7 +8,7 @@ const { log } = require('../utilities/logging.js');
 const { throttle, isThrottled } = require('../utilities/throttling.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
-const pool = require("../utilities/database.js")
+const pool = require("../utilities/database.js");
 
 const apiSignup = async (req, res) => {
 	//handle all outcomes

@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS sessions (
 
 	accountId INTEGER UNSIGNED,
 	token INTEGER DEFAULT 0,
-	#TODO: time limit
 
 	CONSTRAINT FOREIGN KEY fk_accountId(accountId) REFERENCES accounts(id) ON UPDATE CASCADE ON DELETE CASCADE
 );

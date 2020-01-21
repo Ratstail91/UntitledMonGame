@@ -14,6 +14,6 @@ const logActivity = (id) => {
 };
 
 module.exports = {
-	log: log,
-	logActivity: logActivity,
+	log,
+	logActivity,
 };

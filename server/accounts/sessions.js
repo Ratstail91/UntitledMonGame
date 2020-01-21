@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const { log, logActivity } = require('../utilities/logging.js');
 const validateEmail = require('../utilities/validate_email.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
-const pool = require("../utilities/database.js")
+const pool = require("../utilities/database.js");
 
 const apiLogin = async (req, res) => {
 	//handle all outcomes
@@ -96,7 +96,7 @@ const createNewSession = (accountRecord) => new Promise( async (resolve, reject)
 		extra: [accountRecord.email, rand]
 	};
 
-	logActivity(accountRecord.id);
+	logActivity(result.id);
 
 	return resolve(result);
 });
@@ -108,6 +108,7 @@ const apiLogout = (req, res) => {
 			//logging
 			log('Logged out', req.body.id, req.body.token);
 			logActivity(req.body.id);
+
 			res.end();
 		})
 	;
@@ -117,10 +118,22 @@ const apiLogout = (req, res) => {
 const validateSession = ({ fields }) => new Promise(async (resolve, reject) => {
 	const query = 'SELECT * FROM sessions WHERE accountId = ? AND token = ?;';
 	return pool.promise().query(query, [fields.id, fields.token])
-		.then(results => results.length >= 0 ? resolve(fields) : reject({ msg: 'Invalid session', extra: fields }))
+		.then(results => results[0].length > 0 ? fields : reject({ msg: 'Session Timed Out', extra: fields }))
+		.then(fields => { logActivity(fields.id); resolve(fields); })
 		.catch(e => reject({ msg: 'validateSession error', extra: e }))
 	;
 });
+
+//delete the sessions for inactive accounts
+const { CronJob } = require('cron');
+
+const job = new CronJob('0 0 0 * * *', async () => {
+	const query = 'DELETE FROM sessions WHERE accountId IN (SELECT id FROM accounts WHERE lastActivityTime < NOW() - interval 2 days);';
+	pool.promise().query(query)
+		.catch(e => log('Session deletion error: ', e));
+});
+
+job.start();
 
 module.exports = {
 	//public API

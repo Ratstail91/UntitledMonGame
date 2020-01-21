@@ -39,7 +39,7 @@ const markAccountForDeletion = (fields) => new Promise(async (resolve, reject) =
 //delete the accounts marked for deletion
 const { CronJob } = require('cron');
 
-let job = new CronJob('0 * * * * *', async () => {
+const job = new CronJob('0 * * * * *', async () => {
 	const query = 'DELETE FROM accounts WHERE deletionTime < now();';
 	pool.promise().query(query)
 		.then(results => {

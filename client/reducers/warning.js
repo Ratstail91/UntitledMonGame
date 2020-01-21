@@ -1,7 +1,8 @@
 import { SET_WARNING } from "../actions/warning.js";
 
 const initialStore = {
-	text: ''
+	text: '',
+	//TODO: HTTP error codes
 };
 
 export const warningReducer = (store = initialStore, action) => {
