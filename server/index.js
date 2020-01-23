@@ -25,6 +25,10 @@ pool.getConnection((err, connection) => {
 // Add body parser
 app.use(bodyParser.json());
 
+//analytics
+const analytics = require('./analytics/analytics.js');
+analytics.runDailySnapshots();
+
 //news
 const news = require('./news/news.js');
 app.get('/api/newsfiles', news.apiNewsFiles);

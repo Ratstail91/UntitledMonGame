@@ -15,7 +15,7 @@ class Signup extends React.Component {
 			username: '',
 			password: '',
 			retype: '',
-			code: props.code,
+			code: props.code || '',
 			promotions: false,
 		};
 	}
