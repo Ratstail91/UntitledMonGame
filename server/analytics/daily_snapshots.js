@@ -3,7 +3,7 @@ const pool = require("../utilities/database.js");
 const { CronJob } = require('cron');
 
 const runDailySnapshots = () => {
-	const dailyJob = new CronJob('* * * * * *', () => {
+	const dailyJob = new CronJob('0 0 0 * * *', () => {
 		const query = 'INSERT INTO dailySnapshots \
 		(totalAccounts, activeAccounts, totalProfiles, activeProfiles) VALUES (\
 		(SELECT COUNT(*) FROM accounts), \
