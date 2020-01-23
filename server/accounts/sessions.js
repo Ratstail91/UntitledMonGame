@@ -25,6 +25,7 @@ const apiLogin = async (req, res) => {
 		.then(validateFields)
 		.then(validatePassword)
 		.then(unmarkAccountForDeletion)
+		.then(checkAccountType)
 		.then(createNewSession)
 		.then(handleSuccess)
 		.catch(handleRejection)
@@ -71,13 +72,29 @@ const validatePassword = (fields) => new Promise( async (resolve, reject) => {
 	;
 });
 
-const unmarkAccountForDeletion = (fields) => new Promise(async (resolve, reject) => {
+const unmarkAccountForDeletion = (accountRecord) => new Promise(async (resolve, reject) => {
 	//for setting things back to normal
 	const query = 'UPDATE accounts SET deletionTime = NULL WHERE id = ?;';
-	return pool.promise().query(query, [fields.id])
-		.then(() => resolve(fields))
+	return pool.promise().query(query, [accountRecord.id])
+		.then(() => resolve(accountRecord))
 		.catch(e => reject({ msg: 'unmarkAccountForDeletion error', extra: e }))
 	;
+});
+
+const checkAccountType = (accountRecord) => new Promise(async (resolve, reject) => {
+	//accountType ENUM ('administrator', 'moderator', 'alpha', 'beta', 'normal') DEFAULT 'normal',
+	const query = 'SELECT accountType FROM accounts WHERE id = ?;';
+	const accountType = (await pool.promise().query(query, [accountRecord.id]))[0][0].accountType;
+
+	switch(accountType) {
+		case "administrator":
+		case "moderator":
+		case "alpha":
+			return resolve(accountRecord);
+	}
+
+	//TODO: update this message laer
+	return reject({ msg: 'The game isn\'t ready yet, sorry.\nContact krgamestudios@gmail.com for an alpha account.', extra: accountType });
 });
 
 const createNewSession = (accountRecord) => new Promise( async (resolve, reject) => {
