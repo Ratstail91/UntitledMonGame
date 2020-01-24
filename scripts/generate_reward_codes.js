@@ -5,8 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 const total = 50;
-const type = 'beta';
-const randomQuery = 'INSERT INTO rewardCodes (flag, code) VALUES (?, ((SELECT FLOOR(RAND() * 4000000000) AS rand WHERE "rand" NOT IN (SELECT code FROM (SELECT * FROM rewardCodes) AS rc))));';
+const type = 'null';
+const randomQuery = 'INSERT INTO rewardCodes (flag, code) VALUES (?, (SELECT FLOOR(RAND() * 4000000000)));';
 const fetchQuery = 'SELECT code FROM rewardCodes WHERE used = FALSE;';
 
 (async () => {

@@ -27,7 +27,7 @@ const grantSignupRewards = (record) => new Promise(async (resolve, reject) => {
 	}
 
 	//mark this code as used
-	const codeQuery = 'UPDATE rewardcodes SET used = TRUE WHERE id = ?;';
+	const codeQuery = 'UPDATE rewardCodes SET used = TRUE WHERE id = ?;';
 	await pool.promise().execute(codeQuery, [flag[0][0].id]);
 
 	return resolve();

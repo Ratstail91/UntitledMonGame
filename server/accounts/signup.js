@@ -93,7 +93,7 @@ const saveToDatabase = (fields) => new Promise(async (resolve, reject) => {
 const sendSignupEmail = () => ({rand, fields}) => new Promise(async (resolve, reject) => {
 	const send = util.promisify(sendmail);
 
-	const addr = `http://${process.env.WEB_ADDRESS}/api/verify?email=${fields.email}&verify=${rand}`
+	const addr = `https://${process.env.WEB_ADDRESS}/api/verify?email=${fields.email}&verify=${rand}`
 	const msg = 'Hello! Please visit the following address to verify your account: ';
 
 	await send({
