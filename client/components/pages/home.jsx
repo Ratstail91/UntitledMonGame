@@ -17,6 +17,7 @@ class Home extends React.Component {
 					<NewsFeed />
 					<div className='panel' style={{justifyContent: 'flex-end', alignItems:'flex-end'}}>
 						<Button to='/news' className='right' style={{maxWidth:'300px'}}>See more news...</Button>
+						<div className='break' />
 					</div>
 				</div>
 			</div>

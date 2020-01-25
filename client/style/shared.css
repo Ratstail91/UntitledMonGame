@@ -105,7 +105,7 @@ footer {
 	display: flex;
 	flex-direction: column;
 	padding: 0 10px;
-	min-height: calc(100vh - 9.5em);
+	min-height: calc(100vh - 8.5em);
 	margin: 0 10%;
 }
 
