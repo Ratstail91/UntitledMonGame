@@ -56,6 +56,7 @@ app.delete('/api/account', privacy.apiDeleteAccount);
 //static directories
 app.use('/content', express.static(path.resolve(__dirname + '/../public/content')) );
 app.use('/content/news', express.static(path.resolve(__dirname + '/../public/content/news')) );
+app.use('/content/img/', express.static(path.resolve(__dirname + '/../public/content/img')) );
 
 //the app file(s)
 app.get('/*app.bundle.js', (req, res) => {
