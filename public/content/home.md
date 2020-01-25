@@ -10,3 +10,11 @@ You can also breed monsters to produce new eggs, some of which are extremely rar
 
 What will you hatch next?
 
+<hr />
+
+**Please send bug reports here**: [krgamestudios@gmail.com](mailto:krgamestudios@gmail.com)
+
+Join the community here: https://discord.gg/FQmz8TN
+
+Support the game's development here: https://www.patreon.com/krgamestudios
+

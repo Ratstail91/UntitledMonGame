@@ -1,4 +1,3 @@
-//element['attacker']['defender'] = 0 | 0.5 | 1 | 2 ; undefined = 1
 {
 	"fire": {
 		"water": 0.5, "grass": 2, "dark": 2
@@ -10,10 +9,10 @@
 		"fire": 0.5, "water": 2, "fae": 2
 	},
 	"psychic": {
-		"fighting": 2, "metal": 0.5,
+		"fighting": 2, "metal": 0.5
 	},
 	"fighting": {
-		"psychic": 2, "fae": 0.5,
+		"psychic": 2, "fae": 0.5
 	},
 	"metal": {
 		"fae": 2, "water": 0.5
@@ -29,5 +28,5 @@
 	},
 	"dragon": {
 		"fire": 2, "psychic": 2, "fae": 0.5, "dark": 0.5
-	},
+	}
 }

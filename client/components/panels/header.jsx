@@ -17,7 +17,7 @@ class Header extends React.Component {
 	renderLoggedIn() {
 		return (
 			<header className='page-header centered'>
-				<Link to='/'><h1>Egg Trainer</h1></Link>
+				<Link to='/'><span className='centered'><strong><h1>Egg Trainer</h1></strong></span></Link>
 				<div className='navbar'>
 					<Button to='/yourprofile'>Profile</Button>
 					<div className='gap' />
@@ -34,7 +34,7 @@ class Header extends React.Component {
 	renderLoggedOut() {
 		return (
 			<header className='page-header centered'>
-				<Link to='/'><h1>Egg Trainer</h1></Link>
+				<Link to='/'><span className='centered'><strong><h1>Egg Trainer</h1></strong></span></Link>
 				<div className='navbar'>
 					<Button to='/login'>Login</Button>
 					<div className='gap' />

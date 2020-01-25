@@ -147,7 +147,6 @@ CREATE TABLE IF NOT EXISTS creatureEggs (
 	profileId INTEGER UNSIGNED,
 
 	species VARCHAR(100) NOT NULL,
-	element VARCHAR(100) NOT NULL,
 
 	CONSTRAINT FOREIGN KEY fk_creatureEggs_profiles(profileId) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE
 );

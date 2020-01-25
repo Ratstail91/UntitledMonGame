@@ -34,6 +34,10 @@ const news = require('./news/news.js');
 app.get('/api/newsfiles', news.apiNewsFiles);
 app.get('/api/newsheaders', news.apiNewsHeaders);
 
+//public info about the game
+const gameplay = require('./gameplay/gameplay.js');
+app.get('/api/creature', gameplay.apiCreature);
+
 //accounts
 const accounts = require('./accounts/accounts.js');
 app.post('/api/signup', accounts.apiSignup);
@@ -46,6 +50,7 @@ app.post('/api/passwordreset', accounts.apiPasswordReset);
 
 const profiles = require('./profiles/profiles.js');
 app.post('/api/yourprofile', profiles.apiYourProfile);
+app.post('/api/youreggs', profiles.apiYourEggs);
 
 //privacy
 const privacy = require('./privacy/privacy.js');

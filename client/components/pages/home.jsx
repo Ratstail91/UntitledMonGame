@@ -13,7 +13,7 @@ class Home extends React.Component {
 			<div className='page'>
 				<div className='panel'>
 					<Markdown url={'content/home.md'} />
-					<h2>News Feed</h2>
+					<span className='centered'><strong><h1>News Feed</h1></strong></span>
 					<NewsFeed />
 					<div className='panel' style={{justifyContent: 'flex-end', alignItems:'flex-end'}}>
 						<Button to='/news' className='right' style={{maxWidth:'300px'}}>See more news...</Button>

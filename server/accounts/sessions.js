@@ -27,6 +27,7 @@ const apiLogin = async (req, res) => {
 		.then(unmarkAccountForDeletion)
 		.then(checkAccountType)
 		.then(createNewSession)
+		.then(createNewProfile)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
@@ -111,6 +112,16 @@ const createNewSession = (accountRecord) => new Promise( async (resolve, reject)
 	logActivity(accountRecord.id);
 
 	return resolve(result);
+});
+
+const createNewProfile = (accountRecord) => new Promise(async (resolve, reject) => {
+	const total = (await pool.promise().query('SELECT COUNT(*) AS total FROM profiles WHERE accountId = ?;', accountRecord.id))[0][0].total;
+
+	if (!total) {
+		await pool.promise().query('INSERT INTO profiles (accountId) VALUES (?);', [accountRecord.id]);
+	}
+
+	return resolve(accountRecord);
 });
 
 const apiLogout = (req, res) => {
