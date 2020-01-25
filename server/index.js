@@ -44,6 +44,9 @@ app.post('/api/passwordchange', accounts.apiPasswordChange);
 app.post('/api/passwordrecover', accounts.apiPasswordRecover);
 app.post('/api/passwordreset', accounts.apiPasswordReset);
 
+const profiles = require('./profiles/profiles.js');
+app.post('/api/yourprofile', profiles.apiYourProfile);
+
 //privacy
 const privacy = require('./privacy/privacy.js');
 app.post('/api/privacysettings', privacy.apiSettings);

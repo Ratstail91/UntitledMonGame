@@ -11,8 +11,8 @@ const grantSignupRewards = (record) => new Promise(async (resolve, reject) => {
 	const flag = await pool.promise().execute(flagQuery, [record.code]);
 
 	//ignore used or non-existant codes
-	if (!flag[0][0]) {
-		resolve();
+	if (flag[0].length == 0) {
+		return resolve();
 	}
 
 	//process the code flag

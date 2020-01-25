@@ -58,8 +58,6 @@ class Login extends React.Component {
 
 					this.props.login(
 						json.id,
-						json.email,
-						json.username,
 						json.token
 					);
 
@@ -122,7 +120,7 @@ const mapStoreToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		login: (id, email, username, token) => dispatch(login(id, email, username, token)),
+		login: (id, token) => dispatch(login(id, token)),
 		setWarning: msg => dispatch(setWarning(msg))
 	}
 };

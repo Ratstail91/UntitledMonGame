@@ -54,7 +54,7 @@ const validateFields = ({ fields }) => new Promise( async (resolve, reject) => {
 
 const validatePassword = (fields) => new Promise( async (resolve, reject) => {
 	//find this email's account information
-	const accountQuery = 'SELECT id, email, username, hash FROM accounts WHERE email = ?;';
+	const accountQuery = 'SELECT id, hash, accountType FROM accounts WHERE email = ?;';
 	const accountRecord = await pool.promise().query(accountQuery, [fields.email])
 		.then(results => results[0][0])
 		.catch(() => null)
@@ -83,10 +83,7 @@ const unmarkAccountForDeletion = (accountRecord) => new Promise(async (resolve, 
 
 const checkAccountType = (accountRecord) => new Promise(async (resolve, reject) => {
 	//accountType ENUM ('administrator', 'moderator', 'alpha', 'beta', 'normal') DEFAULT 'normal',
-	const query = 'SELECT accountType FROM accounts WHERE id = ?;';
-	const accountType = (await pool.promise().query(query, [accountRecord.id]))[0][0].accountType;
-
-	switch(accountType) {
+	switch(accountRecord.accountType) {
 		case "administrator":
 		case "moderator":
 		case "alpha":
@@ -94,7 +91,7 @@ const checkAccountType = (accountRecord) => new Promise(async (resolve, reject) 
 	}
 
 	//TODO: update this message laer
-	return reject({ msg: 'The game isn\'t ready yet, sorry.\nContact krgamestudios@gmail.com for an alpha account.', extra: accountType });
+	return reject({ msg: 'The game isn\'t ready yet, sorry.\nContact krgamestudios@gmail.com for an alpha account.', extra: accountRecord.accountType });
 });
 
 const createNewSession = (accountRecord) => new Promise( async (resolve, reject) => {
@@ -106,14 +103,12 @@ const createNewSession = (accountRecord) => new Promise( async (resolve, reject)
 
 	const result = {
 		id: accountRecord.id,
-		email: accountRecord.email,
-		username: accountRecord.username,
 		token: rand,
 		msg: 'Logged in',
-		extra: [accountRecord.email, rand]
+		extra: [accountRecord.id, rand]
 	};
 
-	logActivity(result.id);
+	logActivity(accountRecord.id);
 
 	return resolve(result);
 });

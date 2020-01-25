@@ -19,6 +19,8 @@ class Header extends React.Component {
 			<header className='page-header centered'>
 				<Link to='/'><h1>Egg Trainer</h1></Link>
 				<div className='navbar'>
+					<Button to='/yourprofile'>Profile</Button>
+					<div className='gap' />
 					<LogoutButton onClick={() => this.props.history.push('/')} />
 					<div className='gap' />
 					<Button to='/passwordchange'>Password</Button>

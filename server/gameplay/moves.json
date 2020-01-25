@@ -1,0 +1,19 @@
+{
+	"splash": {
+		"name": "Splash",
+
+		"type": "physical",
+		"element": "water",
+
+		"strength": 10
+	},
+
+	"firespit": {
+		"name": "Fire Spit",
+
+		"type": "physical",
+		"element": "fire",
+
+		"strength": 15
+	}
+}

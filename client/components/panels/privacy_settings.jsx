@@ -14,7 +14,6 @@ class PrivacySettings extends React.Component {
 		};
 
 		//TODO: change email
-		//TODO: delete account
 	}
 
 	componentDidMount() {
