@@ -17,7 +17,7 @@ class YourEggs extends React.Component {
 	}
 
 	componentDidMount() {
-		this.sendEggsRequest();
+		this.sendYourEggsRequest();
 	}
 
 	render() {
@@ -28,10 +28,10 @@ class YourEggs extends React.Component {
 		}
 
 		return (
-			<div className='panel'>
+			<div className='panel' style={{flexDirection: 'row', flexWrap:'wrap'}}>
 				{this.props.eggs.map( (egg, idx) => {
 					return (
-						<div key={idx} className={'panel'} style={{display: 'inline-block', verticalAlign: 'top'}}>
+						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
 								<img src={`/content/sprites/eggs/${egg.element}.png`} />
 								<span>{capitalize(egg.element)} Egg</span>
@@ -52,7 +52,7 @@ class YourEggs extends React.Component {
 		);
 	}
 
-	sendEggsRequest() {
+	sendYourEggsRequest() {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 

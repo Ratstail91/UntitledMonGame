@@ -8,7 +8,59 @@
 
 		"egg": {
 			"rarity": "common",
-			"value": 100
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [ "Splash" ],
+
+		"frontImage": "whalephant.png",
+		"backImage": "whalephant.png"
+	},
+	"firephant": {
+		"index": 1,
+
+		"name": "Firephant",
+
+		"element": "fire",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [ "Splash" ],
+
+		"frontImage": "whalephant.png",
+		"backImage": "whalephant.png"
+	},
+	"grassphant": {
+		"index": 1,
+
+		"name": "Grassphant",
+
+		"element": "grass",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
 		},
 
 		"stats": {

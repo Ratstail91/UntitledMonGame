@@ -61,6 +61,10 @@ a {
 	color: blue;
 }
 
+.left {
+	text-align: left;
+}
+
 .centered {
 	text-align: center;
 }
@@ -189,4 +193,11 @@ footer {
 .checkbox {
 	flex: 1;
 	margin-top: 0.5em;
+}
+
+.servertime {
+	flex: 1;
+	align-self: flex-start;
+	margin: 0;
+	padding: 0;
 }

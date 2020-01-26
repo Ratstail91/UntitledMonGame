@@ -18,8 +18,6 @@ class YourProfile extends React.Component {
 	render() {
 		return (
 			<div className='panel'>
-				<h1 className='centered'>Profile</h1>
-
 				<p>Username: {this.props.username}</p>
 				<p>Coins: {this.props.coins}</p>
 			</div>

@@ -85,6 +85,7 @@ class App extends React.Component {
 						<LazyRoute path='/passwordreset' component={() => import('./pages/password_reset.jsx')} />
 
 						<LazyRoute path='/yourprofile' component={() => import('./pages/your_profile.jsx')} />
+						<LazyRoute path='/shop' component={() => import('./pages/shop.jsx')} />
 
 						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings.jsx')} />
 						<LazyRoute path='/privacypolicy' component={async () => () => <MarkdownWrapper url={'/content/privacy_policy.md'} />} />

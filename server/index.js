@@ -35,6 +35,11 @@ app.get('/api/newsfiles', news.apiNewsFiles);
 app.get('/api/newsheaders', news.apiNewsHeaders);
 
 //public info about the game
+app.get('/api/timezoneoffset', (req, res) => {
+	res.status(200).send(new Date().getTimezoneOffset().toString());
+	res.end();
+});
+
 const gameplay = require('./gameplay/gameplay.js');
 app.get('/api/creature', gameplay.apiCreature);
 
@@ -51,6 +56,10 @@ app.post('/api/passwordreset', accounts.apiPasswordReset);
 const profiles = require('./profiles/profiles.js');
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/youreggs', profiles.apiYourEggs);
+
+const shop = require('./shop/shop.js');
+shop.runDailyShopRefresh();
+app.get('/api/shopeggs', shop.apiShopEggs);
 
 //privacy
 const privacy = require('./privacy/privacy.js');

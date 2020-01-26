@@ -6,9 +6,9 @@ import { Tabs, Tab } from 'react-bootstrap';
 //panels
 import YourProfilePanel from '../panels/your_profile.jsx';
 
-import YourEggs from '../panels/your_eggs.jsx';
+import ShopEggs from '../panels/shop_eggs.jsx';
 
-class YourProfile extends React.Component {
+class Shop extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -23,23 +23,20 @@ class YourProfile extends React.Component {
 	render() {
 		return (
 			<div className='page'>
-				<h1 className='centered'>Profile</h1>
+				<h1 className='centered'>Shop</h1>
 				<YourProfilePanel />
 				<Tabs>
-					<Tab eventKey='creatures' title='Creatures'>
-						<p>Creatures go here.</p>
-					</Tab>
-
 					<Tab eventKey='eggs' title='Eggs'>
-						<YourEggs />
+						<ShopEggs />
 					</Tab>
 
-					<Tab eventKey='inventory' title='Inventory'>
-						<p>Inventroy goes here.</p>
+					<Tab eventKey='items' title='Items'>
+						<p>Items go here.</p>
 					</Tab>
 
-					<Tab eventKey='battles' title='Battles'>
-						<p>Battles go here.</p>
+					<Tab eventKey='premium' title='Premium'>
+						<p>Premium goods go here.</p>
+						<p>You'll be able to support the game's development here, and get a bonus as well!</p>
 					</Tab>
 				</Tabs>
 			</div>
@@ -59,6 +56,6 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-YourProfile = connect(mapStoreToProps, mapDispatchToProps)(YourProfile);
+Shop = connect(mapStoreToProps, mapDispatchToProps)(Shop);
 
-export default withRouter(YourProfile);
+export default withRouter(Shop);
