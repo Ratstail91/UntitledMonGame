@@ -1,9 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { setWarning } from '../../actions/warning.js';
 import { setEggs } from '../../actions/profile.js';
+
+const capitalize = str => {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 class YourEggs extends React.Component {
 	constructor(props) {
@@ -16,12 +21,30 @@ class YourEggs extends React.Component {
 	}
 
 	render() {
+		if (this.props.eggs.length == 0) {
+			return (
+				<p>Eggs go here.</p>
+			);
+		}
+
 		return (
 			<div className='panel'>
 				{this.props.eggs.map( (egg, idx) => {
 					return (
-						<div key={idx} className='panel' style={{display: 'inline-block', verticalAlign: 'top'}}>
-							<img src={`/content/sprites/${egg.element}.png`} />
+						<div key={idx} className={'panel'} style={{display: 'inline-block', verticalAlign: 'top'}}>
+							<div className='eggPanel'>
+								<img src={`/content/sprites/eggs/${egg.element}.png`} />
+								<span>{capitalize(egg.element)} Egg</span>
+
+								<Dropdown>
+									<Dropdown.Toggle>Actions</Dropdown.Toggle>
+
+									<Dropdown.Menu>
+										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.eggAction(idx, 'incubate'); }}>Incubate</Dropdown.Item>
+										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.eggAction(idx, 'sell'); }}>Sell</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown>
+							</div>
 						</div>
 					);
 				})}
@@ -77,6 +100,14 @@ class YourEggs extends React.Component {
 		xhr.open('GET', `/api/creature?species=${speciesName}`, true);
 		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send();
+	}
+
+	eggAction(index, action) {
+		switch(action) {
+			case 'incubate':
+			case 'sell':
+				return;
+		}
 	}
 }
 

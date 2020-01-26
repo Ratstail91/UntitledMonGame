@@ -159,6 +159,27 @@ footer {
 	background: #ff6666;
 }
 
+/* custom styling */
+.eggPanel {
+	display: flex;
+	flex: 0 1 auto;
+	flex-direction: column;
+	align-items: center;
+	max-width: 250px;
+}
+
+.eggPanel img {
+	width: 250px;
+	height: 250px;
+}
+
+@media screen and (max-width: 480px) {
+	.eggPanel {
+		flex: 1;
+		max-width: initial;
+	}
+}
+
 /* corrections */
 .checkboxContainer {
 	display: flex;
