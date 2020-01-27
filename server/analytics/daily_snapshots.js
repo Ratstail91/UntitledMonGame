@@ -8,8 +8,8 @@ const runDailySnapshots = () => {
 		(totalAccounts, activeAccounts, totalProfiles, activeProfiles) VALUES (\
 		(SELECT COUNT(*) FROM accounts), \
 		(SELECT COUNT(*) FROM accounts WHERE NOW() - interval 1 day < lastActivityTime), \
-		0, \
-		0 \
+		(SELECT COUNT(*) FROM profiles), \
+		(SELECT COUNT(*) FROM profiles WHERE accountId IN (SELECT id FROM accounts WHERE NOW() - interval 1 day < lastActivityTime)) \
 		);';
 		pool.promise().query(query)
 			.then(() => log('Daily snapshot taken'))
