@@ -32,6 +32,10 @@ const getInformationFromJSON = (req) => new Promise((resolve, reject) => {
 		return resolve({ msg: result, extra: req.query.species });
 	}
 
+	if (!req.query.species) {
+		return resolve({ msg: species, extra: '' });
+	}
+
 	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
 });
 
