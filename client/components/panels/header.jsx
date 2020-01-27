@@ -23,11 +23,11 @@ class Header extends React.Component {
 					<div className='gap' />
 					<Button to='/shop'>Shop</Button>
 					<div className='gap' />
-					<LogoutButton onClick={() => this.props.history.push('/')} />
-					<div className='gap' />
 					<Button to='/passwordchange'>Password</Button>
 					<div className='gap' />
 					<Button to='/privacysettings'>Privacy</Button>
+					<div className='gap' />
+					<LogoutButton onClick={() => this.props.history.push('/')} />
 				</div>
 			</header>
 		);
