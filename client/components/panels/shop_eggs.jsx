@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
+import { setProfile } from '../../actions/profile.js';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);
@@ -40,7 +41,7 @@ class ShopEggs extends React.Component {
 								<span>{capitalize(egg.element)} Egg</span>
 								<span>{capitalize(egg.rarity)} - {egg.value} coins</span>
 
-								<Button disabled onClick={e => { e.preventDefault(); this.sendBuyEggRequest(idx); }}>Buy</Button>
+								<Button onClick={e => { e.preventDefault(); e.persist(); e.target.setAttribute('disabled', 'disabled'); this.sendBuyEggRequest(idx, e); }}>Buy</Button>
 							</div>
 							<div className='break' />
 						</div>
@@ -70,12 +71,35 @@ class ShopEggs extends React.Component {
 		};
 
 		xhr.open('GET', '/api/shopeggs', true);
-		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send();
 	}
 
-	sendBuyEggRequest(index) {
-		//TODO: sendBuyEggRequest
+	sendBuyEggRequest(index, e) {
+		//build the XHR
+		const xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					//on success
+					e.target.removeAttribute('disabled');
+					const json = JSON.parse(xhr.responseText);
+					this.props.setProfile(json.username, json.coins);
+					alert('Egg Purchased!');
+				}
+				else {
+					this.props.setWarning(xhr.responseText);
+				}
+			}
+		};
+
+		xhr.open('POST', '/api/shopeggs/buy', true);
+		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+		xhr.send(JSON.stringify({
+			id: this.props.id,
+			token: this.props.token,
+			index: index
+		}));
 	}
 }
 
@@ -83,6 +107,7 @@ ShopEggs.propTypes = {
 	id: PropTypes.number.isRequired,
 	token: PropTypes.number.isRequired,
 	setWarning: PropTypes.func.isRequired,
+	setProfile: PropTypes.func.isRequired,
 };
 
 const mapStoreToProps = (store) => {
@@ -95,6 +120,7 @@ const mapStoreToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setWarning: msg => dispatch(setWarning(msg)),
+		setProfile: (username, coins) => dispatch(setProfile(username, coins)),
 	};
 };
 

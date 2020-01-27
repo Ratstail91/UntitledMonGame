@@ -28,7 +28,7 @@ const apiYourEggs = async (req, res) => {
 };
 
 const getYourEggs = (accountId) => new Promise((resolve, reject) => {
-	const query = 'SELECT species FROM creatureEggs WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?);';
+	const query = 'SELECT id, species FROM creatureEggs WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
 	return pool.promise().query(query, [accountId])
 		.then(results => results[0])
 		.then(eggs => resolve({ msg: eggs.map(egg => { return { id: egg.id, element: species[egg.species].element }}), extra: eggs.length }))

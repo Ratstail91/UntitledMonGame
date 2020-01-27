@@ -23,6 +23,7 @@ const apiYourProfile = async (req, res) => {
 	;
 };
 
+//TODO: get rid of this
 const validateCredentials = (body) => new Promise((resolve, reject) => {
 	const query = 'SELECT COUNT(*) AS total FROM sessions WHERE accountId = ? AND token = ?;';
 	return pool.promise().query(query, [body.id, body.token])
@@ -34,7 +35,7 @@ const validateCredentials = (body) => new Promise((resolve, reject) => {
 
 const getYourProfile = (accountId) => new Promise((resolve, reject) => {
 	//TODO: send creatures
-	const query = 'SELECT username, coins FROM accounts WHERE id = ?;';
+	const query = 'SELECT id, username, coins FROM accounts WHERE id = ?;';
 	return pool.promise().query(query, [accountId])
 		.then(result => result[0][0])
 		.then(record => record ? resolve({ msg: record, extra: '' }) : reject({ msg: 'Failed to find record', extra: accountId }))

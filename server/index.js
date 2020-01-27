@@ -50,10 +50,12 @@ app.post('/api/passwordreset', accounts.apiPasswordReset);
 const profiles = require('./profiles/profiles.js');
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/youreggs', profiles.apiYourEggs);
+app.post('/api/youreggs/sell', profiles.apiYourEggsSell);
 
 const shop = require('./shop/shop.js');
 shop.runDailyShopRefresh();
 app.get('/api/shopeggs', shop.apiShopEggs);
+app.post('/api/shopeggs/buy', shop.apiShopEggsBuy);
 
 //privacy
 const privacy = require('./privacy/privacy.js');

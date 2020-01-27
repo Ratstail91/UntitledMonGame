@@ -17,7 +17,7 @@ class YourEggs extends React.Component {
 	}
 
 	componentDidMount() {
-		this.sendYourEggsRequest();
+		this.sendYourEggsRequest('/api/youreggs');
 	}
 
 	render() {
@@ -41,10 +41,11 @@ class YourEggs extends React.Component {
 
 									<Dropdown.Menu>
 										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.eggAction(idx, 'incubate'); }}>Incubate</Dropdown.Item>
-										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.eggAction(idx, 'sell'); }}>Sell</Dropdown.Item>
+										<Dropdown.Item onClick={e => { e.preventDefault(); this.eggAction(idx, 'sell'); }}>Sell</Dropdown.Item>
 									</Dropdown.Menu>
 								</Dropdown>
 							</div>
+							<div className='break' />
 						</div>
 					);
 				})}
@@ -52,7 +53,7 @@ class YourEggs extends React.Component {
 		);
 	}
 
-	sendYourEggsRequest() {
+	sendYourEggsRequest(url, index) {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -69,11 +70,12 @@ class YourEggs extends React.Component {
 			}
 		};
 
-		xhr.open('POST', '/api/youreggs', true);
+		xhr.open('POST', url, true);
 		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send(JSON.stringify({
 			id: this.props.id,
-			token: this.props.token
+			token: this.props.token,
+			index: index,
 		}));
 	}
 
@@ -105,7 +107,12 @@ class YourEggs extends React.Component {
 	eggAction(index, action) {
 		switch(action) {
 			case 'incubate':
+				return;
+
 			case 'sell':
+				if (confirm('Sell this egg?')) {
+					this.sendYourEggsRequest('/api/youreggs/sell', index);
+				}
 				return;
 		}
 	}

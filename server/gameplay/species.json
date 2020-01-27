@@ -1,9 +1,29 @@
 {
+	"spitty": {
+		"name": "Spitty",
+		"element": "fire",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [ "firespit" ],
+
+		"frontImage": "spitty_sketch.png",
+		"backImage": "spitty_sketch.png"
+	},
 	"whalephant": {
-		"index": 1,
-
 		"name": "Whalephant",
-
 		"element": "water",
 
 		"egg": {
@@ -22,40 +42,11 @@
 
 		"moves": [ "Splash" ],
 
-		"frontImage": "whalephant.png",
-		"backImage": "whalephant.png"
+		"frontImage": "whalephant_sketch.png",
+		"backImage": "whalephant_sketch.png"
 	},
-	"firephant": {
-		"index": null,
-
-		"name": "Firephant",
-
-		"element": "fire",
-
-		"egg": {
-			"rarity": "common",
-			"value": 200
-		},
-
-		"stats": {
-			"health": 10,
-			"speed": 10,
-			"physicalAttack": 10,
-			"physicalDefense": 10,
-			"magicalAttack": 10,
-			"magicalDefense": 10
-		},
-
-		"moves": [ "Splash" ],
-
-		"frontImage": "whalephant.png",
-		"backImage": "whalephant.png"
-	},
-	"grassphant": {
-		"index": null,
-
-		"name": "Grassphant",
-
+	"neverrat": {
+		"name": "Neverrat",
 		"element": "grass",
 
 		"egg": {
@@ -72,9 +63,147 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [ "Splash" ],
+		"moves": [],
 
-		"frontImage": "whalephant.png",
-		"backImage": "whalephant.png"
+		"frontImage": "neverrat_sketch.png",
+		"backImage": "neverrat_sketch.png"
+	},
+	"slink": {
+		"name": "Slink",
+		"element": "psychic",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [],
+
+		"frontImage": "slink_sketch.png",
+		"backImage": "slink_sketch.png"
+	},
+	"puggy": {
+		"name": "Puggy",
+		"element": "fighting",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [],
+
+		"frontImage": "puggy_sketch.png",
+		"backImage": "puggy_sketch.png"
+	},
+	"predatore": {
+		"name": "Predatore",
+		"element": "metal",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [],
+
+		"frontImage": "predatore_sketch.png",
+		"backImage": "predatore_sketch.png"
+	},
+	"pixi": {
+		"name": "Pixi",
+		"element": "fae",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [],
+
+		"frontImage": "pixi_sketch.png",
+		"backImage": "pixi_sketch.png"
+	},
+	"lure": {
+		"name": "Lure",
+		"element": "light",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [],
+
+		"frontImage": "lure_sketch.png",
+		"backImage": "lure_sketch.png"
+	},
+	"dropbear": {
+		"name": "Dropbear",
+		"element": "dark",
+
+		"egg": {
+			"rarity": "common",
+			"value": 200
+		},
+
+		"stats": {
+			"health": 10,
+			"speed": 10,
+			"physicalAttack": 10,
+			"physicalDefense": 10,
+			"magicalAttack": 10,
+			"magicalDefense": 10
+		},
+
+		"moves": [],
+
+		"frontImage": "dropbear_sketch.png",
+		"backImage": "dropbear_sketch.png"
 	}
 }
