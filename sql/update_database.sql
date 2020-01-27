@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS shopEggs (
 
 	shopSlot INTEGER UNSIGNED UNIQUE,
 
-	species VARCHAR(100) NOT NULL,
+	species VARCHAR(100) NOT NULL, #TODO: allow some eggs to be random?
 
 	geneticPointsHealth INTEGER UNSIGNED NULL DEFAULT NULL,
 	geneticPointsSpeed INTEGER UNSIGNED NULL DEFAULT NULL,
