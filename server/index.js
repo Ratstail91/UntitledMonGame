@@ -63,6 +63,10 @@ app.post('/api/privacysettings', privacy.apiSettings);
 app.put('/api/privacysettings', privacy.apiUpdateSettings);
 app.delete('/api/account', privacy.apiDeleteAccount);
 
+//administration
+const admin = require('./admin/admin.js');
+app.post('/api/admin', admin.apiAdminDisplay);
+
 //static directories
 app.use('/content', express.static(path.resolve(__dirname + '/../public/content')) );
 app.use('/content/news', express.static(path.resolve(__dirname + '/../public/content/news')) );

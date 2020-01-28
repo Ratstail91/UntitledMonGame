@@ -91,6 +91,8 @@ class App extends React.Component {
 						<LazyRoute path='/privacypolicy' component={async () => () => <MarkdownWrapper url={'/content/privacy_policy.md'} />} />
 						<LazyRoute path='/credits' component={async () => () => <MarkdownWrapper url={'/content/credits.md'} />} />
 
+						<LazyRoute path='/admin' component={() => import('./pages/admin.jsx')} />
+
 						<LazyRoute path='*' component={() => import('./pages/page_not_found.jsx')} />
 					</Switch>
 				</div>
