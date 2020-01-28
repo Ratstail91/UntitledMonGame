@@ -9,7 +9,7 @@ const initialStore = {
 export const profileReducer = (store = initialStore, action) => {
 	switch(action.type) {
 		case SET_PROFILE: {
-			let newStore = JSON.parse(JSON.stringify(initialStore));
+			let newStore = JSON.parse(JSON.stringify(store));
 
 			newStore.username = action.username;
 			newStore.coins = action.coins;
