@@ -4,6 +4,7 @@ import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { setWarning } from '../../actions/warning.js';
+import { setProfile } from '../../actions/profile.js';
 import { setEggs } from '../../actions/profile.js';
 
 const capitalize = str => {
@@ -61,8 +62,12 @@ class YourEggs extends React.Component {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
 					//on success
-					const eggs = JSON.parse(xhr.responseText);
-					this.props.setEggs(eggs);
+					const json = JSON.parse(xhr.responseText);
+					if (json.profile) {
+						console.log(json)
+						this.props.setProfile(json.profile.username, json.profile.coins);
+					}
+					this.props.setEggs(json.eggs);
 				}
 				else {
 					this.props.setWarning(xhr.responseText);
@@ -78,7 +83,7 @@ class YourEggs extends React.Component {
 			index: index,
 		}));
 	}
-
+/*
 	sendSpeciesRequest(speciesName) {
 		const xhr = new XMLHttpRequest();
 
@@ -103,7 +108,7 @@ class YourEggs extends React.Component {
 		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send();
 	}
-
+*/
 	eggAction(index, action) {
 		switch(action) {
 			case 'incubate':
@@ -136,7 +141,8 @@ const mapStoreToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setWarning: msg => dispatch(setWarning(msg)),
-		setEggs: (eggs) => dispatch(setEggs(eggs))
+		setProfile: (username, coins) => dispatch(setProfile(username, coins)),
+		setEggs: (eggs) => dispatch(setEggs(eggs)),
 	};
 };
 

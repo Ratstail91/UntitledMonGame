@@ -40,30 +40,30 @@ const getInformationFromDatabase = (req) => new Promise( async (resolve, reject)
 	;
 });
 
-const verifyToken = (req) => (record) => new Promise( async (resolve, reject) => {
-	if (req.query.verify != record.verify) {
-		reject({msg: 'Verification failed!', extra: [req.query.email, req.query.verify, record.verify]});
+const verifyToken = (req) => (signupRecord) => new Promise( async (resolve, reject) => {
+	if (req.query.verify != signupRecord.verify) {
+		reject({msg: 'Verification failed!', extra: [req.query.email, req.query.verify, signupRecord.verify]});
 	} else {
-		resolve(record);
+		resolve(signupRecord);
 	}
 });
 
-const createAccount = (record) => new Promise( async (resolve, reject) => {
+const createAccount = (signupRecord) => new Promise( async (resolve, reject) => {
 	//BUGFIX: a delay to prevent the fail message appearing to the end user
 	setTimeout(async () => {
-		log('Trying to create account', record.email);
+		log('Trying to create account', signupRecord.email);
 
 		//move the data from signups to accounts
 		let moveQuery = 'INSERT IGNORE INTO accounts (email, username, hash, promotions) VALUES (?, ?, ?, ?);';
-		await pool.promise().query(moveQuery, [record.email, record.username, record.hash, record.promotions]);
+		await pool.promise().query(moveQuery, [signupRecord.email, signupRecord.username, signupRecord.hash, signupRecord.promotions]);
 
 		//delete from signups
 		let deleteQuery = 'DELETE FROM signups WHERE email = ?;';
-		await pool.promise().query(deleteQuery, [record.email]);
+		await pool.promise().query(deleteQuery, [signupRecord.email]);
 
-		resolve(record);
+		resolve(signupRecord);
 
-		log('Account created', record.email);
+		log('Account created', signupRecord.email);
 	}, 3000); //3 second delay on account creation
 });
 

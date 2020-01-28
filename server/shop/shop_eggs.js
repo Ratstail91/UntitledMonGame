@@ -19,6 +19,7 @@ const apiShopEggs = async (req, res) => {
 
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(getShopEggs)
+		.then(eggs => { return { msg: { eggs }, extra: '' };})
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
@@ -29,7 +30,7 @@ const getShopEggs = () => new Promise((resolve, reject) => {
 	return pool.promise().query(query)
 		.then(results => results[0])
 		.then(eggs => eggs.map(egg => { return { element: species[egg.species].element, rarity: species[egg.species].egg.rarity, value: species[egg.species].egg.value }; }))
-		.then(eggs => resolve({ msg: eggs, extra: '' }))
+		.then(eggs => resolve(eggs))
 		.catch(e => reject({ msg: 'getShopEggs error', extra: e }))
 	;
 });

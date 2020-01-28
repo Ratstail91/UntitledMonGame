@@ -33,7 +33,7 @@ class YourProfile extends React.Component {
 				if (xhr.status === 200) {
 					//on success
 					const json = JSON.parse(xhr.responseText);
-					this.props.setProfile(json.username, json.coins);
+					this.props.setProfile(json.profile.username, json.profile.coins);
 				}
 				else {
 					this.props.setWarning(xhr.responseText);

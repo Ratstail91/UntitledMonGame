@@ -22,8 +22,8 @@ const apiLogin = async (req, res) => {
 	}
 
 	return formidablePromise(req)
-		.then(validateFields)
-		.then(validatePassword)
+		.then(validateLoginFields)
+		.then(validateLoginPassword)
 		.then(unmarkAccountForDeletion)
 		.then(checkAccountType)
 		.then(createNewSession)
@@ -33,7 +33,7 @@ const apiLogin = async (req, res) => {
 	;
 };
 
-const validateFields = ({ fields }) => new Promise( async (resolve, reject) => {
+const validateLoginFields = ({ fields }) => new Promise( async (resolve, reject) => {
 	//validate email, username and password
 	if (!validateEmail(fields.email) || fields.password.length < 8) {
 		return reject({msg: 'Invalid login data', extra: [fields.email] }); //WARNING: NEVER LOG PASSWORDS. EVER.
@@ -53,9 +53,9 @@ const validateFields = ({ fields }) => new Promise( async (resolve, reject) => {
 	return resolve(fields);
 });
 
-const validatePassword = (fields) => new Promise( async (resolve, reject) => {
+const validateLoginPassword = (fields) => new Promise( async (resolve, reject) => {
 	//find this email's account information
-	const accountQuery = 'SELECT id, hash, accountType FROM accounts WHERE email = ?;';
+	const accountQuery = 'SELECT id, hash FROM accounts WHERE email = ?;';
 	const accountRecord = await pool.promise().query(accountQuery, [fields.email])
 		.then(results => results[0][0])
 		.catch(() => null)
@@ -83,8 +83,13 @@ const unmarkAccountForDeletion = (accountRecord) => new Promise(async (resolve, 
 });
 
 const checkAccountType = (accountRecord) => new Promise(async (resolve, reject) => {
+	const query = 'SELECT accountType FROM accounts WHERE id = ?;';
+	const accountType = await pool.promise().query(query, [accountRecord.id])
+		.catch(e => reject({ msg: 'checkAccountType error', extra: e }))
+	;
+
 	//accountType ENUM ('administrator', 'moderator', 'alpha', 'beta', 'normal') DEFAULT 'normal',
-	switch(accountRecord.accountType) {
+	switch(accountType[0][0].accountType) {
 		case "administrator":
 		case "moderator":
 		case "alpha":
@@ -137,16 +142,6 @@ const apiLogout = (req, res) => {
 	;
 };
 
-//reusable
-const validateSession = ({ fields }) => new Promise(async (resolve, reject) => {
-	const query = 'SELECT * FROM sessions WHERE accountId = ? AND token = ?;';
-	return pool.promise().query(query, [fields.id, fields.token])
-		.then(results => results[0].length > 0 ? fields : reject({ msg: 'Session Timed Out', extra: fields }))
-		.then(fields => { logActivity(fields.id); resolve(fields); })
-		.catch(e => reject({ msg: 'validateSession error', extra: e }))
-	;
-});
-
 //delete the sessions for inactive accounts
 const { CronJob } = require('cron');
 
@@ -162,12 +157,13 @@ module.exports = {
 	//public API
 	apiLogin,
 	apiLogout,
-	validateSession,
 
 	//for testing
-	validateFields,
-	validatePassword,
+	validateLoginFields,
+	validateLoginPassword,
 	unmarkAccountForDeletion,
+	checkAccountType,
 	createNewSession,
+	createNewProfile,
 };
 

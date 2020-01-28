@@ -2,6 +2,8 @@ const pool = require("../utilities/database.js");
 
 const { log } = require('../utilities/logging.js');
 
+const { validateSession } = require('../reusable.js');
+
 const apiYourProfile = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
@@ -16,37 +18,25 @@ const apiYourProfile = async (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateCredentials)
+		.then(validateSession)
 		.then(getYourProfile)
+		.then(profile => { return { msg: profile, extra: '' }; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-//TODO: get rid of this
-const validateCredentials = (body) => new Promise((resolve, reject) => {
-	const query = 'SELECT COUNT(*) AS total FROM sessions WHERE accountId = ? AND token = ?;';
-	return pool.promise().query(query, [body.id, body.token])
-		.then(result => result[0][0])
-		.then(record => record && record.total > 0 ? resolve(body.id) : reject({ msg: 'Invalid credentials', extra: JSON.stringify(record) }))
-		.catch(e => reject({ msg: 'validateCredentials error', extra: e }))
-	;
-});
-
-const getYourProfile = (accountId) => new Promise((resolve, reject) => {
+const getYourProfile = (fields) => new Promise((resolve, reject) => {
 	//TODO: send creatures
-	const query = 'SELECT id, username, coins FROM accounts WHERE id = ?;';
-	return pool.promise().query(query, [accountId])
+	const query = 'SELECT username, coins FROM accounts WHERE id = ?;'; //TODO: join with profile for more stuff
+	return pool.promise().query(query, [fields.id])
 		.then(result => result[0][0])
-		.then(record => record ? resolve({ msg: record, extra: '' }) : reject({ msg: 'Failed to find record', extra: accountId }))
+		.then(record => record ? resolve({profile: record, ...fields}) : reject({ msg: 'Failed to find profile records', extra: fields.id }))
 		.catch(e => reject({ msg: 'getYourProfile error', extra: e }))
 	;
 });
 
 module.exports = {
 	apiYourProfile,
-	validateCredentials,
-
-	//for testing
 	getYourProfile,
 };

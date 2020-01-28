@@ -59,10 +59,8 @@ class ShopEggs extends React.Component {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
 					//on success
-					const eggs = JSON.parse(xhr.responseText);
-					this.setState({
-						eggs: eggs
-					});
+					const json = JSON.parse(xhr.responseText);
+					this.setState({ eggs: json.eggs });
 				}
 				else {
 					this.props.setWarning(xhr.responseText);
@@ -84,7 +82,7 @@ class ShopEggs extends React.Component {
 					//on success
 					e.target.removeAttribute('disabled');
 					const json = JSON.parse(xhr.responseText);
-					this.props.setProfile(json.username, json.coins);
+					this.props.setProfile(json.profile.username, json.profile.coins);
 					alert('Egg Purchased!');
 				}
 				else {

@@ -26,7 +26,7 @@ const apiSignup = async (req, res) => {
 	return formidablePromise(req)
 		.then(validateSignup)
 		.then(saveToDatabase)
-		.then(sendSignupEmail())
+		.then(sendSignupEmail)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
@@ -87,25 +87,24 @@ const saveToDatabase = (fields) => new Promise(async (resolve, reject) => {
 	const signupQuery = 'REPLACE INTO signups (email, username, hash, promotions, code, referral, verify) VALUES (?, ?, ?, ?, ?, ?, ?);';
 	await pool.promise().query(signupQuery, [fields.email, fields.username, hash, fields.promotions ? true : false, fields.code, !!fields.referral ? fields.referral : null, rand]);
 
-	return resolve({rand, fields});
+	return resolve({rand, ...fields});
 });
 
-const sendSignupEmail = () => ({rand, fields}) => new Promise(async (resolve, reject) => {
+const sendSignupEmail = (fields) => new Promise(async (resolve, reject) => {
 	const send = util.promisify(sendmail);
 
 	const addr = `https://${process.env.WEB_ADDRESS}/api/verify?email=${fields.email}&verify=${rand}`
 	const msg = 'Hello! Please visit the following address to verify your account: ';
 
+	//TODO: add encryption
 	await send({
 		from: `signup@${process.env.WEB_ADDRESS}`,
 		to: fields.email,
 		subject: 'Email Verification',
 		text: msg + addr,
 	})
-		.then(
-			() => resolve({msg: 'Verification email sent!', extra: [fields.email, fields.username]}),
-			() => reject({msg: 'Something went wrong', extra: [fields.email, fields.username]})
-		)
+		.then(() => resolve({msg: 'Verification email sent!', extra: [fields.email, fields.username]}))
+		.catch(e => reject({msg: 'Something went wrong', extra: e }))
 	;
 });
 

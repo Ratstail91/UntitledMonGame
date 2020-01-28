@@ -2,7 +2,7 @@ const pool = require("../utilities/database.js");
 
 const { log } = require('../utilities/logging.js');
 
-const { validateCredentials } = require('./your_profile.js');
+const { validateSession } = require('../reusable.js');
 
 const species = require('../gameplay/species.json');
 
@@ -20,18 +20,19 @@ const apiYourEggs = async (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateCredentials)
+		.then(validateSession)
 		.then(getYourEggs)
+		.then(fields => { return { msg: fields, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const getYourEggs = (accountId) => new Promise((resolve, reject) => {
+const getYourEggs = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT id, species FROM creatureEggs WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
-	return pool.promise().query(query, [accountId])
+	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
-		.then(eggs => resolve({ msg: eggs.map(egg => { return { id: egg.id, element: species[egg.species].element }}), extra: eggs.length }))
+		.then(eggs => resolve({ eggs: eggs.map(egg => { return { id: egg.id, element: species[egg.species].element }}), ...fields }))
 		.catch(e => reject({ msg: 'getYourEggs error', extra: e }))
 	;
 });
@@ -40,6 +41,5 @@ module.exports = {
 	apiYourEggs,
 
 	//for testing
-	validateCredentials,
 	getYourEggs,
 };
