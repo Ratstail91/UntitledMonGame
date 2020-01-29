@@ -22,6 +22,9 @@ pool.getConnection((err, connection) => {
 	connection.release();
 })
 
+// Don't need to use bodyparser and other middleware for static files
+app.use('/', express.static(path.resolve(__dirname + '/../dist/')));
+
 // Add body parser
 app.use(bodyParser.json());
 
@@ -67,24 +70,9 @@ app.delete('/api/account', privacy.apiDeleteAccount);
 const admin = require('./admin/admin.js');
 app.post('/api/admin', admin.apiAdminDisplay);
 
-//static directories
-app.use('/content', express.static(path.resolve(__dirname + '/../public/content')) );
-app.use('/content/news', express.static(path.resolve(__dirname + '/../public/content/news')) );
-app.use('/content/img/', express.static(path.resolve(__dirname + '/../public/content/img')) );
-
-//the app file(s)
-app.get('/*app.bundle.js', (req, res) => {
-	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl.split('/').pop()}`));
-});
-
-//source map (for development)
-app.get('/app.bundle.js.map', (req, res) => {
-	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl}`));
-});
-
 //fallback to index.html
 app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, `../public/index.html`));
+	res.sendFile(path.resolve(__dirname, `../dist/index.html`));
 });
 
 //startup

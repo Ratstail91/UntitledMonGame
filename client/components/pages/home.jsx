@@ -12,7 +12,7 @@ class Home extends React.Component {
 		return (
 			<div className='page'>
 				<div className='panel'>
-					<Markdown url={'content/home.md'} />
+					<Markdown className="content" url={require('../../markdown/home.md').default} />
 					<span className='centered'><strong><h1>News Feed</h1></strong></span>
 					<NewsFeed />
 					<div className='panel' style={{justifyContent: 'flex-end', alignItems:'flex-end'}}>

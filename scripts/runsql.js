@@ -1,3 +1,4 @@
+// Runs any sql file in sql folder
 //environment variables
 require('dotenv').config();
 
@@ -14,18 +15,17 @@ const connection = mysql.createConnection({
 	port: process.env.DB_PORT,
 	multipleStatements:true
 });
+console.log(path.join(__dirname,'..','sql',process.argv[2]))
 
 // Get the file with sql statements
-const updateFile = fs.readFileSync(path.join(__dirname, "..","sql", "update_database.sql"), {encoding:"utf-8"});
+const updateFile = fs.readFileSync(path.join(__dirname,'..','sql',process.argv[2]), {encoding:"utf-8"});
 
 connection.connect(err => {
 	if (err) throw err;
 
 	connection.query(updateFile, err => {
 		if (err) throw err;
-
 		console.log("Database is updated");
-
 		connection.end();
 	});
 });

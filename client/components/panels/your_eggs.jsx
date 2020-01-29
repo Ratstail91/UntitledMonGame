@@ -36,6 +36,7 @@ class YourEggs extends React.Component {
 							<div className='eggPanel'>
 								<img src={`/content/sprites/eggs/${egg.element}.png`} />
 								<span>{capitalize(egg.element)} Egg</span>
+								<div className='break' />
 
 								<Dropdown>
 									<Dropdown.Toggle>Actions</Dropdown.Toggle>
