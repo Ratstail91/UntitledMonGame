@@ -1,0 +1,37 @@
+{
+	"incubator": {
+		"name": "Incubator",
+
+		"type": "usable",
+
+		"value": 100,
+
+		"sprite": "incubator.png",
+
+		"shop": "constant",
+
+		"minQuantity": 1,
+		"maxQuantity": 2,
+
+		"meta": {
+			"effect": "hatch",
+			"value": 600
+		}
+	},
+	"potion": {
+		"name": "Potion",
+
+		"type": "consumable",
+
+		"value": 50,
+
+		"sprite": "potion.png",
+
+		"shop": "constant",
+
+		"meta": {
+			"effect": "heal",
+			"value": 10
+		}
+	}
+}

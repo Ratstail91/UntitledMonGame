@@ -7,6 +7,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 import YourProfilePanel from '../panels/your_profile.jsx';
 
 import YourEggs from '../panels/your_eggs.jsx';
+import YourItems from '../panels/your_items.jsx';
 
 class YourProfile extends React.Component {
 	constructor(props) {
@@ -35,7 +36,7 @@ class YourProfile extends React.Component {
 					</Tab>
 
 					<Tab eventKey='inventory' title='Inventory'>
-						<p>Inventroy goes here.</p>
+						<YourItems />
 					</Tab>
 
 					<Tab eventKey='battles' title='Battles'>

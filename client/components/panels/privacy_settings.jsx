@@ -12,8 +12,6 @@ class PrivacySettings extends React.Component {
 		this.state = {
 			promotions: false,
 		};
-
-		//TODO: change email
 	}
 
 	componentDidMount() {

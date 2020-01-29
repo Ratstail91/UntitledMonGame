@@ -1,5 +1,6 @@
 export const SET_PROFILE = 'SET_PROFILE';
 export const SET_EGGS = 'SET_EGGS';
+export const SET_ITEMS = 'SET_ITEMS';
 
 export const setProfile = (username, coins) => {
 	return {
@@ -15,3 +16,10 @@ export const setEggs = (eggs) => {
 		eggs: eggs
 	}
 };
+
+export const setItems = (items) => {
+	return {
+		type: SET_ITEMS,
+		items: items
+	}
+}

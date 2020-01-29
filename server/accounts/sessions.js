@@ -97,12 +97,12 @@ const checkAccountType = (accountRecord) => new Promise(async (resolve, reject) 
 	}
 
 	//TODO: update this message laer
-	return reject({ msg: 'The game isn\'t ready yet, sorry.\nContact krgamestudios@gmail.com for an alpha account.', extra: accountRecord.accountType });
+	return reject({ msg: 'The game isn\'t ready yet, sorry.\nContact krgamestudios@gmail.com for an alpha account.', extra: [accountRecord.id, accountType[0][0].accountType] });
 });
 
 const createNewSession = (accountRecord) => new Promise( async (resolve, reject) => {
 	//create the new session
-	const rand = Math.floor(Math.random() * 2000000000); //TODO: uuid
+	const rand = Math.floor(Math.random() * 2000000000);
 
 	const sessionQuery = 'INSERT INTO sessions (accountId, token) VALUES (?, ?);';
 	await pool.promise().query(sessionQuery, [accountRecord.id, rand]);
@@ -124,6 +124,10 @@ const createNewProfile = (accountRecord) => new Promise(async (resolve, reject) 
 
 	if (!total) {
 		await pool.promise().query('INSERT INTO profiles (accountId) VALUES (?);', [accountRecord.id]);
+
+		const profileId = (await pool.promise().query('SELECT id FROM profiles WHERE accountId = ?;', [accountRecord.id]))[0][0].id;
+
+		await pool.promise().query('INSERT INTO items (profileId, idx) VALUES (?, "incubator");', [profileId]);
 	}
 
 	return resolve(accountRecord);

@@ -3,8 +3,12 @@ const { log } = require('../utilities/logging.js');
 const elements = require('./elements.json');
 const moves = require('./moves.json');
 const species = require('./species.json');
+const itemIndex = require('./item_index.json');
 
-const apiCreature = async (req, res) => {
+//TODO: elements and moves
+
+//creatures
+const apiCreatures = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -17,13 +21,13 @@ const apiCreature = async (req, res) => {
 	}
 
 	//pass the process along
-	return getInformationFromJSON(req)
+	return getCreatureInformationFromJSON(req)
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
 };
 
-const getInformationFromJSON = (req) => new Promise((resolve, reject) => {
+const getCreatureInformationFromJSON = (req) => new Promise((resolve, reject) => {
 	if (req.query.species && species[req.query.species]) {
 		const result = {};
 
@@ -39,9 +43,47 @@ const getInformationFromJSON = (req) => new Promise((resolve, reject) => {
 	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
 });
 
+//items
+const apiItems = async (req, res) => {
+	//handle all outcomes
+	const handleRejection = (obj) => {
+		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.end();
+	}
+
+	const handleSuccess = (obj) => {
+		log(obj.msg, obj.extra.toString());
+		res.status(200).json(obj.msg);
+	}
+
+	//pass the process along
+	return getItemInformationFromJSON(req)
+		.then(handleSuccess)
+		.catch(handleRejection)
+	;
+};
+
+const getItemInformationFromJSON = (req) => new Promise((resolve, reject) => {
+	if (req.query.item && itemIndex[req.query.item]) {
+		const result = {};
+
+		result[req.query.item] = itemIndex[req.query.item];
+
+		return resolve({ msg: result, extra: req.query.item });
+	}
+
+	if (!req.query.item) {
+		return resolve({ msg: itemIndex, extra: '' });
+	}
+
+	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
+});
+
 module.exports = {
-	apiCreature,
+	apiCreatures,
+	apiItems,
 
 	//for testing
-	getInformationFromJSON,
+	getCreatureInformationFromJSON,
+	getItemInformationFromJSON,
 };

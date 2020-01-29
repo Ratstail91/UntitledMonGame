@@ -37,7 +37,7 @@ const getShopEggs = () => new Promise((resolve, reject) => {
 
 const { CronJob } = require('cron');
 
-const runDailyShopRefresh = () => {
+const runDailyShopEggRefresh = () => {
 	shopRefresh(); //run on start
 	const dailyJob = new CronJob('0 0 0 * * *', shopRefresh);
 	dailyJob.start();
@@ -47,10 +47,10 @@ const shopRefresh = async () => {
 	await pool.promise().query('DELETE FROM shopEggs;');
 
 	//find all correct creatures based on rarity
-	const common = Object.values(species).filter(creature => creature.egg.rarity == 'common');
-	const uncommon = Object.values(species).filter(creature => creature.egg.rarity == 'uncommon');
-	const rare = Object.values(species).filter(creature => creature.egg.rarity == 'rare');
-	const mythic = Object.values(species).filter(creature => creature.egg.rarity == 'mythic');
+	const common = Object.keys(species).filter(key => species[key].egg.rarity == 'common');
+	const uncommon = Object.keys(species).filter(key => species[key].egg.rarity == 'uncommon');
+	const rare = Object.keys(species).filter(key => species[key].egg.rarity == 'rare');
+	const mythic = Object.keys(species).filter(key => species[key].egg.rarity == 'mythic');
 
 	const query = 'INSERT INTO shopEggs (shopSlot, species) VALUES (?, ?);';
 	let shopSlot = 0;
@@ -60,7 +60,7 @@ const shopRefresh = async () => {
 		num = Math.min(arr.length, num);
 		for (let i = 0; i < num; i++) {
 			const rand = Math.floor(Math.random() * arr.length);
-			await pool.promise().query(query, [shopSlot++, arr[rand].name.toLowerCase()]);
+			await pool.promise().query(query, [shopSlot++, arr[rand]]);
 			arr.splice(rand, 1);
 		}
 	};
@@ -78,7 +78,7 @@ const shopRefresh = async () => {
 
 module.exports = {
 	apiShopEggs,
-	runDailyShopRefresh,
+	runDailyShopEggRefresh,
 
 	//for testing
 	getShopEggs,

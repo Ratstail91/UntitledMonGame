@@ -7,6 +7,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 import YourProfilePanel from '../panels/your_profile.jsx';
 
 import ShopEggs from '../panels/shop_eggs.jsx';
+import ShopItems from '../panels/shop_items.jsx';
 
 class Shop extends React.Component {
 	constructor(props) {
@@ -31,7 +32,7 @@ class Shop extends React.Component {
 					</Tab>
 
 					<Tab eventKey='items' title='Items'>
-						<p>Items go here.</p>
+						<ShopItems />
 					</Tab>
 
 					<Tab eventKey='premium' title='Premium'>

@@ -38,7 +38,8 @@ app.get('/api/newsfiles', news.apiNewsFiles);
 app.get('/api/newsheaders', news.apiNewsHeaders);
 
 const gameplay = require('./gameplay/gameplay.js');
-app.get('/api/creature', gameplay.apiCreature);
+app.get('/api/creatures', gameplay.apiCreatures);
+app.get('/api/items', gameplay.apiItems);
 
 //accounts
 const accounts = require('./accounts/accounts.js');
@@ -54,11 +55,17 @@ const profiles = require('./profiles/profiles.js');
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/youreggs', profiles.apiYourEggs);
 app.post('/api/youreggs/sell', profiles.apiYourEggsSell);
+app.post('/api/youritems', profiles.apiYourItems);
+app.post('/api/youritems/sell', profiles.apiYourItemsSell);
 
 const shop = require('./shop/shop.js');
-shop.runDailyShopRefresh();
+shop.runDailyShopEggRefresh();
 app.get('/api/shopeggs', shop.apiShopEggs);
 app.post('/api/shopeggs/buy', shop.apiShopEggsBuy);
+
+shop.runWeeklyShopItemRefresh();
+app.get('/api/shopitems', shop.apiShopItems);
+app.post('/api/shopitems/buy', shop.apiShopItemsBuy);
 
 //privacy
 const privacy = require('./privacy/privacy.js');
