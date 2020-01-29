@@ -18,6 +18,14 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
 	whitelistPatterns: [/btn-/]
 })
 
+const htmlPlugin = new HtmlWebpackPlugin({
+	template: "./client/template.html",
+	minify: {
+		collapseWhitespace: true,
+		removeComments: true,
+		removeAttributeQuotes: true
+	}
+});
 
 module.exports = env => {
 	const production = env === 'production' ? true : false;
@@ -150,7 +158,7 @@ module.exports = env => {
 		},
 		optimization: {
 			minimize: production,
-			minimizer: [
+			minimizer: production ? [
 				new TerserPlugin({
 					terserOptions: {
 						output: {
@@ -158,20 +166,13 @@ module.exports = env => {
 						},
 					},
 				}),
-				new HtmlWebpackPlugin({
-					template: "./client/template.html",
-					minify: {
-						collapseWhitespace: true,
-						removeComments: true,
-						removeAttributeQuotes: true
-					}
-				}),
-			]
+				htmlPlugin
+			] : []
 		},
 		plugins: [
 			new CleanWebpackPlugin(),
 			new MiniCssExtractPlugin({
-				filename: "[name].[contentHash].css"
+				filename: "[name].[hash].css"
 			}),
 			new CompressionWebpackPlugin({
 				compressionOptions: {
@@ -185,6 +186,7 @@ module.exports = env => {
 					to: ''
 				},
 			]),
+			htmlPlugin
 		]
 	};
 };
