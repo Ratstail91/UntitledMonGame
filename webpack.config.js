@@ -4,6 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const path = require('path');
 
 // Remove unused bootstrap css 90% reduction in size
 const purgecss = require('@fullhuman/postcss-purgecss')({
@@ -19,14 +20,52 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
 
 
 module.exports = env => {
+	const production = env === 'production' ? true : false;
+
 	return {
-		mode: 'production',
-		entry: `./client/index${env === 'production' ? '' : '_dev'}.jsx`,
+		mode: env,
+		entry: `./client/index${production ? '' : '_dev'}.jsx`,
 		output: {
 			path: __dirname + '/dist/',
-			filename: 'main.[contentHash].js',
+			filename: '[name].[hash].js',
+			sourceMapFilename: '[name].[hash].js.map',
 			publicPath: '/'
 		},
+		devServer: {
+			contentBase: path.join(__dirname, 'dist/'),
+			compress: false,
+			port: 3001,
+			proxy: {
+				'/api/': 'http://localhost:3000/'
+			},
+			overlay: {
+				errors: true
+			},
+			// liveReload: true,
+			stats: {
+				colors: true,
+				hash: false,
+				version: false,
+				timings: false,
+				assets: false,
+				chunks: false,
+				modules: false,
+				reasons: false,
+				children: false,
+				source: false,
+				errors: true,
+				errorDetails: false,
+				warnings: true,
+				publicPath: false
+			},
+			host: '0.0.0.0',
+			disableHostCheck: true,
+			clientLogLevel: 'silent',
+			historyApiFallback: true,
+			hot: true,
+			injectHot: true
+		},
+		devtool: 'source-map',
 		module: {
 			rules: [{
 					test: /\.(js|jsx)$/,
@@ -52,7 +91,7 @@ module.exports = env => {
 									require('postcss-import')({ root: loader.resourcePath }),
 									require('postcss-preset-env')(),
 									require('cssnano')(),
-									purgecss
+									/* purgecss */
 								  ]
 							}
 						}
@@ -110,7 +149,7 @@ module.exports = env => {
 
 		},
 		optimization: {
-			minimize: true,
+			minimize: production,
 			minimizer: [
 				new TerserPlugin({
 					terserOptions: {
