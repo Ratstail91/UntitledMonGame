@@ -70,7 +70,6 @@ app.delete('/api/account', privacy.apiDeleteAccount);
 const admin = require('./admin/admin.js');
 app.post('/api/admin', admin.apiAdminDisplay);
 
-
 //fallback to index.html
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, `../dist/index.html`));

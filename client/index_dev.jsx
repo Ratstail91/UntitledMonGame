@@ -28,7 +28,6 @@ store.subscribe(() => {
 	localStorage.setItem(ITEM_NAME, JSON.stringify(store.getState().account));
 });
 
-
 //start the process
 ReactDOM.render(
 	<Provider store={store}>
