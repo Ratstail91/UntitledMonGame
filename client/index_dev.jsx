@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -29,13 +28,12 @@ store.subscribe(() => {
 	localStorage.setItem(ITEM_NAME, JSON.stringify(store.getState().account));
 });
 
-const HotApp = hot(App)
 
 //start the process
 ReactDOM.render(
 	<Provider store={store}>
 		<div>
-			<HotApp />
+			<App />
 			<DevTools />
 		</div>
 	</Provider>,

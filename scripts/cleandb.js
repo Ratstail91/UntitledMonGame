@@ -1,3 +1,6 @@
+//environment variables
+require('dotenv').config();
+
 var pool = require('./../server/utilities/database');
 
 (async () => {
