@@ -20,7 +20,9 @@ pool.getConnection((err, connection) => {
 
 	log("Connection is established");
 	connection.release();
-})
+});
+
+//TODO: move coins from accounts to profiles
 
 // Don't need to use bodyparser and other middleware for static files
 app.use('/', express.static(path.resolve(__dirname + '/../dist/')));
@@ -36,6 +38,10 @@ analytics.runDailySnapshots();
 const news = require('./news/news.js');
 app.get('/api/newsfiles', news.apiNewsFiles);
 app.get('/api/newsheaders', news.apiNewsHeaders);
+
+//gameplay
+const { runSoftlockPicker } = require('./softlock_picker.js');
+runSoftlockPicker();
 
 const gameplay = require('./gameplay/gameplay.js');
 app.get('/api/creatures', gameplay.apiCreatures);
