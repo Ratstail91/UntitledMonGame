@@ -1,15 +1,11 @@
 {
 	"incubator": {
 		"name": "Incubator",
-
 		"type": "usable",
-
 		"value": 100,
-
 		"sprite": "incubator.png",
 
 		"shop": "constant",
-
 		"minQuantity": 1,
 		"maxQuantity": 2,
 
@@ -18,13 +14,25 @@
 			"value": 600
 		}
 	},
+
+	"magnifyingglass": {
+		"name": "Magnifying Glass",
+		"type": "usable",
+		"value": 600,
+		"sprite": "magnifying_glass.png",
+
+		"shop": "constant",
+		"maxQuantity": 1,
+
+		"meta": {
+			"effect": "reveal"
+		}
+	},
+
 	"potion": {
 		"name": "Potion",
-
 		"type": "consumable",
-
 		"value": 50,
-
 		"sprite": "potion.png",
 
 		"shop": "constant",

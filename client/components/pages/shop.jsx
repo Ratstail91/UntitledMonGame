@@ -8,6 +8,7 @@ import YourProfilePanel from '../panels/your_profile.jsx';
 
 import ShopEggs from '../panels/shop_eggs.jsx';
 import ShopItems from '../panels/shop_items.jsx';
+import ShopPremium from '../panels/shop_premium.jsx';
 
 class Shop extends React.Component {
 	constructor(props) {
@@ -36,8 +37,7 @@ class Shop extends React.Component {
 					</Tab>
 
 					<Tab eventKey='premium' title='Premium'>
-						<p>Premium goods go here.</p>
-						<p>You'll be able to support the game's development here, and get a bonus as well!</p>
+						<ShopPremium />
 					</Tab>
 				</Tabs>
 			</div>

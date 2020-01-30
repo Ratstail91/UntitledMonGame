@@ -1,0 +1,15 @@
+{
+	"goldenapple": {
+		"name": "Golden Apple",
+		"type": "consumable",
+		"value": 199,
+		"sprite": "goldenapple.png",
+
+		"shop": "constant",
+
+		"meta": {
+			"effect": "heal",
+			"value": 10
+		}
+	}
+}

@@ -56,8 +56,6 @@ const checkMinQuantity = (fields) => new Promise((resolve, reject) => {
 	;
 });
 
-//TODO: give everyone an incubator on first login
-
 const addCoins = (fields) => new Promise((resolve, reject) => {
 	const query = 'UPDATE accounts SET coins = coins + ? WHERE id = ?;';
 	return pool.promise().query(query, [itemIndex[fields.item.idx].value / 2, fields.id]) //TODO: change value to price, for eggs too

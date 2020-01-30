@@ -73,6 +73,10 @@ shop.runWeeklyShopItemRefresh();
 app.get('/api/shopitems', shop.apiShopItems);
 app.post('/api/shopitems/buy', shop.apiShopItemsBuy);
 
+shop.runDailyShopPremiumRefresh();
+app.get('/api/shoppremium', shop.apiShopPremiums);
+app.post('/api/shoppremium/buy', shop.apiShopPremiumsBuy);
+
 //privacy
 const privacy = require('./privacy/privacy.js');
 app.post('/api/privacysettings', privacy.apiSettings);
