@@ -150,7 +150,7 @@ const apiLogout = (req, res) => {
 const { CronJob } = require('cron');
 
 const job = new CronJob('0 0 0 * * *', async () => {
-	const query = 'DELETE FROM sessions WHERE accountId IN (SELECT id FROM accounts WHERE lastActivityTime < NOW() - interval 2 days);';
+	const query = 'DELETE FROM sessions WHERE accountId IN (SELECT id FROM accounts WHERE lastActivityTime < NOW() - interval 2 day);';
 	pool.promise().query(query)
 		.catch(e => log('Session deletion error: ', e));
 });
