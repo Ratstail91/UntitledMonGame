@@ -80,7 +80,7 @@ class ShopPremium extends React.Component {
 								<span>{premium.name}</span>
 								<span>${premium.value / 100} AUD</span>
 
-								<button id={`btn-${idx}`}>Buy</button>
+								<span id={`btn-${idx}`}></span>
 							</div>
 							<div className='break' />
 						</div>
