@@ -4,6 +4,10 @@ import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Button from '../button.jsx';
 
+import paypal from 'paypal-checkout';
+import client from 'braintree-web/client';
+import paypalCheckout from 'braintree-web/paypal-checkout';
+
 import { setWarning } from '../../actions/warning.js';
 import { setProfile } from '../../actions/profile.js';
 
@@ -11,18 +15,54 @@ class ShopPremium extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			premiums: []
+			premiums: [],
+			clientToken: null
 		};
 	}
 
 	componentDidMount() {
-		this.sendShopPremiumRequest();
+		this.sendShopPremiumsRequest();
+		this.sendShopPremiumsClientTokenRequest();
+	}
+
+	componentDidUpdate() {
+		if (!this.state.clientToken) {
+			return;
+		}
+
+		this.state.premiums.forEach((premium, idx) => {
+			//hook the element to paypal
+			paypal.Button.render({
+				braintree: {
+					client: client,
+					paypalCheckout: paypalCheckout,
+				},
+				client: {
+					sandbox: this.state.clientToken
+				},
+				env: 'sandbox',
+
+				payment: (data, actions) => {
+					return actions.braintree.create({
+						flow: 'checkout',
+						amount: premium.value / 100,
+						currency: 'AUD',
+						enableShippingAddress: false,
+					});
+				},
+
+				onAuthorize: (payload) => {
+					//submit payload.nonce to the server
+					this.sendShopPremiumsNonceMessage(payload.nonce, premium);
+				}
+			}, `#btn-${idx}`);
+		});
 	}
 
 	render() {
 		if (this.state.premiums.length == 0) {
 			return (
-				<div>
+				<div className='panel'>
 					<p>Premium goods go here.</p>
 					<p>You'll be able to support the game's development here, and get a bonus as well!</p>
 				</div>
@@ -38,9 +78,9 @@ class ShopPremium extends React.Component {
 							<div className='eggPanel'>
 								<img src={`/content/sprites/premiums/${premium.sprite}`} />
 								<span>{premium.name}</span>
-								<span>${premium.value / 100} USD</span>
+								<span>${premium.value / 100} AUD</span>
 
-								<Button disabled onClick={e => { e.preventDefault(); e.persist(); e.target.setAttribute('disabled', 'disabled'); this.sendBuyPremiumRequest(idx, e); }}>Buy</Button>
+								<button id={`btn-${idx}`}>Buy</button>
 							</div>
 							<div className='break' />
 						</div>
@@ -50,7 +90,7 @@ class ShopPremium extends React.Component {
 		);
 	}
 
-	sendShopPremiumRequest() {
+	sendShopPremiumsRequest() {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -67,11 +107,11 @@ class ShopPremium extends React.Component {
 			}
 		};
 
-		xhr.open('GET', '/api/shoppremium', true);
+		xhr.open('GET', '/api/shoppremiums', true);
 		xhr.send();
 	}
 
-	sendBuyPremiumRequest(index, e) {
+	sendShopPremiumsClientTokenRequest() {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -79,10 +119,8 @@ class ShopPremium extends React.Component {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
 					//on success
-					e.target.removeAttribute('disabled');
 					const json = JSON.parse(xhr.responseText);
-					this.props.setProfile(json.profile.username, json.profile.coins);
-					alert('Premium Item Purchased!');
+					this.setState({ clientToken: json.clientToken });
 				}
 				else {
 					this.props.setWarning(xhr.responseText);
@@ -90,12 +128,33 @@ class ShopPremium extends React.Component {
 			}
 		};
 
-		xhr.open('POST', '/api/shoppremium/buy', true);
+		xhr.open('GET', '/api/shoppremiums/client_token', true);
+		xhr.send();
+	}
+
+	sendShopPremiumsNonceMessage(nonce, premium) {
+		//build the XHR
+		const xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					//on success
+					//...
+				}
+				else {
+					this.props.setWarning(xhr.responseText);
+				}
+			}
+		};
+
+		xhr.open('POST', '/api/shoppremiums/checkout', true);
 		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send(JSON.stringify({
 			id: this.props.id,
 			token: this.props.token,
-			index: index
+			nonce: nonce,
+			premium: premium,
 		}));
 	}
 }

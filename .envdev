@@ -6,3 +6,6 @@ DB_PORT=3306
 
 WEB_ADDRESS=localhost
 WEB_PORT=3000
+
+PAYPAL_ADDRESS=api.sandbox.paypal.com
+PAYPAL_ACCESS=

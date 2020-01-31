@@ -23,6 +23,9 @@ pool.getConnection((err, connection) => {
 });
 
 //TODO: move coins from accounts to profiles
+//TODO: (1) design for mobiles forst
+//TODO: (1) add descriptions to all of the gameplay things
+//TODO: does bootstrap have an image class?
 
 // Don't need to use bodyparser and other middleware for static files
 app.use('/', express.static(path.resolve(__dirname + '/../dist/')));
@@ -74,8 +77,13 @@ app.get('/api/shopitems', shop.apiShopItems);
 app.post('/api/shopitems/buy', shop.apiShopItemsBuy);
 
 shop.runDailyShopPremiumRefresh();
-app.get('/api/shoppremium', shop.apiShopPremiums);
-app.post('/api/shoppremium/buy', shop.apiShopPremiumsBuy);
+app.get('/api/shoppremiums', shop.apiShopPremiums);
+
+//financials
+const financial = require('./financial/financial.js');
+financial.connectBraintree();
+app.get('/api/shoppremiums/client_token', financial.apiGenerateClientToken);
+app.post('/api/shoppremiums/checkout', financial.apiCheckout);
 
 //privacy
 const privacy = require('./privacy/privacy.js');
