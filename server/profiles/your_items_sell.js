@@ -45,6 +45,10 @@ const determineSelectedItem = (fields) => new Promise((resolve, reject) => {
 });
 
 const checkMinQuantity = (fields) => new Promise((resolve, reject) => {
+	if (!itemIndex[fields.item.idx]) {
+		return reject({ msg: 'This item cannot be sold', extra: fields.item.idx });
+	}
+
 	if (!itemIndex[fields.item.idx].minQuantity) {
 		return resolve(fields);
 	}

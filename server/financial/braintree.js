@@ -1,4 +1,10 @@
+const pool = require("../utilities/database.js");
+
+const { log } = require('../utilities/logging.js');
+
 const braintree = require('braintree');
+
+const premiumIndex = require('../gameplay/premium_index.json');
 
 let gateway = null;
 
@@ -15,35 +21,36 @@ const apiGenerateClientToken = (req, res) => new Promise((resolve, reject) => {
 	});
 });
 
-const apiCheckout = (req, res) => new Promise((resolve, reject) => {
+const apiCheckout = (req, res) => new Promise(async (resolve, reject) => {
+	const premiumRecord = (await pool.promise().query('SELECT * FROM shopPremiums WHERE shopSlot = ?;', [req.body.index]))[0][0];
+
+	if (!premiumRecord) {
+		res.status(400).write('No premium item with that shop index was found');
+		res.end();
+		return;
+	}
+
 	const saleRequest = {
-		amount: req.body.premium.value / 100,
+		amount: premiumIndex[premiumRecord.idx].value / 100,
 		paymentMethodNonce: req.body.nonce,
 		descriptor: {
 			name: "KGS*Egg Trainer"
 		},
 	};
 
-	gateway.transaction.sale(saleRequest, (err, result) => {
-		if (err) {
-			res.status(400).write(`Error: ${err}`);
-		} else if (result.success) {
-			res.status(200).json({ status: 'success', id: result.transaction.id });
-			buyPremium(req.body.id, req.body.token, req.body.premium);
+	gateway.transaction.sale(saleRequest, async (err, result) => {
+		if (err || !result.success) {
+			res.status(400).write(`${err}`);
 		} else {
-			res.status(400).write(`<h1>Error: ${result.message}</h1>`);
+			await pool.promise().query('INSERT INTO premiumTransactions (accountId, idx, state) VALUES (?, ?, "complete");', [req.body.id, premiumRecord.idx]);
+			await pool.promise().query('INSERT INTO items (profileId, idx) VALUES((SELECT id FROM profiles WHERE accountId = ?), ?);', [req.body.id, premiumRecord.idx])
+
+			res.status(200).json({ msg: `Success! you have purchased a ${premiumIndex[premiumRecord.idx].name}` });
 		}
 
 		res.end();
 	});
 });
-
-const buyPremium = (id, token, premium) => {
-	console.log(`${id} has purchased ${premium.name}`);
-	//TODO: (1) finish this
-	//TODO: change premium argument to shopslot argument
-	//TODO: store all sales in the database
-}
 
 module.exports = {
 	connectBraintree,

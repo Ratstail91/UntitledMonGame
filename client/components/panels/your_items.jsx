@@ -30,7 +30,7 @@ class YourItems extends React.Component {
 					return (
 						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
-								<img src={`/content/sprites/items/${item.sprite}`} />
+								<img src={item.premium ? `/content/sprites/premiums/${item.sprite}` : `/content/sprites/items/${item.sprite}`} />
 								<span>{item.name}</span>
 								<div className='break' />
 
@@ -38,7 +38,7 @@ class YourItems extends React.Component {
 									<Dropdown.Toggle>Actions</Dropdown.Toggle>
 
 									<Dropdown.Menu>
-										<Dropdown.Item onClick={e => { e.preventDefault(); this.itemAction(idx, 'sell'); }}>Sell</Dropdown.Item>
+										{!item.premium ? <Dropdown.Item onClick={e => { e.preventDefault(); this.itemAction(idx, 'sell'); }}>Sell</Dropdown.Item> : <div />}
 									</Dropdown.Menu>
 								</Dropdown>
 							</div>

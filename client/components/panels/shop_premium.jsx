@@ -53,7 +53,7 @@ class ShopPremium extends React.Component {
 
 				onAuthorize: (payload) => {
 					//submit payload.nonce to the server
-					this.sendShopPremiumsNonceMessage(payload.nonce, premium);
+					this.sendShopPremiumsNonceMessage(payload.nonce, idx);
 				}
 			}, `#btn-${idx}`);
 		});
@@ -132,7 +132,7 @@ class ShopPremium extends React.Component {
 		xhr.send();
 	}
 
-	sendShopPremiumsNonceMessage(nonce, premium) {
+	sendShopPremiumsNonceMessage(nonce, index) {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -140,7 +140,8 @@ class ShopPremium extends React.Component {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
 					//on success
-					//...
+					const json = JSON.parse(xhr.responseText);
+					alert(json.msg);
 				}
 				else {
 					this.props.setWarning(xhr.responseText);
@@ -154,7 +155,7 @@ class ShopPremium extends React.Component {
 			id: this.props.id,
 			token: this.props.token,
 			nonce: nonce,
-			premium: premium,
+			index: index,
 		}));
 	}
 }

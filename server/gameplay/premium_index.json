@@ -6,6 +6,7 @@
 		"sprite": "goldenapple.png",
 
 		"shop": "constant",
+		"premium": true,
 
 		"meta": {
 			"effect": "heal",

@@ -5,6 +5,7 @@ const { log } = require('../utilities/logging.js');
 const { validateSession } = require('../reusable.js');
 
 const itemIndex = require('../gameplay/item_index.json');
+const premiumIndex = require('../gameplay/premium_index.json');
 
 const apiYourItems = async (req, res) => {
 	//handle all outcomes
@@ -32,7 +33,7 @@ const getYourItems = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT id, idx FROM items WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
-		.then(items => resolve({ items: items.map(item => { return { id: item.id, ...itemIndex[item.idx] }}), ...fields })) //TODO: (1) itemIndex or premiumIndex
+		.then(items => resolve({ items: items.map(item => { return { id: item.id, ... (itemIndex[item.idx] || premiumIndex[item.idx]) }}), ...fields }))
 		.catch(e => reject({ msg: 'getYourItems error', extra: e }))
 	;
 });

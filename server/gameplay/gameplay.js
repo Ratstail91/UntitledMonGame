@@ -79,6 +79,8 @@ const getItemInformationFromJSON = (req) => new Promise((resolve, reject) => {
 	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
 });
 
+//TODO: expose premiums, moves, etc. here
+
 module.exports = {
 	apiCreatures,
 	apiItems,
