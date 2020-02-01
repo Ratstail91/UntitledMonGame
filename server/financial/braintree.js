@@ -1,6 +1,7 @@
 const pool = require("../utilities/database.js");
 
 const { log } = require('../utilities/logging.js');
+const { validateSession } = require('../reusable.js');
 
 const braintree = require('braintree');
 
@@ -22,6 +23,14 @@ const apiGenerateClientToken = (req, res) => new Promise((resolve, reject) => {
 });
 
 const apiCheckout = (req, res) => new Promise(async (resolve, reject) => {
+	//verify the session
+	const result = (await validateSession(req.body).catch(e => e));
+	if (!result.id) {
+		res.status(400).write('Failed Premium Validation');
+		res.end();
+		return;
+	}
+
 	const premiumRecord = (await pool.promise().query('SELECT * FROM shopPremiums WHERE shopSlot = ?;', [req.body.index]))[0][0];
 
 	if (!premiumRecord) {
@@ -50,6 +59,8 @@ const apiCheckout = (req, res) => new Promise(async (resolve, reject) => {
 
 		res.end();
 	});
+
+	return resolve();
 });
 
 module.exports = {
