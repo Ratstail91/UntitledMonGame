@@ -20,7 +20,7 @@ const runSoftlockPicker = () => {
 
 			//get the value of items
 			const itemsOwned = (await pool.promise().query('SELECT idx FROM items WHERE profileId = ?', [ profile.profileId ]))[0];
-			itemsOwned.forEach(async item => totalValue += itemIndex[ item.idx ].value);
+			itemsOwned.forEach(async item => totalValue += itemIndex[ item.idx ] ? itemIndex[ item.idx ].value || 0);
 
 			//subtract minQuantities
 			totalValue -= itemIndex['incubator'].value;
