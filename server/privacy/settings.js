@@ -21,7 +21,7 @@ const apiSettings = async (req, res) => {
 		res.end();
 	};
 
-	return new Promise((resolve, reject) => resolve({ fields: req.body }))
+	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(sendPrivacySettings(res))
 		.then(handleSuccess)
