@@ -5,47 +5,46 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import { setWarning } from '../../actions/warning.js';
-import { setProfile } from '../../actions/profile.js';
-import { setEggs } from '../../actions/profile.js';
+import { setCreatures } from '../../actions/profile.js';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-class YourEggs extends React.Component {
+class YourCreatures extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
 	}
 
 	componentDidMount() {
-		this.sendYourEggsRequest('/api/youreggs');
+		this.sendYourCreaturesRequest('/api/yourcreatures');
 	}
 
 	render() {
-		if (this.props.eggs.length == 0) {
+		if (this.props.creatures.length == 0) {
 			return (
-				<p>Eggs go here.</p>
+				<p>Creatures go here.</p>
 			);
 		}
 
 		return (
 			<div className='panel' style={{flexDirection: 'row', flexWrap:'wrap'}}>
-				{this.props.eggs.map( (egg, idx) => {
+				{this.props.creatures.map( (creature, idx) => {
 					return (
 						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
-								<img src={egg.hatchTime ? '/content/sprites/items/incubator.png' : `/content/sprites/eggs/${egg.element}.png`} />
-								<span>{capitalize(egg.element)} Egg</span>
-								<span>{egg.hatchTime ? 'Hatching ' + egg.hatchTime : ''}</span>
+								<img src={`/content/sprites/creatures/${creature.frontImage}`} />
+								<span>{creature.name} - {capitalize(creature.element)}</span>
 								<div className='break' />
 
 								<Dropdown>
 									<Dropdown.Toggle>Actions</Dropdown.Toggle>
 
 									<Dropdown.Menu>
-										<Dropdown.Item className={egg.hatchTime ? 'disabled' : ''} onClick={e => { e.preventDefault(); this.eggAction(idx, 'incubate'); }}>Incubate</Dropdown.Item>
-										<Dropdown.Item className={egg.hatchTime ? 'disabled' : ''} onClick={e => { e.preventDefault(); this.eggAction(idx, 'sell'); }}>Sell</Dropdown.Item>
+										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
+										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'breed'); }}>Breed</Dropdown.Item>
+										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
 									</Dropdown.Menu>
 								</Dropdown>
 							</div>
@@ -57,7 +56,7 @@ class YourEggs extends React.Component {
 		);
 	}
 
-	sendYourEggsRequest(url, index) {
+	sendYourCreaturesRequest(url, index) {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -66,10 +65,7 @@ class YourEggs extends React.Component {
 				if (xhr.status === 200) {
 					//on success
 					const json = JSON.parse(xhr.responseText);
-					if (json.profile) {
-						this.props.setProfile(json.profile.username, json.profile.coins);
-					}
-					this.props.setEggs(json.eggs);
+					this.props.setCreatures(json.creatures);
 				}
 				else {
 					this.props.setWarning(xhr.responseText);
@@ -86,35 +82,35 @@ class YourEggs extends React.Component {
 		}));
 	}
 
-	eggAction(index, action) {
+	creatureAction(index, action) {
 		switch(action) {
-			case 'incubate':
-				if (confirm('Incubate this egg?')) {
-					this.sendYourEggsRequest('/api/youreggs/incubate', index);
-				}
+			case 'inspect':
+				//TODO: inspect
 				return;
 
-			case 'sell':
-				if (confirm('Sell this egg?')) {
-					this.sendYourEggsRequest('/api/youreggs/sell', index);
-				}
+			case 'breed':
+				//TODO: breeding
+				return;
+
+			case 'release':
+				//TODO: release
 				return;
 		}
 	}
 }
 
-YourEggs.propTypes = {
+YourCreatures.propTypes = {
 	id: PropTypes.number.isRequired,
 	token: PropTypes.number.isRequired,
 	setWarning: PropTypes.func.isRequired,
-	setEggs: PropTypes.func.isRequired,
+	setCreatures: PropTypes.func.isRequired,
 };
 
 const mapStoreToProps = (store) => {
 	return {
 		id: store.account.id,
 		token: store.account.token,
-		eggs: store.profile.eggs,
+		creatures: store.profile.creatures,
 	};
 };
 
@@ -122,10 +118,10 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setWarning: msg => dispatch(setWarning(msg)),
 		setProfile: (username, coins) => dispatch(setProfile(username, coins)),
-		setEggs: (eggs) => dispatch(setEggs(eggs)),
+		setCreatures: (creatures) => dispatch(setCreatures(creatures)),
 	};
 };
 
-YourEggs = connect(mapStoreToProps, mapDispatchToProps)(YourEggs);
+YourCreatures = connect(mapStoreToProps, mapDispatchToProps)(YourCreatures);
 
-export default YourEggs;
+export default YourCreatures;

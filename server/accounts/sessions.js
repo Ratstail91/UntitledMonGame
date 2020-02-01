@@ -96,7 +96,7 @@ const checkAccountType = (accountRecord) => new Promise(async (resolve, reject) 
 			return resolve(accountRecord);
 	}
 
-	//TODO: update this message laer
+	//TODO: update this message later
 	return reject({ msg: 'The game isn\'t ready yet, sorry.\nContact krgamestudios@gmail.com for an alpha account.', extra: [accountRecord.id, accountType[0][0].accountType] });
 });
 

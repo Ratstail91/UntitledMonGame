@@ -38,9 +38,10 @@ class ShopPremium extends React.Component {
 					paypalCheckout: paypalCheckout,
 				},
 				client: {
+					sandbox: this.state.clientToken,
 					production: this.state.clientToken
 				},
-				env: 'production',
+				env: process.env.NODE_ENV == 'development' ? 'sandbox' : 'production',
 
 				payment: (data, actions) => {
 					return actions.braintree.create({

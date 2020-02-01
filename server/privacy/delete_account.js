@@ -50,7 +50,7 @@ const job = new CronJob('0 * * * * *', async () => {
 		.catch(e => log('Account deletion error: ', e));
 });
 
-job.start();
+job.start(); //TODO: move this to a run function
 
 module.exports = {
 	apiDeleteAccount,

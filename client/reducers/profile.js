@@ -1,8 +1,9 @@
-import { SET_PROFILE, SET_EGGS, SET_ITEMS } from "../actions/profile.js";
+import { SET_PROFILE, SET_CREATURES, SET_EGGS, SET_ITEMS } from "../actions/profile.js";
 
 const initialStore = {
 	username: '',
 	coins: 0,
+	creatures: [],
 	eggs: [],
 	items: [],
 };
@@ -14,6 +15,14 @@ export const profileReducer = (store = initialStore, action) => {
 
 			newStore.username = action.username;
 			newStore.coins = action.coins;
+
+			return newStore;
+		}
+
+		case SET_CREATURES: {
+			let newStore = JSON.parse(JSON.stringify(store));
+
+			newStore.creatures = JSON.parse(JSON.stringify(action.creatures));
 
 			return newStore;
 		}

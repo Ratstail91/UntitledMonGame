@@ -23,7 +23,7 @@ pool.getConnection((err, connection) => {
 });
 
 //TODO: move coins from accounts to profiles
-//TODO: (1) design for mobiles forst
+//TODO: (1) design for mobiles first
 //TODO: (1) add descriptions to all of the gameplay things
 //TODO: does bootstrap have an image class?
 
@@ -61,9 +61,12 @@ app.post('/api/passwordrecover', accounts.apiPasswordRecover);
 app.post('/api/passwordreset', accounts.apiPasswordReset);
 
 const profiles = require('./profiles/profiles.js');
+profiles.runEggHatchJob();
 app.post('/api/yourprofile', profiles.apiYourProfile);
+app.post('/api/yourcreatures', profiles.apiYourCreatures);
 app.post('/api/youreggs', profiles.apiYourEggs);
 app.post('/api/youreggs/sell', profiles.apiYourEggsSell);
+app.post('/api/youreggs/incubate', profiles.apiYourEggsIncubate);
 app.post('/api/youritems', profiles.apiYourItems);
 app.post('/api/youritems/sell', profiles.apiYourItemsSell);
 

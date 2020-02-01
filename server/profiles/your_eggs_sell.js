@@ -2,9 +2,8 @@ const pool = require("../utilities/database.js");
 
 const { log } = require('../utilities/logging.js');
 
-const { validateSession } = require('../reusable.js');
+const { validateSession, getYourEggs } = require('../reusable.js');
 const { getYourProfile } = require('./your_profile.js');
-const { getYourEggs } = require('./your_eggs.js');
 
 const species = require('../gameplay/species.json');
 
@@ -34,6 +33,7 @@ const apiYourEggsSell = async (req, res) => {
 	;
 };
 
+//TODO: move this to reusable
 const determineSelectedEgg = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM creatureEggs WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
