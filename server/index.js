@@ -26,6 +26,7 @@ pool.getConnection((err, connection) => {
 //TODO: (1) design for mobiles first
 //TODO: (1) add descriptions to all of the gameplay things
 //TODO: does bootstrap have an image class?
+//TODO: hatching times based on rarity
 
 // Don't need to use bodyparser and other middleware for static files
 app.use('/', express.static(path.resolve(__dirname + '/../dist/')));
