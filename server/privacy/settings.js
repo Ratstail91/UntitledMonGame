@@ -6,7 +6,7 @@ const { log } = require('../utilities/logging.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
 const pool = require("../utilities/database.js")
 
-const { validateSession } = require('../accounts/sessions.js');
+const { validateSession } = require('../reusable.js');
 
 const apiSettings = async (req, res) => {
 	//handle all outcomes
