@@ -4,6 +4,7 @@
 		"type": "consumable",
 		"value": 199,
 		"sprite": "goldenapple.png",
+		"description": "For healing creatures during battles. Single use.",
 
 		"shop": "constant",
 		"premium": true,

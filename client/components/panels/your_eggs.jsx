@@ -36,8 +36,8 @@ class YourEggs extends React.Component {
 						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
 								<img src={egg.hatchTime ? '/content/sprites/items/incubator.png' : `/content/sprites/eggs/${egg.element}.png`} />
-								<span>{capitalize(egg.element)} Egg</span>
-								<span>{egg.hatchTime ? 'Hatching ' + egg.hatchTime : ''}</span>
+								<span><strong>{capitalize(egg.element)} Egg</strong></span>
+								<span><em>{egg.hatchTime ? 'Hatching ' + egg.hatchTime : ''}</em></span>
 								<div className='break' />
 
 								<Dropdown>

@@ -31,7 +31,8 @@ class YourItems extends React.Component {
 						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
 								<img src={item.premium ? `/content/sprites/premiums/${item.sprite}` : `/content/sprites/items/${item.sprite}`} />
-								<span>{item.name}</span>
+								<span><strong>{item.name}</strong></span>
+								<span style={{marginLeft: '1em', marginRight: '1em', textAlign: 'center'}}><em>{item.description}</em></span>
 								<div className='break' />
 
 								<Dropdown>

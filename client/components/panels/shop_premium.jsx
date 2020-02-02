@@ -129,7 +129,7 @@ class ShopPremium extends React.Component {
 			}
 		};
 
-		xhr.open('GET', '/api/shoppremiums/client_token', true);
+		xhr.open('GET', '/api/shoppremiums/clienttoken', true);
 		xhr.send();
 	}
 

@@ -4,6 +4,7 @@
 		"type": "usable",
 		"value": 100,
 		"sprite": "incubator.png",
+		"description": "For hatching eggs. You can own up to two normally.",
 
 		"shop": "constant",
 		"minQuantity": 1,
@@ -20,6 +21,7 @@
 		"type": "usable",
 		"value": 600,
 		"sprite": "magnifying_glass.png",
+		"description": "For identifying the stats and genetic makeup of a creature.",
 
 		"shop": "constant",
 		"maxQuantity": 1,
@@ -34,6 +36,7 @@
 		"type": "consumable",
 		"value": 50,
 		"sprite": "potion.png",
+		"description": "For healing creatures during battles. Single use.",
 
 		"shop": "constant",
 

@@ -50,6 +50,8 @@ runSoftlockPicker();
 const gameplay = require('./gameplay/gameplay.js');
 app.get('/api/creatures', gameplay.apiCreatures);
 app.get('/api/items', gameplay.apiItems);
+app.get('/api/moves', gameplay.apiMoves);
+app.get('/api/elements', gameplay.apiElements);
 
 //accounts
 const accounts = require('./accounts/accounts.js');
@@ -86,7 +88,7 @@ app.get('/api/shoppremiums', shop.apiShopPremiums);
 //financials
 const financial = require('./financial/financial.js');
 financial.connectBraintree();
-app.get('/api/shoppremiums/client_token', financial.apiGenerateClientToken);
+app.get('/api/shoppremiums/clienttoken', financial.apiGenerateClientToken);
 app.post('/api/shoppremiums/checkout', financial.apiCheckout);
 
 //privacy

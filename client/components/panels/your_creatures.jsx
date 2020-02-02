@@ -35,7 +35,8 @@ class YourCreatures extends React.Component {
 						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
 								<img src={`/content/sprites/creatures/${creature.frontImage}`} />
-								<span>{creature.name} - {capitalize(creature.element)}</span>
+								<span><strong>{creature.name} - {capitalize(creature.element)}</strong></span>
+								<span style={{marginLeft: '1em', marginRight: '1em', textAlign: 'center'}}><em>{creature.description}</em></span>
 								<div className='break' />
 
 								<Dropdown>
@@ -43,6 +44,7 @@ class YourCreatures extends React.Component {
 
 									<Dropdown.Menu>
 										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
+										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
 										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'breed'); }}>Breed</Dropdown.Item>
 										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
 									</Dropdown.Menu>
@@ -86,6 +88,10 @@ class YourCreatures extends React.Component {
 		switch(action) {
 			case 'inspect':
 				//TODO: inspect
+				return;
+
+			case 'train':
+				//TODO: train
 				return;
 
 			case 'breed':

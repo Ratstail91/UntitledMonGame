@@ -2,6 +2,7 @@
 	"spitty": {
 		"name": "Spitty",
 		"element": "fire",
+		"description": "A llama-like creature with fire-infused wool. It spits fire at anything that annoys it.",
 
 		"egg": {
 			"rarity": "common",
@@ -25,6 +26,7 @@
 	"whalephant": {
 		"name": "Whalephant",
 		"element": "water",
+		"description": "A majestic deep-sea creature, known for never forgetting. It has a prehensile nose.",
 
 		"egg": {
 			"rarity": "common",
@@ -48,6 +50,7 @@
 	"neverrat": {
 		"name": "Neverrat",
 		"element": "grass",
+		"description": "Rarely seen during the daytime, it spends it's time the hollows of trees, usually sleeping.",
 
 		"egg": {
 			"rarity": "common",
@@ -71,6 +74,7 @@
 	"slink": {
 		"name": "Slink",
 		"element": "psychic",
+		"description": "An ambush predator, it's head is so cute it draws in even large prey before striking with venomous fangs.",
 
 		"egg": {
 			"rarity": "common",
@@ -94,6 +98,7 @@
 	"puggy": {
 		"name": "Puggy",
 		"element": "fighting",
+		"description": "A common pet in recent times, in the past it was farmed for it's succulent meat.",
 
 		"egg": {
 			"rarity": "common",
@@ -117,6 +122,7 @@
 	"predatore": {
 		"name": "Predatore",
 		"element": "metal",
+		"description": "A beautiful shining bird of prey, it's numbers have been dwindling in recent times due to human encroachment on it's habitat.",
 
 		"egg": {
 			"rarity": "common",
@@ -140,6 +146,7 @@
 	"pixi": {
 		"name": "Pixi",
 		"element": "fae",
+		"description": "A small humanoid of low intelligence, fairy tales attribute many instnaces of mischief to it.",
 
 		"egg": {
 			"rarity": "common",
@@ -163,6 +170,7 @@
 	"lure": {
 		"name": "Lure",
 		"element": "light",
+		"description": "A goldfish-like creature with a light on a lure. It's small size belies it's ferocity.",
 
 		"egg": {
 			"rarity": "common",
@@ -186,6 +194,7 @@
 	"dropbear": {
 		"name": "Dropbear",
 		"element": "dark",
+		"description": "A ravenous variety of koala, known for attacking tourists and people unfamiliar with Australian culture.",
 
 		"egg": {
 			"rarity": "common",
