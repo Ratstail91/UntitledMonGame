@@ -7,6 +7,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const path = require('path');
 
+//TODO: strip out what you don't like from here
+
 // Remove unused bootstrap css 90% reduction in size
 const purgecss = require('@fullhuman/postcss-purgecss')({
 	content: [

@@ -40,7 +40,6 @@
     "firstline": "^2.0.2",
     "forever": "^2.0.0",
     "formidable": "^1.2.1",
-    "moment": "^2.24.0",
     "mysql2": "^2.1.0",
     "paypal-checkout": "^4.0.311",
     "query-string": "^6.9.0",
