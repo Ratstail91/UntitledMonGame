@@ -30,7 +30,7 @@ class YourEggs extends React.Component {
 		}
 
 		return (
-			<div className='panel' style={{flexDirection: 'row', flexWrap:'wrap'}}>
+			<div className='eggContainer panel'>
 				{this.props.eggs.map( (egg, idx) => {
 					return (
 						<div key={idx} className={'panel'}>

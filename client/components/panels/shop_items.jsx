@@ -27,7 +27,7 @@ class ShopItems extends React.Component {
 		}
 
 		return (
-			<div className='panel' style={{flexDirection: 'row', flexWrap:'wrap'}}>
+			<div className='eggContainer panel'>
 				<div className='break' />
 				{this.state.items.map( (item, idx) => {
 					return (

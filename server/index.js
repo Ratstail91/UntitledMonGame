@@ -23,10 +23,9 @@ pool.getConnection((err, connection) => {
 });
 
 //TODO: move coins from accounts to profiles
-//TODO: (1) design for mobiles first
-//TODO: (1) add descriptions to all of the gameplay things
 //TODO: does bootstrap have an image class?
 //TODO: hatching times based on rarity
+//TODO: individualize the creatures using abilities, personalities, etc.
 
 // Don't need to use bodyparser and other middleware for static files
 app.use('/', express.static(path.resolve(__dirname + '/../dist/')));

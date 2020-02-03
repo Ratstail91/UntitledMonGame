@@ -25,7 +25,7 @@ class YourItems extends React.Component {
 		}
 
 		return (
-			<div className='panel' style={{flexDirection: 'row', flexWrap:'wrap'}}>
+			<div className='eggContainer panel'>
 				{this.props.items.map( (item, idx) => {
 					return (
 						<div key={idx} className={'panel'}>

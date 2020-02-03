@@ -1,1 +1,0 @@
-ALTER TABLE creatureEggs ADD incubationTime TIMESTAMP NULL DEFAULT NULL;

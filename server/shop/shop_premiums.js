@@ -65,7 +65,9 @@ const shopRefresh = async () => {
 
 	insertFromArray(rotating, 3);
 
-	constant.forEach(async key => (await pool.promise().query(query, [shopSlot++, key])));
+	for (let i = 0; i < constant.length; i++) {
+		await pool.promise().query(query, [shopSlot++, constant[i]]);
+	}
 };
 
 module.exports = {

@@ -29,7 +29,7 @@ class YourCreatures extends React.Component {
 		}
 
 		return (
-			<div className='panel' style={{flexDirection: 'row', flexWrap:'wrap'}}>
+			<div className='eggContainer panel'>
 				{this.props.creatures.map( (creature, idx) => {
 					return (
 						<div key={idx} className={'panel'}>

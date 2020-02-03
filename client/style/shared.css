@@ -164,6 +164,11 @@ footer {
 }
 
 /* custom styling */
+.eggContainer {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
 .eggPanel {
 	display: flex;
 	flex: 0 1 auto;
@@ -178,6 +183,11 @@ footer {
 }
 
 @media screen and (max-width: 480px) {
+	.eggContainer {
+		flex-direction: column;
+		align-items: center;
+	}
+
 	.eggPanel {
 		flex: 1;
 		max-width: initial;

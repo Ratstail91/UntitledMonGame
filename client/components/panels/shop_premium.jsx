@@ -71,7 +71,7 @@ class ShopPremium extends React.Component {
 		}
 
 		return (
-			<div className='panel' style={{flexDirection: 'row', flexWrap:'wrap'}}>
+			<div className='eggContainer panel'>
 				<div className='break' />
 				{this.state.premiums.map( (premium, idx) => {
 					return (
