@@ -2,10 +2,7 @@ const pool = require("../utilities/database.js");
 
 const { log } = require('../utilities/logging.js');
 
-const { validateSession } = require('../reusable.js');
-
-const itemIndex = require('../gameplay/item_index.json');
-const premiumIndex = require('../gameplay/premium_index.json');
+const { validateSession, getYourItems } = require('../reusable.js');
 
 const apiYourItems = async (req, res) => {
 	//handle all outcomes
@@ -15,7 +12,7 @@ const apiYourItems = async (req, res) => {
 	}
 
 	const handleSuccess = (obj) => {
-		log(obj.msg, obj.extra.toString());
+//		log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 		res.end();
 	}
@@ -28,15 +25,6 @@ const apiYourItems = async (req, res) => {
 		.catch(handleRejection)
 	;
 };
-
-const getYourItems = (fields) => new Promise((resolve, reject) => {
-	const query = 'SELECT id, idx FROM items WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
-	return pool.promise().query(query, [fields.id])
-		.then(results => results[0])
-		.then(items => resolve({ items: items.map(item => { return { id: item.id, ... (itemIndex[item.idx] || premiumIndex[item.idx]) }}), ...fields }))
-		.catch(e => reject({ msg: 'getYourItems error', extra: e }))
-	;
-});
 
 module.exports = {
 	apiYourItems,

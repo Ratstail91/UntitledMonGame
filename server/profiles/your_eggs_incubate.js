@@ -2,8 +2,7 @@ const pool = require("../utilities/database.js");
 
 const { log } = require('../utilities/logging.js');
 
-const { validateSession, getYourEggs } = require('../reusable.js');
-const { determineSelectedEgg } = require('./your_eggs_sell.js');
+const { validateSession, determineSelectedEgg, getYourEggs } = require('../reusable.js');
 
 const species = require('../gameplay/species.json');
 

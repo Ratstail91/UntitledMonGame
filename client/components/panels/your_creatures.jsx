@@ -35,20 +35,27 @@ class YourCreatures extends React.Component {
 						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
 								<img src={`/content/sprites/creatures/${creature.frontImage}`} />
+
 								<span><strong>{creature.name} - {capitalize(creature.element)}</strong></span>
 								<span style={{marginLeft: '1em', marginRight: '1em', textAlign: 'center'}}><em>{creature.description}</em></span>
 								<div className='break' />
 
-								<Dropdown>
-									<Dropdown.Toggle>Actions</Dropdown.Toggle>
+								<div className='panel' style={{flexDirection: 'row', alignItems: 'center'}}>
+									<Dropdown>
+										<Dropdown.Toggle>Actions</Dropdown.Toggle>
 
-									<Dropdown.Menu>
-										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
-										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
-										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'breed'); }}>Breed</Dropdown.Item>
-										<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
-									</Dropdown.Menu>
-								</Dropdown>
+										<Dropdown.Menu>
+											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
+											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
+											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'unbreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
+											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
+										</Dropdown.Menu>
+									</Dropdown>
+
+									<div className='gap' />
+
+									<img src='/content/sprites/heart.png' style={{maxWidth: '25px', maxHeight: '25px', display: creature.breeding ? 'initial' : 'none'}} />
+								</div>
 							</div>
 							<div className='break' />
 						</div>
@@ -95,7 +102,11 @@ class YourCreatures extends React.Component {
 				return;
 
 			case 'breed':
-				//TODO: breeding
+				this.sendYourCreaturesRequest('/api/yourcreatures/breed', index);
+				return;
+
+			case 'unbreed':
+				this.sendYourCreaturesRequest('/api/yourcreatures/unbreed', index);
 				return;
 
 			case 'release':

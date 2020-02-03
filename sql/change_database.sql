@@ -1,0 +1,1 @@
+ALTER TABLE creatures ADD breeding BOOLEAN DEFAULT FALSE;

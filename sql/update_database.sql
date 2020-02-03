@@ -123,6 +123,9 @@ CREATE TABLE IF NOT EXISTS creatures (
 	statPointsStrength INTEGER UNSIGNED NOT NULL DEFAULT 0,
 	statPointsPower INTEGER UNSIGNED NOT NULL DEFAULT 0,
 
+	#breeding and other mechanics
+	breeding BOOLEAN DEFAULT FALSE,
+
 	CONSTRAINT FOREIGN KEY fk_creatures_profiles(profileId) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 

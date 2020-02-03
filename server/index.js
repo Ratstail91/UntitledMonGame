@@ -22,6 +22,7 @@ pool.getConnection((err, connection) => {
 	connection.release();
 });
 
+//TODO: validation as middleware
 //TODO: move coins from accounts to profiles
 //TODO: does bootstrap have an image class?
 //TODO: hatching times based on rarity
@@ -64,11 +65,16 @@ app.post('/api/passwordreset', accounts.apiPasswordReset);
 
 const profiles = require('./profiles/profiles.js');
 profiles.runEggHatchJob();
+profiles.runBreedingJob();
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/yourcreatures', profiles.apiYourCreatures);
+app.post('/api/yourcreatures/breed', profiles.apiYourCreaturesBreed);
+app.post('/api/yourcreatures/unbreed', profiles.apiYourCreaturesUnbreed);
+
 app.post('/api/youreggs', profiles.apiYourEggs);
 app.post('/api/youreggs/sell', profiles.apiYourEggsSell);
 app.post('/api/youreggs/incubate', profiles.apiYourEggsIncubate);
+
 app.post('/api/youritems', profiles.apiYourItems);
 app.post('/api/youritems/sell', profiles.apiYourItemsSell);
 

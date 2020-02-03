@@ -2,6 +2,8 @@ const { log, logActivity } = require('./utilities/logging.js');
 const pool = require("./utilities/database.js");
 
 const species = require('./gameplay/species.json');
+const itemIndex = require('./gameplay/item_index.json');
+const premiumIndex = require('./gameplay/premium_index.json');
 
 //reusable
 const validateSession = (fields) => new Promise(async (resolve, reject) => {
@@ -10,6 +12,15 @@ const validateSession = (fields) => new Promise(async (resolve, reject) => {
 		.then(results => results[0].length > 0 ? fields : reject({ msg: 'Session Timed Out', extra: fields }))
 		.then(fields => { logActivity(fields.id); resolve(fields); })
 		.catch(e => reject({ msg: 'validateSession error', extra: e }))
+	;
+});
+
+const determineSelectedEgg = (fields) => new Promise((resolve, reject) => {
+	const query = 'SELECT * FROM creatureEggs WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
+	return pool.promise().query(query, [fields.id])
+		.then(results => results[0][fields.index])
+		.then(egg => egg ? resolve({ egg, ...fields }) : reject({ msg: 'egg not found', extra: fields.index }))
+		.catch(e => reject({ msg: 'determineSelectedEgg error', extra: e }))
 	;
 });
 
@@ -23,7 +34,60 @@ const getYourEggs = (fields) => new Promise((resolve, reject) => {
 	;
 });
 
+const determineSelectedCreature = (fields) => new Promise((resolve, reject) => {
+	const query = 'SELECT * FROM  creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
+	return pool.promise().query(query, [fields.id])
+		.then(results => results[0][fields.index])
+		.then(creature => creature ? resolve({ creature, ...fields }) : reject({ msg: 'creature not found', extra: fields.index }))
+		.catch(e => reject({ msg: 'determineSelectedCreature error', extra: e }))
+	;
+});
+
+//NOTE: for display only
+const getYourCreatures = (fields) => new Promise((resolve, reject) => {
+	const query = 'SELECT * FROM creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
+	return pool.promise().query(query, [fields.id])
+		.then(results => results[0])
+		.then(creatures => resolve({ creatures: creatures.map(creature => {
+			return {
+				id: creature.id,
+				species: creature.species,
+				name: species[creature.species].name,
+				element: species[creature.species].element,
+				description: species[creature.species].description,
+				breeding: creature.breeding,
+				frontImage: species[creature.species].frontImage,
+			}
+		}), ...fields }))
+		.catch(e => reject({ msg: 'getYourCreatures error', extra: e }))
+	;
+});
+
+const determineSelectedItem = (fields) => new Promise((resolve, reject) => {
+	const query = 'SELECT * FROM items WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
+	return pool.promise().query(query, [fields.id])
+		.then(results => results[0][fields.index])
+		.then(item => item ? resolve({ item, ...fields }) : reject({ msg: 'item not found', extra: fields.index }))
+		.catch(e => reject({ msg: 'determineSelectedItem error', extra: e }))
+	;
+});
+
+//NOTE: for display only
+const getYourItems = (fields) => new Promise((resolve, reject) => {
+	const query = 'SELECT id, idx FROM items WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
+	return pool.promise().query(query, [fields.id])
+		.then(results => results[0])
+		.then(items => resolve({ items: items.map(item => { return { id: item.id, ... (itemIndex[item.idx] || premiumIndex[item.idx]) }}), ...fields }))
+		.catch(e => reject({ msg: 'getYourItems error', extra: e }))
+	;
+});
+
 module.exports = {
 	validateSession,
+	determineSelectedEgg,
 	getYourEggs,
+	determineSelectedCreature,
+	getYourCreatures,
+	determineSelectedItem,
+	getYourItems,
 };

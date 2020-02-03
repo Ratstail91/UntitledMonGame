@@ -2,9 +2,8 @@ const pool = require("../utilities/database.js");
 
 const { log } = require('../utilities/logging.js');
 
-const { validateSession } = require('../reusable.js');
+const { validateSession, determineSelectedItem, getYourItems } = require('../reusable.js');
 const { getYourProfile } = require('./your_profile.js');
-const { getYourItems } = require('./your_items.js');
 
 const itemIndex = require('../gameplay/item_index.json');
 
@@ -34,15 +33,6 @@ const apiYourItemsSell = async (req, res) => {
 		.catch(handleRejection)
 	;
 };
-
-const determineSelectedItem = (fields) => new Promise((resolve, reject) => {
-	const query = 'SELECT * FROM items WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
-	return pool.promise().query(query, [fields.id])
-		.then(results => results[0][fields.index])
-		.then(item => item ? resolve({ item, ...fields }) : reject({ msg: 'item not found', extra: fields.index }))
-		.catch(e => reject({ msg: 'determineSelectedItem error', extra: e }))
-	;
-});
 
 const checkMinQuantity = (fields) => new Promise((resolve, reject) => {
 	if (!itemIndex[fields.item.idx]) {
@@ -80,7 +70,6 @@ module.exports = {
 	apiYourItemsSell,
 
 	//for testing
-	determineSelectedItem,
 	addCoins,
 	sellItem,
 };
