@@ -19,4 +19,3 @@ export const warningReducer = (store = initialStore, action) => {
 			return store;
 	};
 }
-

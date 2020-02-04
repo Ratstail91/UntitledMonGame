@@ -1,11 +1,12 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 import { setWarning } from '../../actions/warning.js';
 import { setCreatures } from '../../actions/profile.js';
+import { setInspect } from '../../actions/inspect.js';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);
@@ -45,7 +46,7 @@ class YourCreatures extends React.Component {
 										<Dropdown.Toggle>Actions</Dropdown.Toggle>
 
 										<Dropdown.Menu>
-											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
+											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
 											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'unbreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
 											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
@@ -94,7 +95,8 @@ class YourCreatures extends React.Component {
 	creatureAction(index, action) {
 		switch(action) {
 			case 'inspect':
-				//TODO: inspect
+				this.props.setInspect(index);
+				this.props.history.push('/inspect');
 				return;
 
 			case 'train':
@@ -121,6 +123,7 @@ YourCreatures.propTypes = {
 	token: PropTypes.number.isRequired,
 	setWarning: PropTypes.func.isRequired,
 	setCreatures: PropTypes.func.isRequired,
+	setInspect: PropTypes.func.isRequired,
 };
 
 const mapStoreToProps = (store) => {
@@ -136,9 +139,10 @@ const mapDispatchToProps = (dispatch) => {
 		setWarning: msg => dispatch(setWarning(msg)),
 		setProfile: (username, coins) => dispatch(setProfile(username, coins)),
 		setCreatures: (creatures) => dispatch(setCreatures(creatures)),
+		setInspect: (index) => dispatch(setInspect(index)),
 	};
 };
 
 YourCreatures = connect(mapStoreToProps, mapDispatchToProps)(YourCreatures);
 
-export default YourCreatures;
+export default withRouter(YourCreatures);

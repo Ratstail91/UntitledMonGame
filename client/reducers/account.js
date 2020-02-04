@@ -31,4 +31,3 @@ export const accountReducer = (store = initialStore, action) => {
 			return store;
 	};
 }
-

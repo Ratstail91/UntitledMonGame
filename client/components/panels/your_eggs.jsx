@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 import { setWarning } from '../../actions/warning.js';
 import { setProfile } from '../../actions/profile.js';

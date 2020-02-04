@@ -163,6 +163,46 @@ footer {
 	background: #ff6666;
 }
 
+/* flexbox tables */
+.table {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.table .row {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
+@media screen and (max-width: 480px) {
+	.table .row {
+		flex-direction: column;
+	}
+}
+
+.table .row .col {
+	flex: 1 1 1%;
+	min-width: 0;
+}
+
+.table .row .col.double {
+	flex: 2 1 2%;
+}
+
+@media screen and (max-width: 480px) {
+	.table .row .col.double {
+		flex: 2 1 2.5%;
+	}
+}
+
+.table.noCollapse .row, .table .row.noCollapse {
+	flex-direction: row;
+}
+
 /* custom styling */
 .eggContainer {
 	flex-direction: row;
@@ -209,3 +249,9 @@ dl, ol, ul {
 	padding-left: 40px;
 }
 
+@media screen and (max-width: 480px) {
+	img.shrink {
+		width: 250px;
+		height: 250px;
+	}
+}

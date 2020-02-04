@@ -138,7 +138,7 @@ const breedPair = (pair) => new Promise((resolve, reject) => {
 	geneticsResults[rand] = geneticsMix[rand][Math.floor(Math.random() * 2)]; //random parent
 	delete geneticsMix[rand];
 
-	geneticsResults[randomKey()] = Math.floor(Math.random() * 16); //mutation
+	geneticsResults[randomKey()] = Math.floor(Math.random() * 17); //mutation
 
 	//finally, make egg
 	const query = 'INSERT INTO creatureEggs (profileId, species, geneticPointsHealth, geneticPointsSpeed, geneticPointsStrength, geneticPointsPower) VALUES (?, ?, ?, ?, ?, ?);';

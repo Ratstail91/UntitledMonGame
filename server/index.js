@@ -28,6 +28,7 @@ pool.getConnection((err, connection) => {
 //TODO: hatching times based on rarity
 //TODO: individualize the creatures using abilities, personalities, etc.
 //TODO: upgrade to typescript
+//TODO: fix the order dependency
 
 // Add body parser
 app.use(bodyParser.json());
@@ -66,6 +67,7 @@ profiles.runEggHatchJob();
 profiles.runBreedingJob();
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/yourcreatures', profiles.apiYourCreatures);
+app.post('/api/yourcreatures/inspect', profiles.apiYourCreaturesInspect);
 app.post('/api/yourcreatures/breed', profiles.apiYourCreaturesBreed);
 app.post('/api/yourcreatures/unbreed', profiles.apiYourCreaturesUnbreed);
 

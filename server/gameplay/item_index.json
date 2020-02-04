@@ -1,7 +1,7 @@
 {
 	"incubator": {
 		"name": "Incubator",
-		"type": "usable",
+		"type": "static",
 		"value": 100,
 		"sprite": "incubator.png",
 		"description": "For hatching eggs. You can own up to two normally.",
@@ -18,7 +18,7 @@
 
 	"magnifyingglass": {
 		"name": "Magnifying Glass",
-		"type": "usable",
+		"type": "static",
 		"value": 600,
 		"sprite": "magnifying_glass.png",
 		"description": "For identifying the stats and genetic makeup of a creature.",

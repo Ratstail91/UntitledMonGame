@@ -72,10 +72,10 @@ const buySelectedEgg = (fields) => new Promise((resolve, reject) => {
 	return pool.promise().query(query, [
 		fields.profileId,
 		fields.egg.species,
-		fields.egg.geneticPointsHealth ? fields.egg.geneticPointsHealth : Math.floor(Math.random() * 16),
-		fields.egg.geneticPointsSpeed ? fields.egg.geneticPointsSpeed : Math.floor(Math.random() * 16),
-		fields.egg.geneticPointsStrength ? fields.egg.geneticPointsStrength : Math.floor(Math.random() * 16),
-		fields.egg.geneticPointsPower ? fields.egg.geneticPointsPower : Math.floor(Math.random() * 16),
+		fields.egg.geneticPointsHealth ? fields.egg.geneticPointsHealth : Math.floor(Math.random() * 17),
+		fields.egg.geneticPointsSpeed ? fields.egg.geneticPointsSpeed : Math.floor(Math.random() * 17),
+		fields.egg.geneticPointsStrength ? fields.egg.geneticPointsStrength : Math.floor(Math.random() * 17),
+		fields.egg.geneticPointsPower ? fields.egg.geneticPointsPower : Math.floor(Math.random() * 17),
 		])
 		.then(results => resolve(fields))
 		.catch(e => reject({ msg: 'buySelectedEgg error', extra: e }))

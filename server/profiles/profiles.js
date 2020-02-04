@@ -1,5 +1,6 @@
 const { apiYourProfile } = require('./your_profile.js');
 const { apiYourCreatures } = require('./your_creatures.js');
+const { apiYourCreaturesInspect } = require('./your_creatures_inspect.js');
 const { apiYourCreaturesBreed, runBreedingJob } = require('./your_creatures_breed.js');
 const { apiYourCreaturesUnbreed } = require('./your_creatures_unbreed.js');
 const { apiYourEggs } = require('./your_eggs.js');
@@ -11,6 +12,7 @@ const { apiYourItemsSell } = require('./your_items_sell.js');
 module.exports = {
 	apiYourProfile,
 	apiYourCreatures,
+	apiYourCreaturesInspect,
 	apiYourCreaturesBreed,
 	apiYourCreaturesUnbreed,
 	runBreedingJob,
