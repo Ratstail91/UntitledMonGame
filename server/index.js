@@ -105,7 +105,7 @@ const admin = require('./admin/admin.js');
 app.post('/api/admin', admin.apiAdminDisplay);
 
 //send static files
-app.use('/', express.static(path.resolve(__dirname, + '../public')));
+app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 //fallback to the index file
 app.get('*', (req, res) => {
