@@ -20,7 +20,7 @@ class NewsSelector extends React.Component {
 	render() {
 		let lines = [];
 
-		for (let i = 0; i < this.state.max; i++) {
+		for (let i = this.state.max -1; i >= 0; i--) { //lazy backwards
 			lines.push(
 				<div key={this.state.fileNames[i]}>
 					<hr />

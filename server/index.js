@@ -22,11 +22,12 @@ pool.getConnection((err, connection) => {
 	connection.release();
 });
 
-//TODO: validation as middleware
+//TODO: (1) validation as middleware
 //TODO: move coins from accounts to profiles
 //TODO: does bootstrap have an image class?
 //TODO: hatching times based on rarity
 //TODO: individualize the creatures using abilities, personalities, etc.
+//TODO: upgrade to typescript
 
 // Don't need to use bodyparser and other middleware for static files
 app.use('/', express.static(path.resolve(__dirname + '/../dist/')));
@@ -106,9 +107,14 @@ app.delete('/api/account', privacy.apiDeleteAccount);
 const admin = require('./admin/admin.js');
 app.post('/api/admin', admin.apiAdminDisplay);
 
-//fallback to index.html
+//send these file types
+app.get(['*.js', '*.css', '*.map', '*.md', '*.png'], (req, res) => {
+	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl}`));
+});
+
+//fallback to the index file
 app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, `../dist/index.html`));
+	res.sendFile(path.resolve(__dirname, `../public/index.html`));
 });
 
 //startup

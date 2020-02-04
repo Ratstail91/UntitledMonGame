@@ -13,11 +13,10 @@ auth.json
 /**/*.log
 
 #output files
-*.bundle*.js
-*.js.map
+public/*.html
+public/*.js
+public/*.css
+public/*.map
 
 # Non npm lock files
 yarn.lock
-
-# Ignore dist folder
-dist/

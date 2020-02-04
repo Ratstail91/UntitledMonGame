@@ -1,49 +1,112 @@
-const webpack = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+
 const path = require('path');
 
-//TODO: strip out what you don't like from here
-
-// Remove unused bootstrap css 90% reduction in size
-const purgecss = require('@fullhuman/postcss-purgecss')({
-	content: [
-		'./client/**/*.html',
-		'./client/**/*.jsx',
-	],
-	defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
-	// Choose what to keep
-	whitelist: ['btn', 'h1','h2','h3', 'p','ol','li', 'ul', 'em'], // Ignore buttons and typography
-	whitelistPatterns: [/btn-/]
-})
-
-const htmlPlugin = new HtmlWebpackPlugin({
-	template: "./client/template.html",
-	minify: {
-		collapseWhitespace: true,
-		removeComments: true,
-		removeAttributeQuotes: true
-	}
-});
-
 module.exports = env => {
-	const production = env === 'production' ? true : false;
+	const prod = env === 'production' ? true : false;
 
 	return {
 		mode: env,
-		entry: `./client/index${production ? '' : '_dev'}.jsx`,
+		entry: `./client/index${prod ? '' : '_dev'}.jsx`,
 		output: {
-			path: __dirname + '/dist/',
+			path: path.resolve(__dirname, 'public'),
 			filename: '[name].[hash].js',
 			sourceMapFilename: '[name].[hash].js.map',
 			publicPath: '/'
 		},
+		devtool: 'source-map',
+		module: {
+			rules: [
+				{
+					test: /\.(js|jsx)$/,
+					exclude: /(node_modules)/,
+					use: [
+						{
+							loader: 'babel-loader',
+							options: {
+								presets: ['@babel/preset-env', '@babel/preset-react'],
+								plugins: ['react-loadable/babel', '@babel/plugin-syntax-dynamic-import']
+							}
+						}
+					]
+				},
+				{
+					test: /\.(css)$/,
+					use: [
+						MiniCssExtractPlugin.loader, //one CSS file for every js file
+						"css-loader",
+						{
+							loader: 'postcss-loader',
+							options: {
+								plugins: (loader) => [
+									require('postcss-import')({ root: loader.resourcePath }),
+									require('postcss-preset-env')(),
+									require('cssnano')(),
+								]
+							}
+						}
+					]
+				},
+				{
+					test: /\.(md)$/,
+					use: [
+						{
+							loader: 'url-loader',
+							options: {
+								limit: 9000,
+								outputPath: 'content',
+								publicPath: '/content',
+								name: '[name].[hash].[ext]'
+							},
+						},
+					],
+				},
+			],
+		},
+		optimization: {
+			minimize: prod,
+			minimizer: [
+				new TerserPlugin({
+					terserOptions: {
+						output: {
+							comments: false,
+						},
+					},
+				})
+			]
+		},
+		plugins: [
+			new DefinePlugin({
+				NODE_ENV: env
+			}),
+			new CleanWebpackPlugin({
+				cleanOnceBeforeBuildPatterns: ['*', '!content*']
+			}),
+			new MiniCssExtractPlugin({
+				filename: "[name].[hash].css"
+			}),
+			new HtmlWebpackPlugin({
+				template: "./client/template.html",
+				minify: {
+					collapseWhitespace: true,
+					removeComments: true,
+					removeAttributeQuotes: true
+				}
+			}),
+//			new CompressionWebpackPlugin({
+//				compressionOptions: {
+//					level: 9,
+//				},
+//				threshold: 1 //size in bytes
+//			})
+		],
 		devServer: {
-			contentBase: path.join(__dirname, 'dist/'),
+			contentBase: path.resolve(__dirname, 'public'),
 			compress: false,
 			port: 3001,
 			proxy: {
@@ -52,7 +115,6 @@ module.exports = env => {
 			overlay: {
 				errors: true
 			},
-			// liveReload: true,
 			stats: {
 				colors: true,
 				hash: false,
@@ -75,124 +137,6 @@ module.exports = env => {
 			historyApiFallback: true,
 			hot: true,
 			injectHot: true
-		},
-		devtool: 'source-map',
-		module: {
-			rules: [{
-					test: /\.(js|jsx)$/,
-					exclude: /(node_modules)/,
-					use: {
-						loader: 'babel-loader',
-						options: {
-							presets: ['@babel/preset-env', '@babel/preset-react'],
-							plugins: ['react-loadable/babel', '@babel/plugin-syntax-dynamic-import']
-						}
-					}
-				},
-				{
-					test: /\.(css)$/,
-					use: [
-						MiniCssExtractPlugin.loader,
-						"css-loader",
-						{
-							loader: 'postcss-loader',
-							options: {
-								// parser: 'sugarss',
-								plugins: (loader) => [
-									require('postcss-import')({ root: loader.resourcePath }),
-									require('postcss-preset-env')(),
-									require('cssnano')(),
-									/* purgecss */
-								  ]
-							}
-						}
-					]
-				},
-				{
-					test: /\.(svg|png|gif|jpg|jpeg)$/,
-					use: [{
-							loader: 'file-loader',
-							options: {
-								outputPath: 'images',
-								publicPath: '/images',
-								name: '[name].[hash].[ext]'
-							}
-						},
-						{
-							loader: 'image-webpack-loader',
-							options: {
-								mozjpeg: {
-									progressive: true,
-									quality: 70
-								},
-								// optipng.enabled: false will disable optipng
-								optipng: {
-									enabled: false,
-								},
-								pngquant: {
-									quality: [0.70, 0.90],
-									speed: 4
-								},
-								gifsicle: {
-									interlaced: false,
-								},
-								// the webp option will enable WEBP
-								webp: {
-									quality: 75
-								}
-							}
-						},
-					]
-				},
-				{
-					test: /\.(md)$/,
-					use: [{
-						loader: 'url-loader',
-						options: {
-							limit: 9000,
-							outputPath: 'content',
-							publicPath: '/content',
-							name: '[name].[hash].[ext]'
-						},
-					}, ],
-				},
-			],
-
-		},
-		optimization: {
-			minimize: production,
-			minimizer: production ? [
-				new TerserPlugin({
-					terserOptions: {
-						output: {
-							comments: false,
-						},
-					},
-				}),
-				htmlPlugin
-			] : []
-		},
-		plugins: [
-			new webpack.DefinePlugin({
-				NODE_ENV: env
-			}),
-			new CleanWebpackPlugin(),
-			new MiniCssExtractPlugin({
-				filename: "[name].[hash].css"
-			}),
-			new CompressionWebpackPlugin({
-				compressionOptions: {
-					level: 9,
-				},
-				threshold: 1
-			}),
-			new CopyPlugin([
-				{
-					from: './public',
-					to: ''
-				},
-			]),
-			htmlPlugin
-		]
+		}
 	};
 };

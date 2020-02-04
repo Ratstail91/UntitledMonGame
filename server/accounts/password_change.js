@@ -10,7 +10,7 @@ const { log } = require('../utilities/logging.js');
 const formidablePromise = require('../utilities/formidable_promise.js');
 const pool = require("../utilities/database.js");
 
-const { validateSession } = require('../accounts/sessions.js');
+const { validateSession } = require('../reusable.js');
 
 const apiPasswordChange = async (req, res) => {
 	//handle all outcomes
@@ -26,6 +26,7 @@ const apiPasswordChange = async (req, res) => {
 	};
 
 	return formidablePromise(req)
+		.then(({fields}) => fields)
 		.then(validateSession)
 		.then(validateAccount)
 		.then(validatePassword)

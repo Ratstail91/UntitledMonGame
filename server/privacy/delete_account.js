@@ -5,7 +5,7 @@ require('dotenv').config();
 const { log } = require('../utilities/logging.js');
 const pool = require("../utilities/database.js")
 
-const { validateSession } = require('../accounts/sessions.js');
+const { validateSession } = require('../reusable.js');
 
 const apiDeleteAccount = async (req, res) => {
 	//handle all outcomes
@@ -20,7 +20,7 @@ const apiDeleteAccount = async (req, res) => {
 		res.end();
 	};
 
-	return new Promise((resolve, reject) => resolve({ fields: req.body }))
+	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(markAccountForDeletion)
 		.then(handleSuccess)
