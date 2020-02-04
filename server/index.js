@@ -29,9 +29,6 @@ pool.getConnection((err, connection) => {
 //TODO: individualize the creatures using abilities, personalities, etc.
 //TODO: upgrade to typescript
 
-// Don't need to use bodyparser and other middleware for static files
-app.use('/', express.static(path.resolve(__dirname + '/../dist/')));
-
 // Add body parser
 app.use(bodyParser.json());
 
@@ -107,10 +104,8 @@ app.delete('/api/account', privacy.apiDeleteAccount);
 const admin = require('./admin/admin.js');
 app.post('/api/admin', admin.apiAdminDisplay);
 
-//send these file types
-app.get(['*.js', '*.css', '*.map', '*.md', '*.png'], (req, res) => {
-	res.sendFile(path.resolve(__dirname, `../public/${req.originalUrl}`));
-});
+//send static files
+app.use('/', express.static(path.resolve(__dirname, + '../public')));
 
 //fallback to the index file
 app.get('*', (req, res) => {
