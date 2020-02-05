@@ -29,6 +29,7 @@ pool.getConnection((err, connection) => {
 //TODO: individualize the creatures using abilities, personalities, etc.
 //TODO: upgrade to typescript
 //TODO: fix the order dependency
+//TODO: (9) cosmetics
 
 // Add body parser
 app.use(bodyParser.json());

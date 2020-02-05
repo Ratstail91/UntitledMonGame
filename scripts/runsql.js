@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
 	password: process.env.DB_PASS,
 	database: process.env.DB_NAME,
 	port: process.env.DB_PORT,
-	multipleStatements:true
+	multipleStatements: true
 });
 console.log(path.join(__dirname,'..','sql',process.argv[2]))
 

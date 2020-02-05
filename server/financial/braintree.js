@@ -67,4 +67,4 @@ module.exports = {
 	connectBraintree,
 	apiGenerateClientToken,
 	apiCheckout,
-}
+};
