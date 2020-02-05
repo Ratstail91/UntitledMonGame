@@ -28,6 +28,8 @@ class YourEggs extends React.Component {
 			);
 		}
 
+		//TODO: ticking hatch time
+
 		return (
 			<div className='eggContainer panel'>
 				{this.props.eggs.map( (egg, idx) => {

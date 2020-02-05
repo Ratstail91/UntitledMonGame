@@ -12,9 +12,18 @@ const runSoftlockPicker = () => {
 
 		//for each profile
 		results.forEach(async profile => {
+			//if you have at least two creatures/eggs, you can breed them
+			let creatureCount = (await pool.promise().query('SELECT COUNT(*) AS total FROM creatures WHERE profileId = ?;', profile.profileId))[0][0].total;
+			creatureCount += (await pool.promise().query('SELECT COUNT(*) AS total FROM creatureEggs WHERE profileId = ?;', profile.profileId))[0][0].total;
+
+			if (creatureCount >= 2) {
+				return;
+			}
+
+			//value
 			let totalValue = 0;
 
-			//get the minimum value of cretures and eggs
+			//get the minimum value of the eggs
 			totalValue += 200 * (await pool.promise().query('SELECT COUNT(*) AS total FROM creatures WHERE profileId = ?;', [ profile.profileId ]))[0][0].total;
 			totalValue += 200 * (await pool.promise().query('SELECT COUNT(*) AS total FROM creatureEggs WHERE profileId = ?;', [ profile.profileId ]))[0][0].total;
 
