@@ -82,6 +82,17 @@ const getYourItems = (fields) => new Promise((resolve, reject) => {
 	;
 });
 
+const getCreatureMoves = (fields) => new Promise(async (resolve, reject) => {
+	const ownedQuery = 'SELECT idx FROM creatureMovesOwned WHERE creatureId = ?;';
+	const equippedQuery = 'SELECT idx FROM creatureMovesOwned WHERE creatureId = ? AND equipped = TRUE;';
+
+	const available = species[fields.creature.species].moves;
+	const owned = (await pool.promise().query(ownedQuery, [fields.creature.id]))[0];
+	const equipped = (await pool.promise().query(equippedQuery, [fields.creature.id]))[0];
+
+	return resolve({ available, owned, equipped });
+});
+
 module.exports = {
 	validateSession,
 	determineSelectedEgg,
@@ -90,4 +101,5 @@ module.exports = {
 	getYourCreatures,
 	determineSelectedItem,
 	getYourItems,
+	getCreatureMoves,
 };

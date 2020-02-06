@@ -86,6 +86,7 @@ class App extends React.Component {
 
 						<LazyRoute path='/yourprofile' component={() => import('./pages/your_profile.jsx')} />
 						<LazyRoute path='/inspect' component={() => import('./pages/inspect.jsx')} />
+						<LazyRoute path='/movesselect' component={() => import('./pages/moves_select.jsx')} />
 						<LazyRoute path='/shop' component={() => import('./pages/shop.jsx')} />
 
 						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings.jsx')} />

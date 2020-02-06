@@ -1,12 +1,13 @@
 {
-	"splash": {
-		"name": "Splash",
-		"description": "The user flails around in water. Not exactly useless anymore.",
+	"tackle": {
+		"name": "Tackle",
+		"description": "The user charges into the target.",
 
 		"type": "physical",
-		"element": "water",
+		"element": "fighting",
 
-		"strength": 10
+		"damage": 5,
+		"value": 10
 	},
 
 	"firespit": {
@@ -16,6 +17,221 @@
 		"type": "physical",
 		"element": "fire",
 
-		"strength": 15
+		"daamge": 15,
+		"value": 10,
+
+		"meta": {
+			"signature": "spitty"
+		}
+	},
+
+	"meteor": {
+		"name": "Meteor",
+		"description": "The user summons a fireball from the sky.",
+
+		"type": "magical",
+		"element": "fire",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"splash": {
+		"name": "Splash",
+		"description": "The user flails around in water. Not exactly useless anymore.",
+
+		"type": "physical",
+		"element": "water",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"watercannon": {
+		"name": "Water Cannon",
+		"description": "The user fires a stream of water at the target.",
+
+		"type": "magical",
+		"element": "water",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"quickbite": {
+		"name": "Quick Bite",
+		"description": "The user attacks with sharp teeth.",
+
+		"type": "physical",
+		"element": "grass",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"gustofwind": {
+		"name": "Gust of Wind",
+		"description": "The user whips up sand and dust, causing damage to their target.",
+
+		"type": "magical",
+		"element": "grass",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"babyeyes": {
+		"name": "Baby Eyes",
+		"description": "The user emphasizes their large eyes, causing the target to waver.",
+
+		"type": "physical",
+		"element": "psychic",
+
+		"damage": 0,
+		"value": 10
+	},
+
+	"mindovermatter": {
+		"name": "Mind Over Matter",
+		"description": "The user damages their target with the power of their mind.",
+
+		"type": "magical",
+		"element": "psychic",
+
+		"damage": 10,
+		"value": 10,
+
+		"meta": {
+			"signatureType": "psychic"
+		}
+	},
+
+	"babyfat": {
+		"name": "Baby Fat",
+		"desciption": "The user puffs up their body to defend against damage.",
+
+		"type": "physical",
+		"element": "fighting",
+
+		"damage": 0,
+		"value": 10
+	},
+
+	"flurryofblows": {
+		"name": "Flurry Of Blows",
+		"description": "The user attacks with a large number of light hits.",
+
+		"type": "magical",
+		"element": "fighting",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"swoop": {
+		"name": "Swoop",
+		"description": "The user attacks the target from high above.",
+
+		"type": "physical",
+		"element": "metal",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"razorblades": {
+		"name": "Razorblades",
+		"description": "The user attacks with a large number of flying razors.",
+
+		"type": "magical",
+		"element": "metal",
+
+		"damage": 10,
+		"value": 10,
+
+		"meta": {
+			"signatureType": "metal"
+		}
+	},
+
+	"faestep": {
+		"name": "Fae Step",
+		"description": "Thee user increases their speed.",
+
+		"type": "physical",
+		"element": "fae",
+
+		"damage": 0,
+		"value": 10
+	},
+
+	"dust": {
+		"name": "Dust",
+		"description": "The user decreases the target's physical attack.",
+
+		"type": "magical",
+		"element": "fae",
+
+		"damage": 0,
+		"value": 10,
+
+		"meta": {
+			"signature": "pixi"
+		}
+	},
+
+	"flash": {
+		"name": "Flash",
+		"description": "The user creates a bright blast of light that blinds the target.",
+
+		"type": "physical",
+		"element": "light",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"thunderclap": {
+		"name": "Thunderclap",
+		"description": "The user creates a monumental sound that deafens the target.",
+
+		"type": "magical",
+		"element": "light",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"makedark": {
+		"name": "Make Dark",
+		"description": "The user covers their eyes and falls asleep, healing some damage.",
+
+		"type": "physical",
+		"element": "dark",
+
+		"damage": 0,
+		"value": 10
+	},
+
+	"shadowball": {
+		"name": "Shadow Ball",
+		"description": "The user summons a ball of darkness and hurls it at the target.",
+
+		"type": "magical",
+		"element": "dark",
+
+		"damage": 10,
+		"value": 10
+	},
+
+	"forcedevolution": {
+		"name": "Forced Evolution",
+		"description": "The user's mind and body are pushed beyond their limit, causing them great pain.",
+
+		"type": "magical",
+		"element": "dragon",
+
+		"damage": 0,
+		"value": 10
 	}
 }

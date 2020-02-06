@@ -48,6 +48,7 @@ class YourCreatures extends React.Component {
 										<Dropdown.Menu>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
 											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
+											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'moves'); }}>Select Moves</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'unbreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
 											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
 										</Dropdown.Menu>
@@ -101,6 +102,11 @@ class YourCreatures extends React.Component {
 
 			case 'train':
 				//TODO: train
+				return;
+
+			case 'moves':
+				this.props.setInspect(index);
+				this.props.history.push('/movesselect');
 				return;
 
 			case 'breed':

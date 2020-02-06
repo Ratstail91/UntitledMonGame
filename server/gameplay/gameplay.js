@@ -3,8 +3,8 @@ const { log } = require('../utilities/logging.js');
 const species = require('./species.json');
 const itemIndex = require('./item_index.json');
 const premiumIndex = require('./premium_index.json');
-const moves = require('./moves.json');
-const elements = require('./elements.json');
+const movesIndex = require('./moves.json');
+const elementsIndex = require('./elements.json');
 
 //creatures
 const apiCreatures = async (req, res) => {
@@ -39,6 +39,19 @@ const getCreatureInformationFromJSON = (req) => new Promise((resolve, reject) =>
 		return resolve({ msg: species, extra: '' });
 	}
 
+	if (req.query.creature.length) {
+		result = {};
+		return resolve({ msg: req.query.creature.reduce((acc, idx, index, array) => {
+			if (typeof acc === 'string') {
+				result[array[0]] = species[acc];
+			}
+
+			result[array[index]] = species[idx];
+
+			return result;
+		}), extra: '' });
+	}
+
 	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
 });
 
@@ -51,7 +64,7 @@ const apiItems = async (req, res) => {
 	}
 
 	const handleSuccess = (obj) => {
-		log(obj.msg, obj.extra.toString());
+//		log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 	}
 
@@ -75,6 +88,19 @@ const getItemInformationFromJSON = (req) => new Promise((resolve, reject) => {
 		return resolve({ msg: { ...itemIndex, ...premiumIndex }, extra: '' });
 	}
 
+	if (req.query.item.length) {
+		result = {};
+		return resolve({ msg: req.query.item.reduce((acc, idx, index, array) => {
+			if (typeof acc === 'string') {
+				result[array[0]] = itemIndex[acc] || premiumIndex[acc];
+			}
+
+			result[array[index]] = itemIndex[idx] || premiumIndex[idx];
+
+			return result;
+		}), extra: '' });
+	}
+
 	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
 });
 
@@ -87,7 +113,7 @@ const apiMoves = async (req, res) => {
 	}
 
 	const handleSuccess = (obj) => {
-		log(obj.msg, obj.extra.toString());
+//		log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 	}
 
@@ -99,16 +125,29 @@ const apiMoves = async (req, res) => {
 };
 
 const getMoveInformationFromJSON = (req) => new Promise((resolve, reject) => {
-	if (req.query.move && moves[req.query.move]) {
+	if (req.query.move && movesIndex[req.query.move]) {
 		const result = {};
 
-		result[req.query.move] = moves[req.query.move];
+		result[req.query.move] = movesIndex[req.query.move];
 
 		return resolve({ msg: result, extra: req.query.move });
 	}
 
 	if (!req.query.move) {
-		return resolve({ msg: moves, extra: '' });
+		return resolve({ msg: movesIndex, extra: '' });
+	}
+
+	if (req.query.move.length) {
+		result = {};
+		return resolve({ msg: req.query.move.reduce((acc, idx, index, array) => {
+			if (typeof acc === 'string') {
+				result[array[0]] = movesIndex[acc];
+			}
+
+			result[array[index]] = movesIndex[idx];
+
+			return result;
+		}), extra: '' });
 	}
 
 	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
@@ -122,7 +161,7 @@ const apiElements = async (req, res) => {
 	}
 
 	const handleSuccess = (obj) => {
-		log(obj.msg, obj.extra.toString());
+//		log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 	}
 
@@ -134,16 +173,29 @@ const apiElements = async (req, res) => {
 };
 
 const getElementInformationFromJSON = (req) => new Promise((resolve, reject) => {
-	if (req.query.element && elements[req.query.element]) {
+	if (req.query.element && elementsIndex[req.query.element]) {
 		const result = {};
 
-		result[req.query.element] = elements[req.query.element];
+		result[req.query.element] = elementsIndex[req.query.element];
 
 		return resolve({ msg: result, extra: req.query.element });
 	}
 
 	if (!req.query.element) {
-		return resolve({ msg: elements, extra: '' });
+		return resolve({ msg: elementsIndex, extra: '' });
+	}
+
+	if (req.query.element.length) {
+		result = {};
+		return resolve({ msg: req.query.element.reduce((acc, idx, index, array) => {
+			if (typeof acc === 'string') {
+				result[array[0]] = elementsIndex[acc];
+			}
+
+			result[array[index]] = elementsIndex[idx];
+
+			return result;
+		}), extra: '' });
 	}
 
 	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });

@@ -18,7 +18,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [ "firespit" ],
+		"moves": [ "tackle", "firespit", "babyeyes" ],
 
 		"frontImage": "spitty_sketch.png",
 		"backImage": "spitty_sketch.png"
@@ -42,7 +42,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [ "Splash" ],
+		"moves": [ "splash", "watercannon", "babyeyes", "babyfat", "thunderclap" ],
 
 		"frontImage": "whalephant_sketch.png",
 		"backImage": "whalephant_sketch.png"
@@ -50,7 +50,7 @@
 	"neverrat": {
 		"name": "Neverrat",
 		"element": "grass",
-		"description": "Rarely seen during the daytime, it spends it's time the hollows of trees, usually sleeping.",
+		"description": "Rarely seen during the daytime, it spends its time the hollows of trees, usually sleeping.",
 
 		"egg": {
 			"rarity": "common",
@@ -66,7 +66,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [],
+		"moves": [ "tackle", "quickbite", "gustofwind", "swoop", "faestep" ],
 
 		"frontImage": "neverrat_sketch.png",
 		"backImage": "neverrat_sketch.png"
@@ -74,7 +74,7 @@
 	"slink": {
 		"name": "Slink",
 		"element": "psychic",
-		"description": "An ambush predator, it's head is so cute it draws in even large prey before striking with venomous fangs.",
+		"description": "An ambush predator, its head is so cute that it draws in even large prey before striking with venomous fangs.",
 
 		"egg": {
 			"rarity": "common",
@@ -90,7 +90,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [],
+		"moves": [ "quickbite", "babyeyes", "mindovermatter", "faestep" ],
 
 		"frontImage": "slink_sketch.png",
 		"backImage": "slink_sketch.png"
@@ -98,7 +98,7 @@
 	"puggy": {
 		"name": "Puggy",
 		"element": "fighting",
-		"description": "A common pet in recent times, in the past it was farmed for it's succulent meat.",
+		"description": "A common pet in recent times, in the past it was farmed for its succulent meat.",
 
 		"egg": {
 			"rarity": "common",
@@ -114,7 +114,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [],
+		"moves": [ "tackle", "babyeyes", "babyfat", "flurryofblows", "thunderclap" ],
 
 		"frontImage": "puggy_sketch.png",
 		"backImage": "puggy_sketch.png"
@@ -122,7 +122,7 @@
 	"predatore": {
 		"name": "Predatore",
 		"element": "metal",
-		"description": "A beautiful shining bird of prey, it's numbers have been dwindling in recent times due to human encroachment on it's habitat.",
+		"description": "A beautiful shining bird of prey, its numbers have been dwindling in recent times due to human encroachment on its habitat.",
 
 		"egg": {
 			"rarity": "common",
@@ -138,7 +138,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [],
+		"moves": [ "tackle", "meteor", "gustofwind", "flurryofblows", "swoop", "razorblades" ],
 
 		"frontImage": "predatore_sketch.png",
 		"backImage": "predatore_sketch.png"
@@ -146,7 +146,7 @@
 	"pixi": {
 		"name": "Pixi",
 		"element": "fae",
-		"description": "A small humanoid of low intelligence, fairy tales attribute many instnaces of mischief to it.",
+		"description": "A small humanoid of low intelligence, fairy tales attribute many instances of mischief to it.",
 
 		"egg": {
 			"rarity": "common",
@@ -162,7 +162,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [],
+		"moves": [ "meteor", "flurryofblows", "swoop", "dust", "shadowball" ],
 
 		"frontImage": "pixi_sketch.png",
 		"backImage": "pixi_sketch.png"
@@ -170,7 +170,7 @@
 	"lure": {
 		"name": "Lure",
 		"element": "light",
-		"description": "A goldfish-like creature with a light on a lure. It's small size belies it's ferocity.",
+		"description": "A goldfish-like creature with a light on a lure. Its small size belies its ferocity.",
 
 		"egg": {
 			"rarity": "common",
@@ -186,7 +186,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [],
+		"moves": [ "splash", "watercannon", "quickbite", "flash" ],
 
 		"frontImage": "lure_sketch.png",
 		"backImage": "lure_sketch.png"
@@ -210,7 +210,7 @@
 			"magicalDefense": 10
 		},
 
-		"moves": [],
+		"moves": [ "babyeyes", "babyfat", "makedark", "shadowball" ],
 
 		"frontImage": "dropbear_sketch.png",
 		"backImage": "dropbear_sketch.png"

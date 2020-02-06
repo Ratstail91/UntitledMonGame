@@ -86,7 +86,6 @@ class Inspect extends React.Component {
 					//on success
 					const json = JSON.parse(xhr.responseText);
 					this.setState(json);
-					console.log(json)
 				}
 				else {
 					this.props.setWarning(xhr.responseText);

@@ -30,6 +30,8 @@ pool.getConnection((err, connection) => {
 //TODO: upgrade to typescript
 //TODO: fix the order dependency
 //TODO: (9) cosmetics
+//TODO: "babyeyes", "babyfat", "faestep", "dust", "makedark" needs a status effect
+//TODO: new moves: "dracometeor" (dragon only)
 
 // Add body parser
 app.use(bodyParser.json());
@@ -69,6 +71,10 @@ profiles.runBreedingJob();
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/yourcreatures', profiles.apiYourCreatures);
 app.post('/api/yourcreatures/inspect', profiles.apiYourCreaturesInspect);
+app.post('/api/yourcreatures/moves', profiles.apiYourCreaturesMoves);
+app.post('/api/yourcreatures/moves/buy', profiles.apiYourCreaturesMovesBuy);
+app.post('/api/yourcreatures/moves/equip', profiles.apiYourCreaturesMovesEquip);
+app.post('/api/yourcreatures/moves/unequip', profiles.apiYourCreaturesMovesUnequip);
 app.post('/api/yourcreatures/breed', profiles.apiYourCreaturesBreed);
 app.post('/api/yourcreatures/unbreed', profiles.apiYourCreaturesUnbreed);
 

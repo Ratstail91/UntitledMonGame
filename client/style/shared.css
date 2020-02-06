@@ -203,6 +203,34 @@ footer {
 	flex-direction: row;
 }
 
+/* mobile control */
+.mobile.show {
+	display: none;
+}
+
+.mobile.centered {
+	text-align: initial;
+}
+
+@media screen and (max-width: 480px) {
+	.mobile.show {
+		display: inline-block;
+	}
+
+	.mobile.hide {
+		display: none;
+	}
+
+	.mobile.centered {
+		text-align: center;
+	}
+
+	/* hybrid of table and mobile control */
+	.mobile.col.half {
+		flex: 0.5;
+	}
+}
+
 /* custom styling */
 .eggContainer {
 	flex-direction: row;
