@@ -17,7 +17,7 @@
 		"type": "physical",
 		"element": "fire",
 
-		"daamge": 15,
+		"damage": 15,
 		"value": 10,
 
 		"meta": {
