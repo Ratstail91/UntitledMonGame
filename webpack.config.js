@@ -4,11 +4,12 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const path = require('path');
 
 module.exports = env => {
-	const prod = env === 'production' ? true : false;
+	const prod = env !== 'development' ? true : false;
 
 	return {
 		mode: env,
@@ -103,7 +104,10 @@ module.exports = env => {
 //					level: 9,
 //				},
 //				threshold: 1 //size in bytes
-//			})
+//			}),
+			new BundleAnalyzerPlugin({
+				analyzerMode: env === 'analyzer' ? 'server' : 'disabled'
+			})
 		],
 		devServer: {
 			contentBase: path.resolve(__dirname, 'public'),
