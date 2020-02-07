@@ -15,7 +15,7 @@ const apiShopItemsBuy = async (req, res) => {
 	}
 
 	const handleSuccess = (obj) => {
-		log(obj.msg, obj.extra.toString());
+//		log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 		res.end();
 	}
