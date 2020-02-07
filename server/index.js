@@ -113,6 +113,21 @@ app.delete('/api/account', privacy.apiDeleteAccount);
 const admin = require('./admin/admin.js');
 app.post('/api/admin', admin.apiAdminDisplay);
 
+//send compressed files
+app.get('*.js', function(req, res, next) {
+	req.url = req.url + '.gz';
+	res.set('Content-Encoding', 'gzip');
+	res.set('Content-Type', 'text/javascript');
+	next();
+});
+
+app.get('*.css', function(req, res, next) {
+	req.url = req.url + '.gz';
+	res.set('Content-Encoding', 'gzip');
+	res.set('Content-Type', 'text/css');
+	next();
+});
+
 //send static files
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 

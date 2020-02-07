@@ -99,12 +99,12 @@ module.exports = env => {
 					removeAttributeQuotes: true
 				}
 			}),
-//			new CompressionWebpackPlugin({
-//				compressionOptions: {
-//					level: 9,
-//				},
-//				threshold: 1 //size in bytes
-//			}),
+			new CompressionWebpackPlugin({
+				compressionOptions: {
+					level: 9,
+				},
+				threshold: 1 //size in bytes
+			}),
 			new BundleAnalyzerPlugin({
 				analyzerMode: env === 'analyzer' ? 'server' : 'disabled'
 			})
