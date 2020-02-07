@@ -18,7 +18,7 @@ class YourBattleBoxes extends React.Component {
 	render() {
         if (this.props.battleBoxes.length == 0) {
 			return (
-				<p>Battles go here.</p>
+				<p>Battle boxes go here.</p>
 			);
         }
 
