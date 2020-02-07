@@ -87,6 +87,9 @@ app.post('/api/youreggs/incubate', profiles.apiYourEggsIncubate);
 app.post('/api/youritems', profiles.apiYourItems);
 app.post('/api/youritems/sell', profiles.apiYourItemsSell);
 
+const battles = require('./battles/battles.js');
+app.post('/api/yourbattleboxes', battles.apiYourBattleBoxes);
+
 const shop = require('./shop/shop.js');
 shop.runDailyShopEggRefresh();
 app.get('/api/shopeggs', shop.apiShopEggs);

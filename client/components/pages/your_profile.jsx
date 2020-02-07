@@ -9,6 +9,7 @@ import YourProfilePanel from '../panels/your_profile.jsx';
 import YourCreatures from '../panels/your_creatures.jsx';
 import YourEggs from '../panels/your_eggs.jsx';
 import YourItems from '../panels/your_items.jsx';
+import YourBattleBoxes from '../panels/your_battle_boxes.jsx';
 
 class YourProfile extends React.Component {
 	constructor(props) {
@@ -41,7 +42,7 @@ class YourProfile extends React.Component {
 					</Tab>
 
 					<Tab eventKey='battles' title='Battles'>
-						<p>Battles go here.</p>
+						<YourBattleBoxes />
 					</Tab>
 				</Tabs>
 			</div>
