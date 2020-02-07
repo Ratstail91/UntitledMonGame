@@ -7,6 +7,7 @@ const { apiYourCreaturesMovesEquip } = require('./your_creatures_moves_equip.js'
 const { apiYourCreaturesMovesUnequip } = require('./your_creatures_moves_unequip.js');
 const { apiYourCreaturesBreed, runBreedingJob } = require('./your_creatures_breed.js');
 const { apiYourCreaturesUnbreed } = require('./your_creatures_unbreed.js');
+const { apiYourCreaturesRelease } = require('./your_creatures_release.js');
 const { apiYourEggs } = require('./your_eggs.js');
 const { apiYourEggsSell } = require('./your_eggs_sell.js');
 const { apiYourEggsIncubate, runEggHatchJob } = require('./your_eggs_incubate.js');
@@ -23,6 +24,7 @@ module.exports = {
 	apiYourCreaturesMovesUnequip,
 	apiYourCreaturesBreed,
 	apiYourCreaturesUnbreed,
+	apiYourCreaturesRelease,
 	runBreedingJob,
 	apiYourEggs,
 	apiYourEggsSell,

@@ -50,7 +50,7 @@ class YourCreatures extends React.Component {
 											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'moves'); }}>Select Moves</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'unbreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
-											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
+											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
 										</Dropdown.Menu>
 									</Dropdown>
 
@@ -118,7 +118,9 @@ class YourCreatures extends React.Component {
 				return;
 
 			case 'release':
-				//TODO: release
+				if (confirm('Are you sure you want to release this creature?') && confirm('Are you absolutely sure? (They\'ll be gone forever!)')) {
+					this.sendYourCreaturesRequest('/api/yourcreatures/release', index);
+				}
 				return;
 		}
 	}

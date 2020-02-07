@@ -78,6 +78,7 @@ app.post('/api/yourcreatures/moves/equip', profiles.apiYourCreaturesMovesEquip);
 app.post('/api/yourcreatures/moves/unequip', profiles.apiYourCreaturesMovesUnequip);
 app.post('/api/yourcreatures/breed', profiles.apiYourCreaturesBreed);
 app.post('/api/yourcreatures/unbreed', profiles.apiYourCreaturesUnbreed);
+app.post('/api/yourcreatures/release', profiles.apiYourCreaturesRelease);
 
 app.post('/api/youreggs', profiles.apiYourEggs);
 app.post('/api/youreggs/sell', profiles.apiYourEggsSell);

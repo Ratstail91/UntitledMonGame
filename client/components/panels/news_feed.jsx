@@ -13,7 +13,7 @@ class NewsFeed extends React.Component {
 			fileNames: [],
 		};
 
-		this.sendNewsRequest(10);
+		this.sendNewsRequest(3);
 	}
 
 	render() {
