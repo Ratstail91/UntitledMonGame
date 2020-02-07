@@ -65,18 +65,32 @@ class Signup extends React.Component {
 	submit(e) {
 		e.preventDefault();
 
-		if (!this.validateInput()) {
-			return;
-		}
-
-		//build the XHR
+		//build and validate the formData
 		let form = e.target;
 		let formData = new FormData(form);
+
+		//BUGFIX: trim the input data
+		const email = formData.get('email');
+		formData.delete('email');
+		formData.append('email', email.trim());
+
+		const username = formData.get('username');
+		formData.delete('username');
+		formData.append('username', username.trim());
+
+		const code = formData.get('code');
+		formData.delete('code');
+		formData.append('code', code.trim());
+
+		if (!this.validateInput(formData.get('email'), formData.get('username'), formData.get('password'), formData.get('retype'))) {
+			return;
+		}
 
 		if (this.props.referral) {
 			formData.append('referral', this.props.referral);
 		}
 
+		//build the XHR
 		let xhr = new XMLHttpRequest();
 
 		xhr.onreadystatechange = () => {
@@ -103,24 +117,24 @@ class Signup extends React.Component {
 		this.clearInput();
 	}
 
-	validateInput() {
-		if (!validateEmail(this.state.email)) {
+	validateInput(email, username, password, retype) {
+		if (!validateEmail(email)) {
 			this.props.setWarning('Invalid Email');
 			return false;
 		}
-		if (this.state.username.length < 4) {
+		if (username.length < 4) {
 			this.props.setWarning('Minimum username length is 4 characters');
 			return false;
 		}
-		if (this.state.username.length > 100) {
+		if (username.length > 100) {
 			this.props.setWarning('Maximum username length is 100 characters');
 			return false;
 		}
-		if (this.state.password.length < 8) {
+		if (password.length < 8) {
 			this.props.setWarning('Minimum password length is 8 characters');
 			return false;
 		}
-		if (this.state.password !== this.state.retype) {
+		if (password !== retype) {
 			this.props.setWarning('Passwords do not match');
 			return false;
 		}

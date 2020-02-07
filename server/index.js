@@ -32,6 +32,7 @@ pool.getConnection((err, connection) => {
 //TODO: (9) cosmetics
 //TODO: "babyeyes", "babyfat", "faestep", "dust", "makedark" needs a status effect
 //TODO: new moves: "dracometeor" (dragon only)
+//TODO: daily weather conditions
 
 // Add body parser
 app.use(bodyParser.json());

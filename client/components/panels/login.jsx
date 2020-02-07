@@ -41,14 +41,20 @@ class Login extends React.Component {
 	submit(e) {
 		e.preventDefault();
 
-		if (!this.validateInput()) {
-			return;
-		}
-
-		//build the XHR (around an existing form object)
+		//build and validate the form data
 		let form = e.target;
 		let formData = new FormData(form);
 
+		//BUGFIX: trim the input data
+		const email = formData.get('email');
+		formData.delete('email');
+		formData.append('email', email.trim());
+
+		if (!this.validateInput(formData.get('email'), formData.get('password'))) {
+			return;
+		}
+
+		//build the xhr
 		let xhr = new XMLHttpRequest();
 
 		xhr.onreadystatechange = () => {
@@ -79,13 +85,13 @@ class Login extends React.Component {
 		this.clearInput();
 	}
 
-	validateInput(e) {
-		if (!validateEmail(this.state.email)) {
+	validateInput(email, password) {
+		if (!validateEmail(email)) {
 			this.props.setWarning('Invalid Email');
 			return false;
 		}
 
-		if (this.state.password.length < 8) {
+		if (password.length < 8) {
 			this.props.setWarning('Minimum password length is 8 characters');
 			return false;
 		}
