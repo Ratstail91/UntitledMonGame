@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { setWarning } from '../../actions/warning.js';
 import { setCreatures } from '../../actions/profile.js';
 import { setInspect } from '../../actions/inspect.js';
+import { setBattleBoxes } from '../../actions/battles.js';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);
@@ -48,6 +49,7 @@ class YourCreatures extends React.Component {
 										<Dropdown.Menu>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
 											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
+											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'battlebox'); }}>Move To Battle Boxes</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'moves'); }}>Select Moves</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'unbreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
@@ -76,7 +78,11 @@ class YourCreatures extends React.Component {
 				if (xhr.status === 200) {
 					//on success
 					const json = JSON.parse(xhr.responseText);
+
 					this.props.setCreatures(json.creatures);
+					if (json.battleBoxes) {
+						this.props.setBattleBoxes(json.battleBoxes);
+					}
 				}
 				else {
 					this.props.setWarning(xhr.responseText);
@@ -104,6 +110,10 @@ class YourCreatures extends React.Component {
 				//TODO: train
 				return;
 
+			case 'battlebox':
+				this.sendYourCreaturesRequest('/api/yourbattleboxes/insert', index);
+				return;
+
 			case 'moves':
 				this.props.setInspect(index);
 				this.props.history.push('/movesselect');
@@ -129,9 +139,12 @@ class YourCreatures extends React.Component {
 YourCreatures.propTypes = {
 	id: PropTypes.number.isRequired,
 	token: PropTypes.number.isRequired,
+	creatures: PropTypes.array.isRequired,
 	setWarning: PropTypes.func.isRequired,
+	setProfile: PropTypes.func.isRequired,
 	setCreatures: PropTypes.func.isRequired,
 	setInspect: PropTypes.func.isRequired,
+	setBattleBoxes: PropTypes.func.isRequired,
 };
 
 const mapStoreToProps = (store) => {
@@ -148,6 +161,7 @@ const mapDispatchToProps = (dispatch) => {
 		setProfile: (username, coins) => dispatch(setProfile(username, coins)),
 		setCreatures: (creatures) => dispatch(setCreatures(creatures)),
 		setInspect: (index) => dispatch(setInspect(index)),
+		setBattleBoxes: (bb) => dispatch(setBattleBoxes(bb)),
 	};
 };
 

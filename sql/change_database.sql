@@ -1,14 +1,23 @@
-DROP TABLE creatureMovesEquipped;
-DROP TABLE creatureMovesOwned;
+#grant everyone a battlebox
 
-CREATE TABLE IF NOT EXISTS creatureMovesOwned (
-	id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY UNIQUE,
-	td TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+DROP PROCEDURE IF EXISTS fill;
 
-	creatureId INTEGER UNSIGNED,
+DELIMITER ;;
 
-	idx VARCHAR(100) NOT NULL,
-	equipped BOOLEAN NOT NULL DEFAULT FALSE,
+CREATE PROCEDURE fill()
+BEGIN
 
-	CONSTRAINT FOREIGN KEY fk_creatureMovesOwned_creatures(creatureId) REFERENCES creatures(id) ON UPDATE CASCADE ON DELETE CASCADE
-);
+	SET @idColumn = 0;
+
+	SELECT MIN(id) FROM profiles INTO @idColumn;
+
+	WHILE (@idColumn IS NOT NULL) DO
+		INSERT INTO items (profileId, idx) VALUES (@idColumn, 'battlebox');
+	    SELECT MIN(id) FROM profiles WHERE id > @idColumn INTO @idColumn;
+	END WHILE;
+
+END
+
+;;
+
+CALL fill();

@@ -89,6 +89,9 @@ app.post('/api/youritems/sell', profiles.apiYourItemsSell);
 
 const battles = require('./battles/battles.js');
 app.post('/api/yourbattleboxes', battles.apiYourBattleBoxes);
+app.post('/api/yourbattleboxes/insert', battles.apiYourBattleBoxesInsert);
+app.post('/api/yourbattleboxes/remove', battles.apiYourBattleBoxesRemove);
+app.post('/api/yourbattleboxes/shift', battles.apiYourBattleBoxesShift);
 
 const shop = require('./shop/shop.js');
 shop.runDailyShopEggRefresh();

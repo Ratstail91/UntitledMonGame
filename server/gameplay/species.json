@@ -122,7 +122,7 @@
 	"predatore": {
 		"name": "Predatore",
 		"element": "metal",
-		"description": "A beautiful shining bird of prey, its numbers have been dwindling in recent times due to human encroachment on its habitat.",
+		"description": "A beautiful rocky bird of prey, its numbers have been dwindling in recent times due to human encroachment on its habitat.",
 
 		"egg": {
 			"rarity": "common",

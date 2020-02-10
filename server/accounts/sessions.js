@@ -127,7 +127,9 @@ const createNewProfile = (accountRecord) => new Promise(async (resolve, reject) 
 
 		const profileId = (await pool.promise().query('SELECT id FROM profiles WHERE accountId = ?;', [accountRecord.id]))[0][0].id;
 
+		//NOTE: grant starting items
 		await pool.promise().query('INSERT INTO items (profileId, idx) VALUES (?, "incubator");', [profileId]);
+		await pool.promise().query('INSERT INTO items (profileId, idx) VALUES (?, "battlebox");', [profileId]);
 	}
 
 	return resolve(accountRecord);

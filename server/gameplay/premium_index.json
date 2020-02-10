@@ -13,5 +13,16 @@
 			"effect": "heal",
 			"value": 10
 		}
+	},
+
+	"battlebox": {
+		"name": "Battle Box",
+		"type": "static",
+		"value": 499,
+		"sprite": "battlebox.png",
+		"description": "For participating in battles.",
+
+		"shop": "constant",
+		"premium": true
 	}
 }

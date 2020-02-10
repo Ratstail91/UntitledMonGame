@@ -76,8 +76,10 @@ class ShopPremium extends React.Component {
 						<div key={idx} className={'panel'}>
 							<div className='eggPanel'>
 								<img src={`/content/sprites/premiums/${premium.sprite}`} />
-								<span>{premium.name}</span>
+								<span><strong>{premium.name}</strong></span>
+								<span style={{marginLeft: '1em', marginRight: '1em', textAlign: 'center'}}><em>{premium.description}</em></span>
 								<span>${premium.value / 100} AUD</span>
+								<div className='break' />
 
 								<span id={`btn-${idx}`}></span>
 							</div>

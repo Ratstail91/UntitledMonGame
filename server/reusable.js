@@ -35,7 +35,7 @@ const getYourEggs = (fields) => new Promise((resolve, reject) => {
 });
 
 const determineSelectedCreature = (fields) => new Promise((resolve, reject) => {
-	const query = 'SELECT * FROM  creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
+	const query = 'SELECT * FROM creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) AND id NOT IN (SELECT creatureId FROM battleBoxSlots) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0][fields.index])
 		.then(creature => creature ? resolve({ creature, ...fields }) : reject({ msg: 'creature not found', extra: fields.index }))
@@ -45,7 +45,7 @@ const determineSelectedCreature = (fields) => new Promise((resolve, reject) => {
 
 //NOTE: for display only
 const getYourCreatures = (fields) => new Promise((resolve, reject) => {
-	const query = 'SELECT * FROM creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
+	const query = 'SELECT * FROM creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) AND id NOT IN (SELECT creatureId FROM battleBoxSlots) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
 		.then(creatures => resolve({ creatures: creatures.map(creature => {
