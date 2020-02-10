@@ -23,6 +23,7 @@ const apiYourCreaturesBreed = async (req, res) => {
 		.then(validateSession)
 		.then(checkBreedingTotal)
 		.then(determineSelectedCreature)
+		.then(checkNotBattling)
 		.then(markAsBreeding)
 		.then(getYourCreatures)
 		.then(fields => { return { msg: fields, extra: ''}; })
@@ -37,6 +38,15 @@ const checkBreedingTotal = (fields) => new Promise((resolve, reject) => {
 		.then(results => results[0][0].total)
 		.then(total => total < 2 ? resolve(fields) : reject({ msg: 'You can breed two creatures at a time', extra: total }))
 		.catch(e => reject({ msg: 'checkBreedingTotal error', extra: e }))
+	;
+});
+
+const checkNotBattling = (fields) => new Promise((resolve, reject) => {
+	const query = 'SELECT COUNT(*) AS total FROM battleBoxSlots WHERE creatureId = ?;';
+	return pool.promise().query(query, [fields.creature.id])
+		.then(results => results[0][0].total)
+		.then(total => total == 0 ? resolve(fields) : reject({ msg: 'Can\'t breed with a battling creature', extra: '' }))
+		.catch(e => reject({ msg: 'checkNotBattling error', extra: e }))
 	;
 });
 
