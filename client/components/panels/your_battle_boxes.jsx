@@ -95,7 +95,6 @@ class YourBattleBoxes extends React.Component {
 				if (xhr.status === 200) {
 					//on success
 					const json = JSON.parse(xhr.responseText);
-					console.log(json)
 					this.props.setBattleBoxes(json.battleBoxes);
 					if (json.creatures) {
 						this.props.setCreatures(json.creatures);

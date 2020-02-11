@@ -43,6 +43,10 @@ const insertIntoBattleBoxes = (fields) => new Promise(async (resolve, reject) =>
 		return reject({ msg: 'Can\'t battle with a breeding creature', extra: [fields.creature.id] })
 	}
 
+	if (fields.creature.trainingTime) {
+		return reject({ msg: 'Can\'t battle with a training creature', extra: [fields.creature.id] })
+	}
+
 	//get the battleboxes
 	let battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
 

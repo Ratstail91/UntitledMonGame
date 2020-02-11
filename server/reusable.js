@@ -45,7 +45,7 @@ const determineSelectedCreature = (fields) => new Promise((resolve, reject) => {
 
 //NOTE: for display only
 const getYourCreatures = (fields) => new Promise((resolve, reject) => {
-	const query = 'SELECT * FROM creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) AND id NOT IN (SELECT creatureId FROM battleBoxSlots) ORDER BY id;';
+	const query = 'SELECT *, TIMEDIFF(trainingTime, NOW()) AS trainingTime FROM creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) AND id NOT IN (SELECT creatureId FROM battleBoxSlots) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
 		.then(creatures => resolve({ creatures: creatures.map(creature => {
@@ -56,6 +56,7 @@ const getYourCreatures = (fields) => new Promise((resolve, reject) => {
 				element: species[creature.species].element,
 				description: species[creature.species].description,
 				breeding: creature.breeding,
+				trainingTime: creature.trainingTime,
 				frontImage: species[creature.species].frontImage,
 			}
 		}), ...fields }))

@@ -126,6 +126,9 @@ CREATE TABLE IF NOT EXISTS creatures (
 	#breeding and other mechanics
 	breeding BOOLEAN DEFAULT FALSE,
 
+	trainingTime TIMESTAMP NULL DEFAULT NULL,
+	trainingType ENUM ('health', 'speed', 'strength', 'power'),
+
 	CONSTRAINT FOREIGN KEY fk_creatures_profiles(profileId) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 

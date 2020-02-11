@@ -1,6 +1,7 @@
 const { apiYourProfile } = require('./your_profile.js');
 const { apiYourCreatures } = require('./your_creatures.js');
 const { apiYourCreaturesInspect } = require('./your_creatures_inspect.js');
+const { apiYourCreaturesTrain, runTrainJob } = require('./your_creatures_train.js');
 const { apiYourCreaturesMoves } = require('./your_creatures_moves.js');
 const { apiYourCreaturesMovesBuy } = require('./your_creatures_moves_buy.js');
 const { apiYourCreaturesMovesEquip } = require('./your_creatures_moves_equip.js');
@@ -18,6 +19,8 @@ module.exports = {
 	apiYourProfile,
 	apiYourCreatures,
 	apiYourCreaturesInspect,
+	apiYourCreaturesTrain,
+	runTrainJob,
 	apiYourCreaturesMoves,
 	apiYourCreaturesMovesBuy,
 	apiYourCreaturesMovesEquip,

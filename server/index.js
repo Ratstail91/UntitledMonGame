@@ -68,10 +68,12 @@ app.post('/api/passwordreset', accounts.apiPasswordReset);
 
 const profiles = require('./profiles/profiles.js');
 profiles.runEggHatchJob();
+profiles.runTrainJob();
 profiles.runBreedingJob();
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/yourcreatures', profiles.apiYourCreatures);
 app.post('/api/yourcreatures/inspect', profiles.apiYourCreaturesInspect);
+app.post('/api/yourcreatures/train', profiles.apiYourCreaturesTrain);
 app.post('/api/yourcreatures/moves', profiles.apiYourCreaturesMoves);
 app.post('/api/yourcreatures/moves/buy', profiles.apiYourCreaturesMovesBuy);
 app.post('/api/yourcreatures/moves/equip', profiles.apiYourCreaturesMovesEquip);

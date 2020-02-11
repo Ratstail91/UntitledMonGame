@@ -48,8 +48,14 @@ class YourCreatures extends React.Component {
 
 										<Dropdown.Menu>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
-											<Dropdown.Item disabled onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train'); }}>Train</Dropdown.Item>
-											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'battlebox'); }}>Move To Battle Boxes</Dropdown.Item>
+											<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })}>Training{this.state.training ? ' -' : ' +'}</Dropdown.Item>
+											<div style={{display: this.state.training ? 'initial' : 'none' }}>
+												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'health'); }}>Health</Dropdown.Item>
+												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'speed'); }}>Speed</Dropdown.Item>
+												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'stength'); }}>Strength</Dropdown.Item>
+												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'power'); }}>Power</Dropdown.Item>
+											</div>
+											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'battlebox'); }}>Move To Battle Box</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'moves'); }}>Select Moves</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'unbreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
@@ -60,6 +66,12 @@ class YourCreatures extends React.Component {
 
 									<img src='/content/sprites/heart.png' style={{maxWidth: '25px', maxHeight: '25px', display: creature.breeding ? 'initial' : 'none'}} />
 								</div>
+
+								<div className='panel' style={{display: creature.trainingTime ? 'flex' : 'none', flexDirection: 'row', alignItems: 'center'}}>
+									<div className='break' />
+									<span>{creature.trainingTime}</span>
+									<img src='/content/sprites/sword.png' style={{maxWidth: '25px', maxHeight: '25px'}} />
+								</div>
 							</div>
 							<div className='break' />
 						</div>
@@ -69,7 +81,7 @@ class YourCreatures extends React.Component {
 		);
 	}
 
-	sendYourCreaturesRequest(url, index) {
+	sendYourCreaturesRequest(url, index, extra) {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -96,10 +108,11 @@ class YourCreatures extends React.Component {
 			id: this.props.id,
 			token: this.props.token,
 			index: index,
+			extra: extra,
 		}));
 	}
 
-	creatureAction(index, action) {
+	creatureAction(index, action, trainingType) {
 		switch(action) {
 			case 'inspect':
 				this.props.setInspect(index);
@@ -107,7 +120,7 @@ class YourCreatures extends React.Component {
 				return;
 
 			case 'train':
-				//TODO: train
+				this.sendYourCreaturesRequest('/api/yourcreatures/train', index, trainingType);
 				return;
 
 			case 'battlebox':

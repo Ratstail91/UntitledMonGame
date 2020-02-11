@@ -24,6 +24,7 @@ const apiYourCreaturesBreed = async (req, res) => {
 		.then(checkBreedingTotal)
 		.then(determineSelectedCreature)
 		.then(checkNotBattling)
+		.then(checkNotTraining)
 		.then(markAsBreeding)
 		.then(getYourCreatures)
 		.then(fields => { return { msg: fields, extra: ''}; })
@@ -48,6 +49,10 @@ const checkNotBattling = (fields) => new Promise((resolve, reject) => {
 		.then(total => total == 0 ? resolve(fields) : reject({ msg: 'Can\'t breed with a battling creature', extra: '' }))
 		.catch(e => reject({ msg: 'checkNotBattling error', extra: e }))
 	;
+});
+
+const checkNotTraining = (fields) => new Promise((resolve, reject) => {
+	return !fields.creature.trainingTime ? resolve(fields) : reject({ msg: 'Can\'t breed with a training creature', extra: '' });
 });
 
 const markAsBreeding = (fields) => new Promise((resolve, reject) => {
@@ -161,6 +166,8 @@ module.exports = {
 
 	//for testing
 	checkBreedingTotal,
+	checkNotBattling,
+	checkNotTraining,
 	markAsBreeding,
 
 	runBreedingJob,

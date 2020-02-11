@@ -41,7 +41,7 @@ class YourProfile extends React.Component {
 						<YourItems />
 					</Tab>
 
-					<Tab eventKey='battles' title='Battles'>
+					<Tab eventKey='battles' title='Battle Boxes'>
 						<YourBattleBoxes />
 					</Tab>
 				</Tabs>
