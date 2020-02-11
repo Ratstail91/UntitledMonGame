@@ -52,7 +52,7 @@ class YourCreatures extends React.Component {
 											<div style={{display: this.state.training ? 'initial' : 'none' }}>
 												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'health'); }}>Health</Dropdown.Item>
 												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'speed'); }}>Speed</Dropdown.Item>
-												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'stength'); }}>Strength</Dropdown.Item>
+												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'strength'); }}>Strength</Dropdown.Item>
 												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'power'); }}>Power</Dropdown.Item>
 											</div>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'battlebox'); }}>Move To Battle Box</Dropdown.Item>

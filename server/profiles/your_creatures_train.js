@@ -55,6 +55,11 @@ const checkStatTotal = (fields) => new Promise((resolve, reject) => {
 });
 
 const trainSelectedCreature = (fields) => new Promise((resolve, reject) => {
+	//extra check
+	if (fields.extra != 'health' || fields.extra != 'speed' || fields.extra != 'strength' || fields.extra != 'power') {
+		return reject({ msg: 'Invalid trainingType', extra: fields.extra });
+	}
+
 	const query = 'UPDATE creatures SET trainingTime = NOW() + INTERVAL ? MINUTE, trainingType = ? WHERE id = ?;';
 	return pool.promise().query(query, [fields.statTotal + 1, fields.extra, fields.creature.id])
 		.then(() => resolve(fields))
