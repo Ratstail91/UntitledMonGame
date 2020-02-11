@@ -66,9 +66,15 @@ const processBattleBoxSlots = (fields) => new Promise(async (resolve, reject) =>
 	});
 
 	structure = (await Promise.all(structure));
+
 	structure = structure.reduce((acc, slot) => {
-		acc[slot.battleBoxIndex] = acc[slot.battleBoxIndex] || [];
-		acc[slot.battleBoxIndex][slot.boxSlot] = { name: slot.name, frontImage: slot.frontImage, boxSlot: slot.boxSlot }
+		acc[slot.battleBoxIndex] = acc[slot.battleBoxIndex] || {};
+		acc[slot.battleBoxIndex].meta = acc[slot.battleBoxIndex].meta || {};
+		acc[slot.battleBoxIndex].content = acc[slot.battleBoxIndex].content || [];
+
+		acc[slot.battleBoxIndex].meta.locked = !!battleBoxes[slot.battleBoxIndex].locked;
+
+		acc[slot.battleBoxIndex].content[slot.boxSlot] = { name: slot.name, frontImage: slot.frontImage, boxSlot: slot.boxSlot }
 		return acc;
 	}, new Array(fields.totalBattleBoxes));
 

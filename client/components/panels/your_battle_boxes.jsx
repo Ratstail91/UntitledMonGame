@@ -29,14 +29,22 @@ class YourBattleBoxes extends React.Component {
 
 		battleBoxArray = battleBoxArray.map( (battleBox, idx) => {
 			if (!battleBox) {
-				battleBox = [];
+				battleBox = {};
+			}
+
+			if (!battleBox.meta) {
+				battleBox.meta = { locked: false };
+			}
+
+			if (!battleBox.content) {
+				battleBox.content = [];
 			}
 
 			for (let i = 0; i < 6; i++) {
-				battleBox[i] = battleBox[i] || { name: null, frontImage: null, boxSlot: i };
+				battleBox.content[i] = battleBox.content[i] || { name: null, frontImage: null, boxSlot: i };
 			}
 
-			battleBox = battleBox.sort((a, b) => a.boxSlot - b.boxSlot);
+			battleBox.content = battleBox.content.sort((a, b) => a.boxSlot - b.boxSlot);
 
 			return battleBox;
 		});
@@ -46,11 +54,18 @@ class YourBattleBoxes extends React.Component {
 				{battleBoxArray.map( (battleBox, idx) => {
 					return (
 						<div key={idx} className={'panel'}>
-							<div className='eggContainer panel'>
-								{battleBox.map( (box, boxIdx) => {
+							<div className={`boxContainer panel${battleBox.meta.locked ? ' locked' : ''}`}>
+								<div className='boxControls'>
+									<Button onClick={() => this.sendBattleBoxRequest('/api/yourbattleboxes/lock', { box: idx })}>{battleBox.meta.locked ? '🔒' : '🔓'}</Button>
+									<div className='gap mobile show' />
+									<Button onClick={() => battleBox.meta.locked ? alert('Challenge links aren\'t ready yet!') : null} className={`${battleBox.meta.locked ? '' : 'disabled'}`}>🔗</Button>
+									<div className='break mobile hide' />
+								</div>
+
+								{battleBox.content.map( (box, boxIdx) => {
 									return (
-										<div key={`${idx}-${boxIdx}`} className='eggPanel'>
-											<img src={`/content/sprites/creatures/${box.frontImage ? box.frontImage : 'missing.png'}`} style={{width: '150px', height: '150px'}} />
+										<div key={`${idx}-${boxIdx}`} className='boxPanel'>
+											<img src={`/content/sprites/creatures/${box.frontImage ? box.frontImage : 'missing.png'}`} />
 
 											<span><strong>{box.name}</strong></span>
 
@@ -80,6 +95,7 @@ class YourBattleBoxes extends React.Component {
 				if (xhr.status === 200) {
 					//on success
 					const json = JSON.parse(xhr.responseText);
+					console.log(json)
 					this.props.setBattleBoxes(json.battleBoxes);
 					if (json.creatures) {
 						this.props.setCreatures(json.creatures);

@@ -69,8 +69,17 @@ const switchBattleBoxSlots = (fields) => new Promise(async (resolve, reject) => 
 		battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
 	}
 
-	if ( (battleBoxes[aBoxIndex] && battleBoxes[aBoxIndex].locked) || (battleBoxes[bBoxIndex] && battleBoxes[bBoxIndex].locked)) {
+	if (battleBoxes[aBoxIndex] && battleBoxes[aBoxIndex].locked) {
 		return reject({ msg: 'Can\'t move inside a locked box', extra: '' });
+	}
+
+	//move AROUND the locked boxes
+	while (battleBoxes[bBoxIndex] && battleBoxes[bBoxIndex].locked) {
+		bBoxIndex += Math.sign(fields.index.direction);
+	}
+
+	if (!battleBoxes[bBoxIndex]) {
+		return resolve(fields); //silently ignore it
 	}
 
 	let slots = (await pool.promise().query('SELECT * FROM battleBoxSlots WHERE battleBoxId IN (SELECT id FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?));', [fields.id]))[0];
