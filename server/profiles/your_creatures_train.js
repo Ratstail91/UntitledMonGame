@@ -56,7 +56,7 @@ const checkStatTotal = (fields) => new Promise((resolve, reject) => {
 
 const trainSelectedCreature = (fields) => new Promise((resolve, reject) => {
 	//extra check
-	if (fields.extra != 'health' || fields.extra != 'speed' || fields.extra != 'strength' || fields.extra != 'power') {
+	if (fields.extra != 'health' && fields.extra != 'speed' && fields.extra != 'strength' && fields.extra != 'power') {
 		return reject({ msg: 'Invalid trainingType', extra: fields.extra });
 	}
 
