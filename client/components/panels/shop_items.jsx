@@ -36,6 +36,7 @@ class ShopItems extends React.Component {
 								<img src={`/content/sprites/items/${item.sprite}`} />
 								<span><strong>{item.name}</strong></span>
 								<span style={{marginLeft: '1em', marginRight: '1em', textAlign: 'center'}}><em>{item.description}</em></span>
+								<span>{item.value} coins</span>
 								<div className='break' />
 
 								<Button onClick={e => { e.preventDefault(); e.persist(); e.target.setAttribute('disabled', 'disabled'); this.sendBuyItemRequest(idx, e); }}>Buy</Button>
