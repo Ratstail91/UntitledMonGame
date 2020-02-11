@@ -35,6 +35,18 @@ const apiYourBattleBoxesRemove = async (req, res) => {
 const removeFromBattleBox = (fields) => new Promise(async (resolve, reject) => {
 	const battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
 
+	//if there are more item battleboxes than DB battle boxes
+	//TODO: make this reusable?
+	if (battleBoxes.length != fields.totalBattleBoxes) {
+		const query = 'INSERT INTO battleBoxes (profileId) VALUES ((SELECT id FROM profiles WHERE accountId = ?));';
+		for (let i = 0; i < fields.totalBattleBoxes - battleBoxes.length; i++) {
+			await pool.promise().query(query, [fields.id]);
+		}
+
+		//grab new battleboxes
+		battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
+	}
+
 	if (battleBoxes[fields.index.box] && battleBoxes[fields.index.box].locked) {
 		return reject({ msg: 'Can\'t remove from a locked box', extra: '' });
 	}
