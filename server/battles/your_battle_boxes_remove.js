@@ -33,7 +33,7 @@ const apiYourBattleBoxesRemove = async (req, res) => {
 };
 
 const removeFromBattleBox = (fields) => new Promise(async (resolve, reject) => {
-	const battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
+	let battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
 
 	//if there are more item battleboxes than DB battle boxes
 	//TODO: make this reusable?
