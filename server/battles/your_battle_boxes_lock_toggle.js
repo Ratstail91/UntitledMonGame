@@ -6,7 +6,7 @@ const { validateSession } = require('../reusable.js');
 
 const { countTotalBattleBoxObjects, getYourBattleBoxSlots, processBattleBoxSlots } = require('./your_battle_boxes.js');
 
-const apiYourBattleBoxesLock = async (req, res) => {
+const apiYourBattleBoxesLockToggle = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -66,7 +66,7 @@ const toggleBattleBoxLock = (fields) => new Promise(async (resolve, reject) => {
 });
 
 module.exports = {
-	apiYourBattleBoxesLock,
+	apiYourBattleBoxesLockToggle,
 
 	//for testing
 	toggleBattleBoxLock,

@@ -56,7 +56,7 @@ class YourBattleBoxes extends React.Component {
 						<div key={idx} className={'panel'}>
 							<div className={`boxContainer panel${battleBox.meta.locked ? ' locked' : ''}`}>
 								<div className='boxControls'>
-									<Button onClick={() => this.sendBattleBoxRequest('/api/yourbattleboxes/lock', { box: idx })}>{battleBox.meta.locked ? '🔒' : '🔓'}</Button>
+									<Button onClick={() => this.sendBattleBoxRequest('/api/yourbattleboxes/lock/toggle', { box: idx })}>{battleBox.meta.locked ? '🔒' : '🔓'}</Button>
 									<div className='gap mobile show' />
 									<Button onClick={() => battleBox.meta.locked ? alert('Challenge links aren\'t ready yet!') : null} className={`${battleBox.meta.locked ? '' : 'disabled'}`}>🔗</Button>
 									<div className='break mobile hide' />

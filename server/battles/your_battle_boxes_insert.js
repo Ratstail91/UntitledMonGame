@@ -66,7 +66,7 @@ outer:
 		}
 
 		for (let j = 0; j < 6; j++) {
-			if (!fields.structure[i][j]) {
+			if (!fields.structure[i].content[j]) {
 				box = i;
 				slot = j;
 				break outer;
