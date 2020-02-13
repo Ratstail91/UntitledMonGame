@@ -4,7 +4,7 @@ const { log } = require('../utilities/logging.js');
 
 const { validateSession } = require('../reusable.js');
 
-const { countTotalBattleBoxObjects, getYourBattleBoxSlots, processBattleBoxSlots } = require('./your_battle_boxes.js');
+const { countTotalBattleBoxObjects, getBattleBoxStructure, getBattleBoxes } = require('./your_battle_boxes.js');
 
 const apiYourBattleBoxesShift = async (req, res) => {
 	//handle all outcomes
@@ -23,8 +23,7 @@ const apiYourBattleBoxesShift = async (req, res) => {
 		.then(validateSession)
 		.then(countTotalBattleBoxObjects)
 		.then(switchBattleBoxSlots)
-		.then(getYourBattleBoxSlots)
-		.then(processBattleBoxSlots)
+		.then(getBattleBoxStructure)
 		.then(fields => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
@@ -55,19 +54,7 @@ const switchBattleBoxSlots = (fields) => new Promise(async (resolve, reject) => 
 	}
 
 	//get the battleboxes
-	let battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
-
-	//if there are more item battleboxes than DB battle boxes
-	//TODO: make this reusable?
-	if (battleBoxes.length != fields.totalBattleBoxes) {
-		const query = 'INSERT INTO battleBoxes (profileId) VALUES ((SELECT id FROM profiles WHERE accountId = ?));';
-		for (let i = 0; i < fields.totalBattleBoxes - battleBoxes.length; i++) {
-			await pool.promise().query(query, [fields.id]);
-		}
-
-		//grab new battleboxes
-		battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
-	}
+	let battleBoxes = await getBattleBoxes(fields);
 
 	if (battleBoxes[aBoxIndex] && battleBoxes[aBoxIndex].locked) {
 		return reject({ msg: 'Can\'t move inside a locked box', extra: '' });

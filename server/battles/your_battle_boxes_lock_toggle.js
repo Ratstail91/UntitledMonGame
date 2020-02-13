@@ -4,7 +4,7 @@ const { log } = require('../utilities/logging.js');
 
 const { validateSession } = require('../reusable.js');
 
-const { countTotalBattleBoxObjects, getYourBattleBoxSlots, processBattleBoxSlots } = require('./your_battle_boxes.js');
+const { countTotalBattleBoxObjects, getBattleBoxStructure, getBattleBoxes } = require('./your_battle_boxes.js');
 
 const apiYourBattleBoxesLockToggle = async (req, res) => {
 	//handle all outcomes
@@ -22,14 +22,11 @@ const apiYourBattleBoxesLockToggle = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(countTotalBattleBoxObjects)
-
-		.then(getYourBattleBoxSlots)
-		.then(processBattleBoxSlots)
+		.then(getBattleBoxStructure)
 
 		.then(toggleBattleBoxLock)
 
-		.then(getYourBattleBoxSlots)
-		.then(processBattleBoxSlots)
+		.then(getBattleBoxStructure)
 
 		.then(fields => { return { msg: { battleBoxes: fields.structure }, extra: '' }; })
 		.then(handleSuccess)
@@ -42,19 +39,7 @@ const toggleBattleBoxLock = (fields) => new Promise(async (resolve, reject) => {
 		return reject({ msg: 'Can\'t lock an empty box', extra: '' });
 	}
 
-	let battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
-
-	//if there are more item battleboxes than DB battle boxes
-	//TODO: make this reusable?
-	if (battleBoxes.length != fields.totalBattleBoxes) {
-		const query = 'INSERT INTO battleBoxes (profileId) VALUES ((SELECT id FROM profiles WHERE accountId = ?));';
-		for (let i = 0; i < fields.totalBattleBoxes - battleBoxes.length; i++) {
-			await pool.promise().query(query, [fields.id]);
-		}
-
-		//grab new battleboxes
-		battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
-	}
+	let battleBoxes = await getBattleBoxes(fields);
 
 	//update
 	const query = 'UPDATE battleBoxes SET locked = ? WHERE id = ?;';

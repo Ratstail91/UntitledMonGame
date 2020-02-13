@@ -4,7 +4,7 @@ const { log } = require('../utilities/logging.js');
 
 const { validateSession, getYourCreatures } = require('../reusable.js');
 
-const { countTotalBattleBoxObjects, getYourBattleBoxSlots, processBattleBoxSlots } = require('./your_battle_boxes.js');
+const { countTotalBattleBoxObjects, getBattleBoxStructure, getBattleBoxes } = require('./your_battle_boxes.js');
 
 const apiYourBattleBoxesRemove = async (req, res) => {
 	//handle all outcomes
@@ -23,8 +23,7 @@ const apiYourBattleBoxesRemove = async (req, res) => {
 		.then(validateSession)
 		.then(countTotalBattleBoxObjects)
 		.then(removeFromBattleBox)
-		.then(getYourBattleBoxSlots)
-		.then(processBattleBoxSlots)
+		.then(getBattleBoxStructure)
 		.then(getYourCreatures)
 		.then(fields => { return { msg: { creatures: fields.creatures, battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
@@ -33,19 +32,7 @@ const apiYourBattleBoxesRemove = async (req, res) => {
 };
 
 const removeFromBattleBox = (fields) => new Promise(async (resolve, reject) => {
-	let battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
-
-	//if there are more item battleboxes than DB battle boxes
-	//TODO: make this reusable?
-	if (battleBoxes.length != fields.totalBattleBoxes) {
-		const query = 'INSERT INTO battleBoxes (profileId) VALUES ((SELECT id FROM profiles WHERE accountId = ?));';
-		for (let i = 0; i < fields.totalBattleBoxes - battleBoxes.length; i++) {
-			await pool.promise().query(query, [fields.id]);
-		}
-
-		//grab new battleboxes
-		battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
-	}
+	let battleBoxes = await getBattleBoxes(fields);
 
 	if (battleBoxes[fields.index.box] && battleBoxes[fields.index.box].locked) {
 		return reject({ msg: 'Can\'t remove from a locked box', extra: '' });

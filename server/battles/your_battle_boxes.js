@@ -22,8 +22,7 @@ const apiYourBattleBoxes = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(countTotalBattleBoxObjects)
-		.then(getYourBattleBoxSlots)
-		.then(processBattleBoxSlots)
+		.then(getBattleBoxStructure)
 		.then(fields => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
@@ -37,6 +36,16 @@ const countTotalBattleBoxObjects = (fields) => new Promise(async (resolve, rejec
 		.then(results => results[0][0].total)
 		.then(total => resolve({ totalBattleBoxes: total, ...fields }))
 		.catch(e => reject({ msg: 'countTotalBattleBoxObjects error', extra: e }))
+	;
+});
+
+const getBattleBoxStructure = (fields) => new Promise(async (resolve, reject) => {
+	//curry these two functions
+	await new Promise((resolve, reject) => resolve(fields))
+		.then(getYourBattleBoxSlots)
+		.then(processBattleBoxSlots)
+		.then(fields => resolve(fields))
+		.catch(e => reject({ msg: 'getBattleBoxStructure error', extra: e }))
 	;
 });
 
@@ -81,11 +90,30 @@ const processBattleBoxSlots = (fields) => new Promise(async (resolve, reject) =>
 	return resolve({ ...fields, structure }); //WARNING: field hiding is deliberate
 });
 
+const getBattleBoxes = async (fields) => {
+	let battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
+
+	//if there are more item battleboxes than DB battle boxes
+	if (battleBoxes.length != fields.totalBattleBoxes) {
+		const query = 'INSERT INTO battleBoxes (profileId) VALUES ((SELECT id FROM profiles WHERE accountId = ?));';
+		for (let i = 0; i < fields.totalBattleBoxes - battleBoxes.length; i++) {
+			await pool.promise().query(query, [fields.id]);
+		}
+
+		//grab new battleboxes
+		battleBoxes = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [fields.id]))[0];
+	}
+
+	return battleBoxes;
+};
+
 module.exports = {
 	apiYourBattleBoxes,
+	getBattleBoxes,
 
 	//for testing
 	countTotalBattleBoxObjects,
+	getBattleBoxStructure,
 	getYourBattleBoxSlots,
 	processBattleBoxSlots,
 };
