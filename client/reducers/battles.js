@@ -1,7 +1,8 @@
-import { SET_BATTLE_BOXES } from "../actions/battles.js";
+import { SET_BATTLE_BOXES, SET_BATTLES } from "../actions/battles.js";
 
 const initialStore = {
-	battleBoxes: []
+	battleBoxes: [],
+	battles: []
 };
 
 export const battlesReducer = (store = initialStore, action) => {
@@ -10,6 +11,14 @@ export const battlesReducer = (store = initialStore, action) => {
 			let newStore = JSON.parse(JSON.stringify(store));
 
 			newStore.battleBoxes = JSON.parse(JSON.stringify(action.battleBoxes));
+
+			return newStore;
+		}
+
+		case SET_BATTLES: {
+			let newStore = JSON.parse(JSON.stringify(store));
+
+			newStore.battles = JSON.parse(JSON.stringify(action.battles));
 
 			return newStore;
 		}

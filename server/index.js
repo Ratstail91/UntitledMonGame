@@ -96,6 +96,8 @@ app.post('/api/yourbattleboxes/remove', battles.apiYourBattleBoxesRemove);
 app.post('/api/yourbattleboxes/shift', battles.apiYourBattleBoxesShift);
 app.post('/api/yourbattleboxes/lock/toggle', battles.apiYourBattleBoxesLockToggle);
 
+app.post('/api/yourbattles', battles.apiYourBattles);
+
 const shop = require('./shop/shop.js');
 shop.runDailyShopEggRefresh();
 app.get('/api/shopeggs', shop.apiShopEggs);

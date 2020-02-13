@@ -1,1 +1,3 @@
-DELETE FROM battleBoxSlots;
+DROP TABLE battleBoxSlots;
+DROP TABLE battleBoxes;
+
