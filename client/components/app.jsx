@@ -88,6 +88,7 @@ class App extends React.Component {
 						<LazyRoute path='/inspect' component={() => import('./pages/inspect.jsx')} />
 						<LazyRoute path='/movesselect' component={() => import('./pages/moves_select.jsx')} />
 						<LazyRoute path='/shop' component={() => import('./pages/shop.jsx')} />
+						<LazyRoute path='/challenge' component={() => import('./pages/challenge.jsx')} />
 
 						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings.jsx')} />
 						<LazyRoute path='/privacypolicy' component={async () => () => <MarkdownWrapper url={require('../markdown/privacy_policy.md').default} />} />

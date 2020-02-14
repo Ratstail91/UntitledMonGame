@@ -58,7 +58,7 @@ class YourBattleBoxes extends React.Component {
 								<div className='boxControls'>
 									<Button onClick={() => this.sendBattleBoxRequest('/api/yourbattleboxes/lock/toggle', { box: idx })}>{battleBox.meta.locked ? '🔒' : '🔓'}</Button>
 									<div className='gap mobile show' />
-									<Button onClick={() => battleBox.meta.locked ? alert('Challenge links aren\'t ready yet!') : null} className={`${battleBox.meta.locked ? '' : 'disabled'}`}>🔗</Button>
+									<Button onClick={() => battleBox.meta.locked ? this.sendBattleBoxRequest('/api/yourbattles/invite', idx) : null} className={`${battleBox.meta.locked ? '' : 'disabled'}`}>🔗</Button>
 									<div className='break mobile hide' />
 								</div>
 
@@ -95,9 +95,21 @@ class YourBattleBoxes extends React.Component {
 				if (xhr.status === 200) {
 					//on success
 					const json = JSON.parse(xhr.responseText);
-					this.props.setBattleBoxes(json.battleBoxes);
+					if (json.battleBoxes) {
+						this.props.setBattleBoxes(json.battleBoxes);
+					}
 					if (json.creatures) {
 						this.props.setCreatures(json.creatures);
+					}
+					if (json.inviteCode) {
+						navigator.permissions.query({name: "clipboard-write"}).then(result => {
+							if (result.state == "granted" || result.state == "prompt") {
+								navigator.clipboard.writeText(`https://${process.env.NODE_ENV == 'development' ? 'localhost:3001' : 'eggtrainer.com'}/challenge?inviteCode=${json.inviteCode}`);
+								alert('Link copied to clipboard!');
+							} else {
+								alert('Can\'t copy to clipboard!');
+							}
+						});
 					}
 				}
 				else {

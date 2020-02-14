@@ -14,7 +14,7 @@ class AdminDisplay extends React.Component {
 
 		console.log(this.state);
 		return (
-			<div className='panel' style={{overflowY: 'scroll', maxWidth: '200px', maxHeight: '50vh'}}>
+			<div className='panel' style={{overflowY: 'scroll', maxWidth: '250px', maxHeight: '50vh'}}>
 				{Object.values(this.state).map((record, idx) => {
 					return (
 						<div key={idx}><p>Accounts: {record.activeAccounts}/{record.totalAccounts} -> {record.activeProfiles}/{record.totalProfiles}</p></div>

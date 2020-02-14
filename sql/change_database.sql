@@ -1,3 +1,3 @@
-DROP TABLE battleBoxSlots;
-DROP TABLE battleBoxes;
+ALTER TABLE battleBoxSlots ADD active BOOLEAN DEFAULT FALSE;
 
+ALTER TABLE battles MODIFY inviteCode VARCHAR(100) UNIQUE;

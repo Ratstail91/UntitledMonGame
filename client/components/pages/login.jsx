@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Button from '../button.jsx';
 
 //panels
 import LoginPanel from '../panels/login.jsx';
@@ -22,7 +23,7 @@ class Login extends React.Component {
 		return (
 			<div className='page constrained'>
 				<LoginPanel onSuccess={(msg) => this.props.history.push('/')} />
-				<Link to='/' className='centered'>Return Home</Link>
+				<Button href='/' className='centered'>Return Home</Button>
 			</div>
 		);
 	}

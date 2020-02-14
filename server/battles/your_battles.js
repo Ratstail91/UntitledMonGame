@@ -27,13 +27,19 @@ const apiYourBattles = async (req, res) => {
 };
 
 const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
-	//TODO: resolve this
-	return resolve({ ...fields, battles: [{placeholder: true}] });
+	const battleQuery = 'SELECT * FROM battles WHERE id IN (SELECT battleId FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?))';
+
+	const battles = (await pool.promise().query(battleQuery, [fields.id]))[0];
+
+	//TODO: fill with battle data
+
+	return resolve({ ...fields, battles });
 });
 
 module.exports = {
 	apiYourBattles,
+	getYourBattles,
 
 	//for testing
-	getYourBattles,
+	//
 };

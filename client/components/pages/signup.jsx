@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
+import Button from '../button.jsx';
 
 //panels
 import SignupPanel from '../panels/signup.jsx';
