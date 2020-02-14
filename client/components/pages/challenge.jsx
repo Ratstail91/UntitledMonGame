@@ -62,6 +62,7 @@ class Challenge extends React.Component {
 				return (
 					<div className='page constrained'>
 						<LoginPanel onSuccess={msg => this.setState({ display: 'accept' })} />
+						<div className='break' />
 						<Button onClick={() => this.setState({ display: 'signup' })} className='centered'>Signup</Button>
 					</div>
 				);
