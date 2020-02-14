@@ -6,6 +6,7 @@ import Button from '../button.jsx';
 import { setWarning } from '../../actions/warning.js';
 import { setCreatures } from '../../actions/profile.js';
 import { setBattleBoxes } from '../../actions/battles.js';
+import { setBattles } from '../../actions/battles.js';
 
 class YourBattleBoxes extends React.Component {
 	constructor(props) {
@@ -98,6 +99,9 @@ class YourBattleBoxes extends React.Component {
 					if (json.battleBoxes) {
 						this.props.setBattleBoxes(json.battleBoxes);
 					}
+					if (json.battles) {
+						this.props.setBattles(json.battles);
+					}
 					if (json.creatures) {
 						this.props.setCreatures(json.creatures);
 					}
@@ -135,6 +139,7 @@ YourBattleBoxes.propTypes = {
 	setWarning: PropTypes.func.isRequired,
 	setCreatures: PropTypes.func.isRequired,
 	setBattleBoxes: PropTypes.func.isRequired,
+	setBattles: PropTypes.func.isRequired,
 };
 
 const mapStoreToProps = (store) => {
@@ -150,6 +155,7 @@ const mapDispatchToProps = (dispatch) => {
 		setWarning: msg => dispatch(setWarning(msg)),
 		setCreatures: (creatures) => dispatch(setCreatures(creatures)),
 		setBattleBoxes: (battleBoxes) => dispatch(setBattleBoxes(battleBoxes)),
+		setBattles: (battles) => dispatch(setBattles(battles)),
 	};
 };
 

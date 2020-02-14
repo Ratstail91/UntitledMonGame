@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
 import { setBattles } from '../../actions/battles.js';
@@ -22,7 +23,24 @@ class YourBattles extends React.Component {
 			);
 		}
 
-		return null; //TODO: render battle panels
+		return (
+			<div className='panel'>
+				{this.props.battles.map((battle, index) => {
+					return (
+						<div key={index} className={'panel'}>
+							<p>Battle {battle.id}</p>
+							<Button onClick={e => this.resign(index)}>Resign</Button>
+						</div>
+					);
+				})}
+			</div>
+		);
+	}
+
+	resign(index) {
+		if (confirm('Quit this battle?')) {
+			this.sendYourBattlesRequest('/api/yourbattles/resign', index);
+		}
 	}
 
 	sendYourBattlesRequest(url, index, meta) {

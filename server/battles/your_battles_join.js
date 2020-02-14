@@ -55,6 +55,10 @@ const joinBattle = (fields) => new Promise(async (resolve, reject) => {
 		return reject({ msg: 'This battle doesn\'t exist!', extra: fields.inviteCode });
 	}
 
+	if (battleBoxes.some(bb => bb.battleId == battle.id)) {
+		return reject({ msg: 'You can\'t battle yourself!', extra: fields.inviteCode });
+	}
+
 	//update battle box
 	await pool.promise().query('UPDATE battleBoxes SET battleId = ? WHERE id = ?;', [battle.id, battleBoxes[fields.index].id]);
 

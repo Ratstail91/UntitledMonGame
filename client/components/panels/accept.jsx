@@ -84,9 +84,10 @@ class Accept extends React.Component {
 					}
 					if (json.msg) {
 						alert(json.msg);
+						if (this.props.onSuccess) {
+							this.props.onSuccess(json.msg);
+						}
 					}
-
-					console.log(json);
 				}
 				else {
 					this.props.setWarning(xhr.responseText);

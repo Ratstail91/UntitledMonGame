@@ -41,6 +41,13 @@ const toggleBattleBoxLock = (fields) => new Promise(async (resolve, reject) => {
 
 	let battleBoxes = await getBattleBoxes(fields);
 
+	//check for in-battle status
+	const battleId = (await pool.promise().query('SELECT battleId FROM battleBoxes WHERE id = ?;', battleBoxes[fields.index.box].id))[0][0].battleId;
+
+	if (battleId) {
+		return reject({ msg: 'Can\'t toggle a box in battle! Resign from that battle first.', extra: '' });
+	}
+
 	//update
 	const query = 'UPDATE battleBoxes SET locked = ? WHERE id = ?;';
 

@@ -27,7 +27,7 @@ class Challenge extends React.Component {
 	}
 
 	componentDidUpdate() {
-		if (this.props.done) {
+		if (this.state.done) {
 			this.props.history.push('/yourprofile');
 		}
 	}
@@ -70,7 +70,7 @@ class Challenge extends React.Component {
 			case 'accept': {
 				return (
 					<div className='page constrained'>
-						<AcceptPanel inviteCode={this.state.search.inviteCode} onSuccess={() => this.setState({ done: true })} />
+						<AcceptPanel inviteCode={this.state.search.inviteCode} onSuccess={msg => this.setState({ done: true })} />
 					</div>
 				);
 			}
