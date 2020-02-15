@@ -1,3 +1,6 @@
+throw "Generate script is buggy - fix it with the link here";
+//https://stackoverflow.com/questions/12125904/select-last-n-rows-from-mysql
+
 require('dotenv').config();
 
 const pool = require('./../server/utilities/database');
