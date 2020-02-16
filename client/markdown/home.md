@@ -1,7 +1,11 @@
 <span style='color:red'>Help Wanted!</span>
 ===
 
-I'm looking for an artist to work on Egg Trainer - this is unpaid work, but I'm willing to offer half of the profits from the premium shop for as long as we're working together.
+I'm looking for an artist to help create base images and cosmetics for the creatures, as well as designing some of the creatures.
+
+I've been working on this game almost non-stop since the beginning of the year, and it's getting close to having a working battle system - once the battle system and cosmetics are finished, I'll be opening the game up for beta players. If you want a code to login, please feel free to email me (I can also upgrade your account if you've already signed up).
+
+It already has a premium shop, and I've made a little bit of money so far. I'm willing to go halves in the premium shop for as long as we're working together.
 
 If you're interested, please contact me at [krgamestudios@gmail.com](mailto:krgamestudios@gmail.com).
 
