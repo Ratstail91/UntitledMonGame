@@ -26,6 +26,7 @@ const apiYourBattles = async (req, res) => {
 	;
 };
 
+//TODO: (0) reusable?
 const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 	const battleQuery = 'SELECT * FROM battles WHERE id IN (SELECT battleId FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?))';
 	const battles = (await pool.promise().query(battleQuery, [fields.id]))[0];

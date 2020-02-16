@@ -23,7 +23,7 @@ const apiYourBattlesResign = async (req, res) => {
 		.then(validateSession)
 		.then(getYourBattles)
 		.then(resignFromBattle)
-		.then(getYourBattles)
+		.then(getYourBattles) //TODO: (0) not working?
 		.then(fields => { return { msg: { battles: fields.battles }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
