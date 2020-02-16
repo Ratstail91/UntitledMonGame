@@ -1,3 +1,12 @@
+<span style='color:red'>Help Wanted!</span>
+===
+
+I'm looking for an artist to work on Egg Trainer - this is unpaid work, but I'm willing to offer half of the profits from the premium shop for as long as we're working together.
+
+If you're interested, please contact me at [krgamestudios@gmail.com](mailto:krgamestudios@gmail.com).
+
+---
+
 Raise, train and battle creatures from eggs!
 
 Inspired by popular monster battling games, Egg Trainer allows you to buy eggs from the market, hatch them, then train them - each one is different, and even creatures within the same species can vary wildly in strengths.
