@@ -32,7 +32,7 @@ const apiYourBattlesResign = async (req, res) => {
 
 const resignFromBattle = (fields) => new Promise(async (resolve, reject) => {
 	//TODO: mark battle as won for the other player
-	return pool.promise().query('UPDATE battleBoxes SET battleId = NULL WHERE battleId = ? AND profileId IN (SELECT id FROM profiles WHERE accountId = ?);', [fields.battles[fields.index].id, fields.id])
+	return pool.promise().query('UPDATE battleBoxes SET battleId = NULL WHERE battleId = ? AND profileId IN (SELECT id FROM profiles WHERE accountId = ?);', [fields.battleStructure[fields.index].id, fields.id])
 		.then(() => resolve(fields))
 		.catch(e => reject({ msg: 'resignFromBattle error', extra: e }))
 	;
