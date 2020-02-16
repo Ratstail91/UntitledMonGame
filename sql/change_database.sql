@@ -1,3 +1,1 @@
-ALTER TABLE battleBoxSlots ADD active BOOLEAN DEFAULT FALSE;
-
-ALTER TABLE battles MODIFY inviteCode VARCHAR(100) UNIQUE;
+ALTER TABLE battles ADD status ENUM ("open", "inProgress", "completed") DEFAULT "open";

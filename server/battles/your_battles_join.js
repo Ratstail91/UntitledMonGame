@@ -3,10 +3,7 @@ const pool = require("../utilities/database.js");
 const { log } = require('../utilities/logging.js');
 
 const { validateSession } = require('../reusable.js');
-
-const { countTotalBattleBoxObjects, getBattleBoxes } = require('./your_battle_boxes.js');
-
-const { getYourBattles } = require('./your_battles.js');
+const { countTotalBattleBoxItems, getBattleBoxes, getBattleBoxSlots } = require('./battle_tools.js');
 
 const apiYourBattlesJoin = async (req, res) => {
 	//handle all outcomes
@@ -23,7 +20,6 @@ const apiYourBattlesJoin = async (req, res) => {
 
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
-		.then(countTotalBattleBoxObjects)
 		.then(joinBattle)
 		.then(fields => { return { msg: { msg: 'Success' }, extra: ''}; })
 		.then(handleSuccess)
@@ -32,11 +28,12 @@ const apiYourBattlesJoin = async (req, res) => {
 };
 
 const joinBattle = (fields) => new Promise(async (resolve, reject) => {
-	const battleBoxes = await getBattleBoxes(fields);
+	const battleBoxes = await getBattleBoxes(fields.id);
 
 	//bounds check
-	if (fields.index < 0 || fields.totalBattleBoxes <= fields.index) {
-		return reject({ msg: 'Couldn\'t find that battle box', extra: [fields.totalBattleBoxes, fields.index] });
+	const totalBattleBoxItems = countTotalBattleBoxItems(fields.id);
+	if (fields.index < 0 || totalBattleBoxItems <= fields.index) {
+		return reject({ msg: 'Couldn\'t find that battle box', extra: [totalBattleBoxItems, fields.index] });
 	}
 
 	//is locked
@@ -61,6 +58,8 @@ const joinBattle = (fields) => new Promise(async (resolve, reject) => {
 
 	//update battle box
 	await pool.promise().query('UPDATE battleBoxes SET battleId = ? WHERE id = ?;', [battle.id, battleBoxes[fields.index].id]);
+
+	//TODO: (0) set the first two creatures to be "active"
 
 	//send the invite code
 	return resolve(fields);

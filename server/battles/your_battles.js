@@ -20,7 +20,7 @@ const apiYourBattles = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(getYourBattles)
-		.then(fields => { return { msg: { battles: fields.battles }, extra: ''}; })
+		.then(fields => { return { msg: { battles: fields.battleStructure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
@@ -28,12 +28,11 @@ const apiYourBattles = async (req, res) => {
 
 const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 	const battleQuery = 'SELECT * FROM battles WHERE id IN (SELECT battleId FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?))';
-
 	const battles = (await pool.promise().query(battleQuery, [fields.id]))[0];
 
-	//TODO: fill with battle data
+	let battleStructure = battles; //TMP
 
-	return resolve({ ...fields, battles });
+	return resolve({ ...fields, battleStructure });
 });
 
 module.exports = {

@@ -3,8 +3,9 @@ const pool = require("../utilities/database.js");
 const { log } = require('../utilities/logging.js');
 
 const { validateSession, getYourCreatures, determineSelectedCreature } = require('../reusable.js');
+const { countTotalBattleBoxItems, getBattleBoxes } = require('./battle_tools.js');
 
-const { countTotalBattleBoxObjects, getBattleBoxStructure, getBattleBoxes } = require('./your_battle_boxes.js');
+const { getBattleBoxStructure } = require('./your_battle_boxes.js');
 
 const apiYourBattleBoxesInsert = async (req, res) => {
 	//handle all outcomes
@@ -21,7 +22,6 @@ const apiYourBattleBoxesInsert = async (req, res) => {
 
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
-		.then(countTotalBattleBoxObjects)
 		.then(determineSelectedCreature)
 		.then(getBattleBoxStructure)
 
@@ -46,13 +46,15 @@ const insertIntoBattleBoxes = (fields) => new Promise(async (resolve, reject) =>
 	}
 
 	//get the battleboxes
-	let battleBoxes = await getBattleBoxes(fields);
+	let battleBoxes = await getBattleBoxes(fields.id);
 
 	let box = null;
 	let slot = null;
 
+	totalBattleBoxItems = await countTotalBattleBoxItems(fields.id);
+
 outer:
-	for (let i = 0; i < fields.totalBattleBoxes; i++) {
+	for (let i = 0; i < totalBattleBoxItems; i++) {
 		if (battleBoxes[i] && battleBoxes[i].locked) {
 			continue;
 		}

@@ -3,8 +3,9 @@ const pool = require("../utilities/database.js");
 const { log } = require('../utilities/logging.js');
 
 const { validateSession, getYourCreatures } = require('../reusable.js');
+const { getBattleBoxes } = require('./battle_tools.js');
 
-const { countTotalBattleBoxObjects, getBattleBoxStructure, getBattleBoxes } = require('./your_battle_boxes.js');
+const { getBattleBoxStructure } = require('./your_battle_boxes.js');
 
 const apiYourBattleBoxesRemove = async (req, res) => {
 	//handle all outcomes
@@ -21,7 +22,6 @@ const apiYourBattleBoxesRemove = async (req, res) => {
 
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
-		.then(countTotalBattleBoxObjects)
 		.then(removeFromBattleBox)
 		.then(getBattleBoxStructure)
 		.then(getYourCreatures)
@@ -32,7 +32,7 @@ const apiYourBattleBoxesRemove = async (req, res) => {
 };
 
 const removeFromBattleBox = (fields) => new Promise(async (resolve, reject) => {
-	let battleBoxes = await getBattleBoxes(fields);
+	let battleBoxes = await getBattleBoxes(fields.id);
 
 	if (battleBoxes[fields.index.box] && battleBoxes[fields.index.box].locked) {
 		return reject({ msg: 'Can\'t remove from a locked box', extra: '' });

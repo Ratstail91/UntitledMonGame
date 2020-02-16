@@ -3,8 +3,9 @@ const pool = require("../utilities/database.js");
 const { log } = require('../utilities/logging.js');
 
 const { validateSession } = require('../reusable.js');
+const { countTotalBattleBoxItems, getBattleBoxes } = require('./battle_tools.js');
 
-const { countTotalBattleBoxObjects, getBattleBoxStructure, getBattleBoxes } = require('./your_battle_boxes.js');
+const { getBattleBoxStructure } = require('./your_battle_boxes.js');
 
 const apiYourBattleBoxesShift = async (req, res) => {
 	//handle all outcomes
@@ -21,7 +22,6 @@ const apiYourBattleBoxesShift = async (req, res) => {
 
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
-		.then(countTotalBattleBoxObjects)
 		.then(switchBattleBoxSlots)
 		.then(getBattleBoxStructure)
 		.then(fields => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
@@ -48,13 +48,15 @@ const switchBattleBoxSlots = (fields) => new Promise(async (resolve, reject) => 
 		bBoxSlot -= 6;
 	}
 
+	const totalBattleBoxItems = countTotalBattleBoxItems(fields.id);
+
 	//bounds check
-	if (aBoxIndex >= fields.totalBattleBoxes || bBoxIndex >= fields.totalBattleBoxes || aBoxIndex < 0 || bBoxIndex < 0) {
+	if (aBoxIndex >= totalBattleBoxItems || bBoxIndex >= totalBattleBoxItems || aBoxIndex < 0 || bBoxIndex < 0) {
 		return resolve(fields); //silently ignore it
 	}
 
 	//get the battleboxes
-	let battleBoxes = await getBattleBoxes(fields);
+	let battleBoxes = await getBattleBoxes(fields.id);
 
 	if (battleBoxes[aBoxIndex] && battleBoxes[aBoxIndex].locked) {
 		return reject({ msg: 'Can\'t move inside a locked box', extra: '' });
