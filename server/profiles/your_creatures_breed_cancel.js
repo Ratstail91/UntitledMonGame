@@ -4,7 +4,7 @@ const { log } = require('../utilities/logging.js');
 
 const { validateSession, determineSelectedCreature, getYourCreatures } = require('../reusable.js');
 
-const apiYourCreaturesUnbreed = async (req, res) => {
+const apiYourCreaturesBreedCancel = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -20,7 +20,7 @@ const apiYourCreaturesUnbreed = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(determineSelectedCreature)
-		.then(markAsNotBreeding)
+		.then(cancelBreedSelectedCreature)
 		.then(getYourCreatures)
 		.then(fields => { return { msg: fields, extra: ''}; })
 		.then(handleSuccess)
@@ -28,17 +28,17 @@ const apiYourCreaturesUnbreed = async (req, res) => {
 	;
 };
 
-const markAsNotBreeding = (fields) => new Promise((resolve, reject) => {
+const cancelBreedSelectedCreature = (fields) => new Promise((resolve, reject) => {
 	const query = 'UPDATE creatures SET breeding = FALSE WHERE id = ?;';
 	return pool.promise().query(query, [fields.creature.id])
 		.then(() => resolve(fields))
-		.catch(e => reject({ msg: 'markAsNotBreeding error', extra: e }))
+		.catch(e => reject({ msg: 'cancelBreedSelectedCreature error', extra: e }))
 	;
 });
 
 module.exports = {
-	apiYourCreaturesUnbreed,
+	apiYourCreaturesBreedCancel,
 
 	//for testing
-	markAsNotBreeding,
+	cancelBreedSelectedCreature,
 };

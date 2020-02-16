@@ -48,16 +48,22 @@ class YourCreatures extends React.Component {
 
 										<Dropdown.Menu>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'inspect'); }}>Inspect</Dropdown.Item>
-											<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between'}}><span style={{flex: '1 0 auto'}}>Training</span><span className='mobile hide' style={{flex: '1 0 auto', textAlign: 'right'}}>{this.state.training ? ' -' : ' +'}</span></Dropdown.Item>
-											<div className={`${this.state.training ? '' : 'mobile show disabled'}`}>
-												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'health'); }}>Health</Dropdown.Item>
-												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'speed'); }}>Speed</Dropdown.Item>
-												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'strength'); }}>Strength</Dropdown.Item>
-												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'power'); }}>Power</Dropdown.Item>
+
+											<Dropdown.Item style={{display: creature.trainingTime ? 'initial' : 'none'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'cancelTrain'); }}>Cancel Training</Dropdown.Item>
+
+											<div style={{display: creature.trainingTime ? 'none' : 'initial'}}>
+												<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{display: 'flex', flexDirection:'row', justifyContent: 'space-between'}}><span style={{flex: '1 0 auto'}}>Training</span><span className='mobile hide' style={{flex: '1 0 auto', textAlign: 'right'}}>{this.state.training ? ' -' : ' +'}</span></Dropdown.Item>
+												<div className={`${this.state.training ? '' : 'mobile show disabled'}`}>
+													<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'health'); }}>Health</Dropdown.Item>
+													<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'speed'); }}>Speed</Dropdown.Item>
+													<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'strength'); }}>Strength</Dropdown.Item>
+													<Dropdown.Item onMouseEnter={e => this.setState({ training: true })} onMouseLeave={e => this.setState({ training: false })} style={{marginLeft: '1em'}} onClick={e => { e.preventDefault(); this.creatureAction(idx, 'train', 'power'); }}>Power</Dropdown.Item>
+												</div>
 											</div>
+
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'battlebox'); }}>Move To Battle Box</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'moves'); }}>Select Moves</Dropdown.Item>
-											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'unbreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
+											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, creature.breeding ? 'cancelBreed' : 'breed'); }}>{creature.breeding ? 'Cancel Breeding' : 'Breed'}</Dropdown.Item>
 											<Dropdown.Item onClick={e => { e.preventDefault(); this.creatureAction(idx, 'release'); }}>Release</Dropdown.Item>
 										</Dropdown.Menu>
 									</Dropdown>
@@ -123,6 +129,10 @@ class YourCreatures extends React.Component {
 				this.sendYourCreaturesRequest('/api/yourcreatures/train', index, trainingType);
 				return;
 
+			case 'cancelTrain':
+				this.sendYourCreaturesRequest('/api/yourcreatures/train/cancel', index);
+				return;
+
 			case 'battlebox':
 				this.sendYourCreaturesRequest('/api/yourbattleboxes/insert', index);
 				return;
@@ -136,8 +146,8 @@ class YourCreatures extends React.Component {
 				this.sendYourCreaturesRequest('/api/yourcreatures/breed', index);
 				return;
 
-			case 'unbreed':
-				this.sendYourCreaturesRequest('/api/yourcreatures/unbreed', index);
+			case 'cancelBreed':
+				this.sendYourCreaturesRequest('/api/yourcreatures/breed/cancel', index); //TODO: breed/cancel
 				return;
 
 			case 'release':

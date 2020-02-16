@@ -4,8 +4,6 @@ const { log } = require('../utilities/logging.js');
 
 const { validateSession, getYourCreatures, determineSelectedCreature } = require('../reusable.js');
 
-const species = require('../gameplay/species.json');
-
 const apiYourCreaturesTrain = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {

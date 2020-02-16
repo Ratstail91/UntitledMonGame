@@ -2,12 +2,13 @@ const { apiYourProfile } = require('./your_profile.js');
 const { apiYourCreatures } = require('./your_creatures.js');
 const { apiYourCreaturesInspect } = require('./your_creatures_inspect.js');
 const { apiYourCreaturesTrain, runTrainJob } = require('./your_creatures_train.js');
+const { apiYourCreaturesTrainCancel } = require('./your_creatures_train_cancel.js');
 const { apiYourCreaturesMoves } = require('./your_creatures_moves.js');
 const { apiYourCreaturesMovesBuy } = require('./your_creatures_moves_buy.js');
 const { apiYourCreaturesMovesEquip } = require('./your_creatures_moves_equip.js');
 const { apiYourCreaturesMovesUnequip } = require('./your_creatures_moves_unequip.js');
 const { apiYourCreaturesBreed, runBreedingJob } = require('./your_creatures_breed.js');
-const { apiYourCreaturesUnbreed } = require('./your_creatures_unbreed.js');
+const { apiYourCreaturesBreedCancel } = require('./your_creatures_breed_cancel.js');
 const { apiYourCreaturesRelease } = require('./your_creatures_release.js');
 const { apiYourEggs } = require('./your_eggs.js');
 const { apiYourEggsSell } = require('./your_eggs_sell.js');
@@ -20,13 +21,14 @@ module.exports = {
 	apiYourCreatures,
 	apiYourCreaturesInspect,
 	apiYourCreaturesTrain,
+	apiYourCreaturesTrainCancel,
 	runTrainJob,
 	apiYourCreaturesMoves,
 	apiYourCreaturesMovesBuy,
 	apiYourCreaturesMovesEquip,
 	apiYourCreaturesMovesUnequip,
 	apiYourCreaturesBreed,
-	apiYourCreaturesUnbreed,
+	apiYourCreaturesBreedCancel,
 	apiYourCreaturesRelease,
 	runBreedingJob,
 	apiYourEggs,

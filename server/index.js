@@ -23,8 +23,6 @@ pool.getConnection((err, connection) => {
 });
 
 //TODO: (1) validation as middleware
-//TODO: move coins from accounts to profiles
-//TODO: does bootstrap have an image class?
 //TODO: hatching times based on rarity
 //TODO: individualize the creatures using abilities, personalities, etc.
 //TODO: upgrade to typescript
@@ -33,7 +31,6 @@ pool.getConnection((err, connection) => {
 //TODO: "babyeyes", "babyfat", "faestep", "dust", "makedark" needs a status effect
 //TODO: new moves: "dracometeor" (dragon only)
 //TODO: daily weather conditions
-//TODO: cancel training
 
 // Add body parser
 app.use(bodyParser.json());
@@ -68,21 +65,26 @@ app.post('/api/passwordrecover', accounts.apiPasswordRecover);
 app.post('/api/passwordreset', accounts.apiPasswordReset);
 
 const profiles = require('./profiles/profiles.js');
-profiles.runEggHatchJob();
-profiles.runTrainJob();
-profiles.runBreedingJob();
+
 app.post('/api/yourprofile', profiles.apiYourProfile);
 app.post('/api/yourcreatures', profiles.apiYourCreatures);
 app.post('/api/yourcreatures/inspect', profiles.apiYourCreaturesInspect);
+
+profiles.runTrainJob();
 app.post('/api/yourcreatures/train', profiles.apiYourCreaturesTrain);
+app.post('/api/yourcreatures/train/cancel', profiles.apiYourCreaturesTrainCancel);
+
 app.post('/api/yourcreatures/moves', profiles.apiYourCreaturesMoves);
 app.post('/api/yourcreatures/moves/buy', profiles.apiYourCreaturesMovesBuy);
 app.post('/api/yourcreatures/moves/equip', profiles.apiYourCreaturesMovesEquip);
 app.post('/api/yourcreatures/moves/unequip', profiles.apiYourCreaturesMovesUnequip);
+
+profiles.runBreedingJob();
 app.post('/api/yourcreatures/breed', profiles.apiYourCreaturesBreed);
-app.post('/api/yourcreatures/unbreed', profiles.apiYourCreaturesUnbreed);
+app.post('/api/yourcreatures/breed/cancel', profiles.apiYourCreaturesBreedCancel);
 app.post('/api/yourcreatures/release', profiles.apiYourCreaturesRelease);
 
+profiles.runEggHatchJob();
 app.post('/api/youreggs', profiles.apiYourEggs);
 app.post('/api/youreggs/sell', profiles.apiYourEggsSell);
 app.post('/api/youreggs/incubate', profiles.apiYourEggsIncubate);
