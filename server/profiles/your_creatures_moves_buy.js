@@ -23,11 +23,11 @@ const apiYourCreaturesMovesBuy = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(determineSelectedCreature)
-        .then(checkForSelectedMove)
-        .then(checkCoins)
-        .then(buySelectedMove)
-        .then(subtractCoins)
-        .then(getCreatureMoves)
+		.then(checkForSelectedMove)
+		.then(checkCoins)
+		.then(buySelectedMove)
+		.then(subtractCoins)
+		.then(getCreatureMoves)
 		.then(fields => { return { msg: fields, extra: '' }; })
 		.then(handleSuccess)
 		.catch(handleRejection)
@@ -36,15 +36,15 @@ const apiYourCreaturesMovesBuy = async (req, res) => {
 
 const checkForSelectedMove = (fields) => new Promise(async (resolve, reject) => {
 	if (!species[fields.creature.species].moves.includes(fields.move) || !moves[fields.move]) {
-        return reject({ msg: `The creature ${fields.creature.species} can't learn the move ${fields.move}.`, extra: '' });
-    }
+		return reject({ msg: `The creature ${fields.creature.species} can't learn the move ${fields.move}.`, extra: '' });
+	}
 
-    const checkQuery = 'SELECT COUNT(*) AS total FROM creatureMovesOwned WHERE creatureId = ? AND idx = ?;';
-    return pool.promise().query(checkQuery, [fields.creature.id, fields.move])
-        .then(results => results[0][0].total)
-        .then(total => total == 0 ? resolve(fields) : reject({ msg: 'This creature already owns this move', extra: '' }))
-        .catch(e => reject({ msg: 'checkForSelectedMove error', extra: e }))
-    ;
+	const checkQuery = 'SELECT COUNT(*) AS total FROM creatureMovesOwned WHERE creatureId = ? AND idx = ?;';
+	return pool.promise().query(checkQuery, [fields.creature.id, fields.move])
+		.then(results => results[0][0].total)
+		.then(total => total == 0 ? resolve(fields) : reject({ msg: 'This creature already owns this move', extra: '' }))
+		.catch(e => reject({ msg: 'checkForSelectedMove error', extra: e }))
+	;
 });
 
 //WARNING: duplicate-ish
@@ -57,11 +57,11 @@ const checkCoins = (fields) => new Promise((resolve, reject) => {
 });
 
 const buySelectedMove = (fields) => new Promise((resolve, reject) => {
-    const query = 'INSERT INTO creatureMovesOwned (creatureId, idx) VALUES (?, ?);';
-    return pool.promise().query(query, [fields.creature.id, fields.move])
-        .then(() => resolve(fields))
-        .catch(e => reject({ msg: 'buySelectedMove error', extra: e }))
-    ;
+	const query = 'INSERT INTO creatureMovesOwned (creatureId, idx) VALUES (?, ?);';
+	return pool.promise().query(query, [fields.creature.id, fields.move])
+		.then(() => resolve(fields))
+		.catch(e => reject({ msg: 'buySelectedMove error', extra: e }))
+	;
 });
 
 //WARNING: duplicate-ish

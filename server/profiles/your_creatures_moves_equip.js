@@ -24,9 +24,9 @@ const apiYourCreaturesMovesEquip = async (req, res) => {
 		.then(validateSession)
 		.then(determineSelectedCreature)
 		.then(checkMaxMovesEquipped)
-        .then(checkForSelectedMoveOwned)
-        .then(equipSelectedMove)
-        .then(getCreatureMoves)
+		.then(checkForSelectedMoveOwned)
+		.then(equipSelectedMove)
+		.then(getCreatureMoves)
 		.then(fields => { return { msg: fields, extra: '' }; })
 		.then(handleSuccess)
 		.catch(handleRejection)
@@ -45,23 +45,23 @@ const checkMaxMovesEquipped = (fields) => new Promise(async (resolve, reject) =>
 //WARNING: duplication-ish
 const checkForSelectedMoveOwned = (fields) => new Promise(async (resolve, reject) => {
 	if (!species[fields.creature.species].moves.includes(fields.move)) {
-        return reject({ msg: `The creature ${fields.creature.species} can't learn the move ${fields.move}.`, extra: '' });
-    }
+		return reject({ msg: `The creature ${fields.creature.species} can't learn the move ${fields.move}.`, extra: '' });
+	}
 
-    const checkQuery = 'SELECT COUNT(*) AS total FROM creatureMovesOwned WHERE creatureId = ? AND idx = ?;';
-    return pool.promise().query(checkQuery, [fields.creature.id, fields.move])
-        .then(results => results[0][0].total)
-        .then(total => total > 0 ? resolve(fields) : reject({ msg: 'This creature doesn\'t know that move', extra: '' }))
-        .catch(e => reject({ msg: 'checkForSelectedMoveOwned error', extra: e }))
-    ;
+	const checkQuery = 'SELECT COUNT(*) AS total FROM creatureMovesOwned WHERE creatureId = ? AND idx = ?;';
+	return pool.promise().query(checkQuery, [fields.creature.id, fields.move])
+		.then(results => results[0][0].total)
+		.then(total => total > 0 ? resolve(fields) : reject({ msg: 'This creature doesn\'t know that move', extra: '' }))
+		.catch(e => reject({ msg: 'checkForSelectedMoveOwned error', extra: e }))
+	;
 });
 
 const equipSelectedMove = (fields) => new Promise((resolve, reject) => {
-    const query = 'UPDATE creatureMovesOwned SET equipped = TRUE WHERE creatureId = ? AND idx = ?;';
-    return pool.promise().query(query, [fields.creature.id, fields.move])
-        .then(() => resolve(fields))
-        .catch(e => reject({ msg: 'buySelectedMove error', extra: e }))
-    ;
+	const query = 'UPDATE creatureMovesOwned SET equipped = TRUE WHERE creatureId = ? AND idx = ?;';
+	return pool.promise().query(query, [fields.creature.id, fields.move])
+		.then(() => resolve(fields))
+		.catch(e => reject({ msg: 'buySelectedMove error', extra: e }))
+	;
 });
 
 module.exports = {

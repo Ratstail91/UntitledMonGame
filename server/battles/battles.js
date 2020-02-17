@@ -9,13 +9,13 @@ const { apiYourBattlesJoin } = require('./your_battles_join.js');
 const { apiYourBattlesResign } = require('./your_battles_resign.js');
 
 module.exports = {
-    apiYourBattleBoxes,
-    apiYourBattleBoxesInsert,
-    apiYourBattleBoxesRemove,
-    apiYourBattleBoxesShift,
-    apiYourBattleBoxesLockToggle,
-    apiYourBattles,
-    apiYourBattlesInvite,
-    apiYourBattlesJoin,
-    apiYourBattlesResign,
+	apiYourBattleBoxes,
+	apiYourBattleBoxesInsert,
+	apiYourBattleBoxesRemove,
+	apiYourBattleBoxesShift,
+	apiYourBattleBoxesLockToggle,
+	apiYourBattles,
+	apiYourBattlesInvite,
+	apiYourBattlesJoin,
+	apiYourBattlesResign,
 };
