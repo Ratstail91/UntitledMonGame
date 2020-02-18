@@ -233,6 +233,11 @@ footer {
 	}
 }
 
+.scrollable {
+	overflow-y: scroll;
+	max-height: 300px;
+}
+
 /* custom styling */
 .eggContainer {
 	flex-direction: row;
@@ -316,6 +321,46 @@ footer {
 	}
 }
 
+.battleContainer {
+	display: flex;
+	flex: 0 1 auto;
+	flex-direction: column;
+}
+
+.battlePanel {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-style: solid;
+	border-width: 2px;
+	border-color: pink;
+}
+
+.battlePartialPanel {
+	display: flex;
+	flex: 0 1 40%;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+@media screen and (max-width: 480px) {
+	.battlePartialPanel {
+		flex-direction: column;
+	}
+}
+
+.battlePanel img {
+	width: 150px;
+	height: 150px;
+}
+
+.movePanel {
+	display: flex;
+	flex: 0 1 auto;
+	width: 150px;
+}
+
 /* corrections */
 .checkboxContainer {
 	display: flex;
@@ -336,4 +381,16 @@ dl, ol, ul {
 		width: 250px;
 		height: 250px;
 	}
+}
+
+.col.noPadding {
+	padding: 0;
+}
+
+.noPadding {
+	padding: 0;
+}
+
+.noMargin {
+	margin: 0;
 }
