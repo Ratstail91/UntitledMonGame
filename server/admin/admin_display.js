@@ -2,7 +2,7 @@
 const { log } = require('../utilities/logging.js');
 const pool = require("../utilities/database.js")
 
-const { validateSession } = require('../accounts/sessions.js');
+const { validateSession } = require('../reusable.js');
 
 const apiAdminDisplay = (req, res) => {
 	//handle all outcomes
