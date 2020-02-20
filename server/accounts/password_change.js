@@ -36,7 +36,7 @@ const apiPasswordChange = async (req, res) => {
 	;
 };
 
-const validateAccount = ({ fields }) => new Promise(async (resolve, reject) => {
+const validateAccount = (fields) => new Promise(async (resolve, reject) => {
 	const validateQuery = 'SELECT accounts.id AS id, accounts.hash AS hash, sessions.token AS token FROM accounts JOIN sessions ON accounts.id = sessions.accountId WHERE accounts.id = ?;';
 	const accountRecord = await pool.promise().query(validateQuery, [fields.id])
 		.then(results => results[0][0])
