@@ -1,30 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
 
 class AdminDisplay extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
-		this.sendAdminRequest();
+
+		this.state = {
+			snapshotRecords: []
+		};
+	}
+
+	componentDidUpdate() {
+		this.sendAdminRequest('/api/admin');
 	}
 
 	render() {
-
-		console.log(this.state);
 		return (
-			<div className='panel' style={{overflowY: 'scroll', maxWidth: '250px', maxHeight: '50vh'}}>
-				{Object.values(this.state).map((record, idx) => {
-					return (
-						<div key={idx}><p>Accounts: {record.activeAccounts}/{record.totalAccounts} -> {record.activeProfiles}/{record.totalProfiles}</p></div>
-					);
-				})}
+			<div className='panel' style={{flexDirection: 'row'}}>
+				<div className='panel scrollable'>
+					{Object.values(this.state.snapshotRecords).map((record, idx) => {
+						return (
+							<div key={idx}><p>Accounts: {record.activeAccounts}/{record.totalAccounts} -> {record.activeProfiles}/{record.totalProfiles}</p></div>
+						);
+					})}
+				</div>
+				<Button onClick={e => this.sendAdminRequest('/api/admin/shop/reset')}>Reset Shop</Button>
 			</div>
 		);
 	}
 
-	sendAdminRequest(total) {
+	sendAdminRequest(url) {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -32,7 +40,10 @@ class AdminDisplay extends React.Component {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
 					//on success
-					this.setState(JSON.parse(xhr.responseText));
+					const json = JSON.parse(xhr.responseText);
+					if (json.snapshotRecords) {
+						this.setState({ snapshotRecords: json.snapshotRecords });
+					}
 				}
 				else {
 					this.props.setWarning(xhr.responseText);
@@ -40,7 +51,7 @@ class AdminDisplay extends React.Component {
 			}
 		};
 
-		xhr.open('POST', '/api/admin', true);
+		xhr.open('POST', url, true);
 		xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 		xhr.send(JSON.stringify({
 			id: this.props.id,

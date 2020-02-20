@@ -16,12 +16,13 @@ What will you hatch next?
 
 Designed and Developed by Kayne Ruse, KR Game Studios
 
+Art by Aternova
+
 ## Special Thanks
 
 * FrozenAlex
 * LogicMonkey
 * wicked_delite
-* Aternova
 
 ## Patrons
 

@@ -73,13 +73,13 @@ class YourBattles extends React.Component {
 					<Button style={{flex: '0 1 auto'}}>↩️</Button>
 					<div className='panel'>
 						<img style={{flex: '0 1 auto'}} src={`/content/sprites/creatures/${props.creature.frontImage}`} />
-						<span><strong>{props.creature.name}</strong></span>
+						<span className='centered'><strong>{props.creature.name}</strong></span>
 					</div>
 
 
 					<div className='panel' style={{ maxWidth: '300px', flex: '1'}}>
-						<span><strong>HP</strong></span>
-						<span><strong>{props.creature.currentHP}/{props.creature.maxHP}</strong></span>
+						<span className='centered'><strong>HP</strong></span>
+						<span className='centered'><strong>{props.creature.currentHP}/{props.creature.maxHP}</strong></span>
 
 						<div className='break' />
 
@@ -116,14 +116,14 @@ class YourBattles extends React.Component {
 		const EnemyCreature = props => {
 			if (!props.creature) {
 				return (
-					<div className='panel' style={{height: 'calc(150px + 1em)'}}></div>
+					<div className='panel' style={{maxWidth: '150px', height: 'calc(150px + 1em)'}}></div>
 				);
 			}
 
 			return (
-				<div className='panel'>
+				<div className='panel' style={{maxWidth: '150px'}}>
 					<img style={{flex: '0 1 auto', alignSelf: 'center'}} src={`/content/sprites/creatures/${props.creature.frontImage}`} />
-					<span><strong>{props.creature.name} {props.creature.currentHP}/{props.creature.maxHP}</strong></span>
+					<span className='centered'><strong>{props.creature.name} {props.creature.currentHP}/{props.creature.maxHP}</strong></span>
 				</div>
 			);
 		};
@@ -173,24 +173,28 @@ class YourBattles extends React.Component {
 					return (
 						<div key={`battle-${index}`} className={'battlePanel'}>
 							<div className='table noMargin'>
-								<div className='row centered'>
-									<div className='col' style={{flex: '0 1 calc(150px * 4.5)'}}>
-										<YourCreaturePanel creature={{frontImage: 'missing.png', name: 'Nickname', maxHP: 10, currentHP: 10, moves: [{ name: 'Tackle', exhausted: false }]}} items={[{ name: 'Golden Apple', exhausted: false }]} topAttackable={true} bottomAttackable={false} />
-										<YourCreaturePanel creature={{frontImage: 'missing.png', name: 'Nickname', maxHP: 10, currentHP: 10, moves: [{ name: 'Tackle', exhausted: false }]}} items={[{ name: 'Golden Apple', exhausted: false }]} topAttackable={true} bottomAttackable={true} />
-									</div>
-
-									<div className='panel' style={{maxWidth: '350px'}}>
-										<div className='col scrollable'>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+								<div className='row'>
+									<div className='col double'>
+										<div className='panel' style={{width: 'calc(150px * 4.5)'}}>
+											<YourCreaturePanel creature={{frontImage: 'missing.png', name: 'Nickname', maxHP: 10, currentHP: 10, moves: [{ name: 'Tackle', exhausted: false }]}} items={[{ name: 'Golden Apple', exhausted: false }]} topAttackable={true} bottomAttackable={false} />
+											<YourCreaturePanel creature={{frontImage: 'missing.png', name: 'Nickname', maxHP: 10, currentHP: 10, moves: [{ name: 'Tackle', exhausted: false }]}} items={[{ name: 'Golden Apple', exhausted: false }]} topAttackable={true} bottomAttackable={true} />
 										</div>
-										<Button onClick={e => this.resign(index)}>Resign</Button>
 									</div>
 
 									<div className='col'>
+										<div className='panel'  style={{maxWidth: '350px'}}>
+											<div className='scrollable'>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+											</div>
+											<Button onClick={e => this.resign(index)}>Resign</Button>
+										</div>
+									</div>
+
+									<div className='col half'>
 										<EnemyCreature creature={{ frontImage: 'missing.png', name: 'Shenron', maxHP: 10, currentHP: 5 }} />
 										<EnemyCreature creature={{ frontImage: 'missing.png', name: 'Shenron', maxHP: 10, currentHP: 5 }} />
 									</div>

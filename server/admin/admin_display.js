@@ -21,6 +21,7 @@ const apiAdminDisplay = (req, res) => {
 		.then(validateSession)
 		.then(validateAccountType)
 		.then(getDailySnapshots)
+		.then(fields => { return { msg: fields.snapshotRecords, extra: '' }; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
@@ -38,7 +39,7 @@ const getDailySnapshots = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM dailySnapshots;';
 	return pool.promise().query(query)
 		.then(results => results[0])
-		.then(results => resolve({ msg: results, extra: '' }))
+		.then(results => resolve({ snapshotRecords: results, fields }))
 		.catch(e => reject({ msg: 'getDailySnapshots error', extra: e }))
 	;
 });
@@ -47,5 +48,6 @@ module.exports = {
 	apiAdminDisplay,
 
 	//for testing
+	validateAccountType,
 	getDailySnapshots,
 };

@@ -132,6 +132,7 @@ app.delete('/api/account', privacy.apiDeleteAccount);
 //administration
 const admin = require('./admin/admin.js');
 app.post('/api/admin', admin.apiAdminDisplay);
+app.post('/api/admin/shop/reset', admin.apiAdminShopReset);
 
 //send compressed files
 app.get('*.js', function(req, res, next) {
