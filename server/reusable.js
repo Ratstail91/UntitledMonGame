@@ -78,7 +78,7 @@ const getYourItems = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT id, idx FROM items WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
-		.then(items => resolve({ items: items.map(item => { return { id: item.id, ... (itemIndex[item.idx] || premiumIndex[item.idx]) }}), ...fields }))
+		.then(items => resolve({ items: items.map(item => { return { idx: item.idx, id: item.id, ... (itemIndex[item.idx] || premiumIndex[item.idx]) }}), ...fields }))
 		.catch(e => reject({ msg: 'getYourItems error', extra: e }))
 	;
 });

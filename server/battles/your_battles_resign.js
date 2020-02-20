@@ -31,6 +31,7 @@ const apiYourBattlesResign = async (req, res) => {
 };
 
 const resignFromBattle = (fields) => new Promise(async (resolve, reject) => {
+	console.log('mark 1', fields.battleStructure[fields.index].id, fields);
 	//TODO: mark battle as won for the other player
 	return pool.promise().query('UPDATE battleBoxes SET battleId = NULL WHERE battleId = ? AND profileId IN (SELECT id FROM profiles WHERE accountId = ?);', [fields.battleStructure[fields.index].id, fields.id])
 		.then(() => resolve(fields))

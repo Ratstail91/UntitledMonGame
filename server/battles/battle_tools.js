@@ -27,8 +27,23 @@ const getBattleBoxSlots = async (boxId) => {
 	return (await pool.promise().query('SELECT * FROM battleBoxSlots WHERE battleBoxId = ? ORDER BY boxSlot ASC;', boxId))[0];
 };
 
+const activateFirstTwoSlots = async (boxId) => {
+	const battleBoxSlots = await getBattleBoxSlots(boxId);
+
+	await pool.promise().query('UPDATE battleBoxSlots SET activePosition = "none" WHERE battleBoxId = ?;', boxId);
+
+	if (battleBoxSlots[0]) {
+		await pool.promise().query('UPDATE battleBoxSlots SET activePosition = "top" WHERE id = ?;', battleBoxSlots[0].id);
+	}
+
+	if (battleBoxSlots[1]) {
+		await pool.promise().query('UPDATE battleBoxSlots SET activePosition = "bottom" WHERE id = ?;', battleBoxSlots[1].id);
+	}
+};
+
 module.exports = {
 	countTotalBattleBoxItems,
 	getBattleBoxes,
 	getBattleBoxSlots,
+	activateFirstTwoSlots,
 };

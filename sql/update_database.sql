@@ -258,6 +258,19 @@ CREATE TABLE IF NOT EXISTS pendingBattleActions (
 	CONSTRAINT FOREIGN KEY fk_pendingBattleActions_target(targetId) REFERENCES creatures(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS exhaustedBattleItems (
+	id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY UNIQUE,
+	td TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+
+	profileId INTEGER UNSIGNED NOT NULL,
+	battleId INTEGER UNSIGNED NOT NULL,
+
+	idx VARCHAR(100) NOT NULL,
+
+	CONSTRAINT FOREIGN KEY fk_exaustedBattleItems_profiles(profileId) REFERENCES profiles(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT FOREIGN KEY fk_exaustedBattleItems_battles(battleId) REFERENCES battles(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 #battle box system
 CREATE TABLE IF NOT EXISTS battleBoxes (
 	id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY UNIQUE,
@@ -292,7 +305,7 @@ CREATE TABLE IF NOT EXISTS battleBoxSlots (
 	currentMagicalAttackMod INTEGER,
 	currentMagicalDefenseMod INTEGER,
 
-	active BOOLEAN DEFAULT FALSE,
+	activePosition ENUM ('none', 'top', 'bottom') DEFAULT 'none',
 
 	CONSTRAINT FOREIGN KEY fk_battleBoxSlots_battleBoxes(battleBoxId) REFERENCES battleBoxes(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT FOREIGN KEY fk_battleBoxSlots_creatures(creatureId) REFERENCES creatures(id) ON UPDATE CASCADE ON DELETE CASCADE

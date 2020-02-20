@@ -3,7 +3,7 @@ const pool = require("../utilities/database.js");
 const { log } = require('../utilities/logging.js');
 
 const { validateSession } = require('../reusable.js');
-const { countTotalBattleBoxItems, getBattleBoxes, getBattleBoxSlots } = require('./battle_tools.js');
+const { countTotalBattleBoxItems, getBattleBoxes, getBattleBoxSlots, activateFirstTwoSlots } = require('./battle_tools.js');
 
 const apiYourBattlesJoin = async (req, res) => {
 	//handle all outcomes
@@ -59,7 +59,8 @@ const joinBattle = (fields) => new Promise(async (resolve, reject) => {
 	//update battle box
 	await pool.promise().query('UPDATE battleBoxes SET battleId = ? WHERE id = ?;', [battle.id, battleBoxes[fields.index].id]);
 
-	//TODO: (0) set the first two creatures to be "active"
+	//set the first two creatures to be "active"
+	await activateFirstTwoSlots(battleBoxes[fields.index].id);
 
 	//send the invite code
 	return resolve(fields);

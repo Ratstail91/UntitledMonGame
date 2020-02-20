@@ -128,56 +128,18 @@ class YourBattles extends React.Component {
 			);
 		};
 
-		/*
-
-		battle: {
-			yourTopCreature: {
-				frontImage: 'image.png',
-				name: 'nickname || species',
-				maxHP: 10,
-				currentHP: 10,
-				moves: [
-					{ name: 'Tackle', idx: 'tackle', exhausted: true }
-				]
-			},
-			yourButtonCreature: {
-				//duplicate of yourTopCreature
-			},
-
-			yourTeam: [
-				{ name: 'Creature', maxHP, currentHP },
-				//up to 6
-			],
-
-			items: [
-				{ name: 'Golden Apple', idx: 'goldenapple', exhausted: true }
-			],
-			enemyTopCreature: {
-				frontImage: 'image.png',
-				name: 'nickname || species',
-				maxHP: 10,
-				currentHP: 10,
-			},
-			enemyBottomCreature: {
-				//duplicate of enemyTopCreature
-			},
-
-			logs: [ "text" ]
-		}
-
-		*/
-
 		return (
 			<div className='battleContainer'>
 				{this.props.battles.map((battle, index) => {
+					console.log(battle)
 					return (
 						<div key={`battle-${index}`} className={'battlePanel'}>
 							<div className='table noMargin'>
 								<div className='row'>
 									<div className='col double'>
 										<div className='panel' style={{width: 'calc(150px * 4.5)'}}>
-											<YourCreaturePanel creature={{frontImage: 'missing.png', name: 'Nickname', maxHP: 10, currentHP: 10, moves: [{ name: 'Tackle', exhausted: false }]}} items={[{ name: 'Golden Apple', exhausted: false }]} topAttackable={true} bottomAttackable={false} />
-											<YourCreaturePanel creature={{frontImage: 'missing.png', name: 'Nickname', maxHP: 10, currentHP: 10, moves: [{ name: 'Tackle', exhausted: false }]}} items={[{ name: 'Golden Apple', exhausted: false }]} topAttackable={true} bottomAttackable={true} />
+											<YourCreaturePanel creature={battle.yourTopCreature} team={battle.yourTeam} items={battle.yourItems} topAttackable={!!battle.enemyTopCreature} bottomAttackable={!!battle.enemyBottomCreature} />
+											<YourCreaturePanel creature={battle.yourBottomCreature} team={battle.yourTeam} items={battle.yourItems} topAttackable={!!battle.enemyTopCreature} bottomAttackable={!!battle.enemyBottomCreature} />
 										</div>
 									</div>
 
@@ -195,8 +157,8 @@ class YourBattles extends React.Component {
 									</div>
 
 									<div className='col half'>
-										<EnemyCreature creature={{ frontImage: 'missing.png', name: 'Shenron', maxHP: 10, currentHP: 5 }} />
-										<EnemyCreature creature={{ frontImage: 'missing.png', name: 'Shenron', maxHP: 10, currentHP: 5 }} />
+										<EnemyCreature creature={battle.enemyTopCreature} />
+										<EnemyCreature creature={battle.enemyBottomCreature} />
 									</div>
 								</div>
 							</div>

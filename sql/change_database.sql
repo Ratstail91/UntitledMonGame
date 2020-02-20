@@ -1,1 +1,2 @@
-ALTER TABLE battles ADD status ENUM ("open", "inProgress", "completed") DEFAULT "open";
+DROP TABLE battleBoxSlots;
+
