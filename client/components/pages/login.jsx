@@ -23,6 +23,7 @@ class Login extends React.Component {
 		return (
 			<div className='page constrained'>
 				<LoginPanel onSuccess={(msg) => this.props.history.push('/')} />
+				<div className='break' />
 				<Button href='/' className='centered'>Return Home</Button>
 			</div>
 		);
