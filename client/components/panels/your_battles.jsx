@@ -131,7 +131,6 @@ class YourBattles extends React.Component {
 		return (
 			<div className='battleContainer'>
 				{this.props.battles.map((battle, index) => {
-					console.log(battle)
 					return (
 						<div key={`battle-${index}`} className={'battlePanel'}>
 							<div className='table noMargin'>
