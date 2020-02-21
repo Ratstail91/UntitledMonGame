@@ -8,6 +8,8 @@ const { getBattleBoxes, getBattleBoxSlots } = require('./battle_tools.js');
 
 const speciesIndex = require('../gameplay/species.json');
 const movesIndex = require('../gameplay/moves.json');
+const itemIndex = require('../gameplay/item_index.json');
+const premiumIndex = require('../gameplay/premium_index.json');
 
 const apiYourBattles = async (req, res) => {
 	//handle all outcomes
@@ -58,6 +60,7 @@ const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 		yourItems.forEach(yourItem => {
 			itemPopulation[yourItem.idx] = {
 				idx: yourItem.idx,
+				name: yourItem.name,
 				exhausted: false,
 			};
 		});
@@ -65,6 +68,7 @@ const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 		exhaustedItems.forEach(yourExhautedItem => {
 			itemPopulation[yourExhautedItem.idx] = {
 				idx: yourExhautedItem.idx,
+				name: itemIndex[yourExhautedItem] ? itemIndex[yourExhautedItem.idx].name : premiumIndex[yourExhautedItem.idx].name,
 				exhausted: true,
 			};
 		})
