@@ -21,7 +21,7 @@ const apiAdminDisplay = (req, res) => {
 		.then(validateSession)
 		.then(validateAccountType)
 		.then(getDailySnapshots)
-		.then(fields => { return { msg: fields.snapshotRecords, extra: '' }; })
+		.then(fields => { return { msg: { snapshotRecords: fields.snapshotRecords }, extra: '' }; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
