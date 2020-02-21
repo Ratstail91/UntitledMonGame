@@ -21,7 +21,7 @@ class AdminDisplay extends React.Component {
 		return (
 			<div className='panel' style={{flexDirection: 'row'}}>
 				<div className='panel scrollable'>
-					{Object.values(this.state.snapshotRecords).map((record, idx) => {
+					{this.state.snapshotRecords.map((record, idx) => {
 						return (
 							<div key={idx}><p>Accounts: {record.activeAccounts}/{record.totalAccounts} -> {record.activeProfiles}/{record.totalProfiles}</p></div>
 						);
