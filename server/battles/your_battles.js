@@ -36,7 +36,7 @@ const apiYourBattles = async (req, res) => {
 //TODO: (0) reusable?
 const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 	//get your battles
-	const battleQuery = 'SELECT * FROM battles WHERE id IN (SELECT battleId FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?))';
+	const battleQuery = 'SELECT * FROM battles WHERE id IN (SELECT battleId FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?)) AND status != "open";';
 	const battles = (await pool.promise().query(battleQuery, [fields.id]))[0];
 
 	const battleBoxes = await getBattleBoxes(fields.id);
@@ -149,7 +149,7 @@ const getEnemyCreatures = async (notAccountId, battleId) => {
 
 	if (!battleBox) {
 		return { top: null, bottom: null };
-	}
+	}process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); });
 
 	const slotsQuery = 'SELECT * FROM battleBoxSlots WHERE battleBoxId = ?;';
 	const battleBoxSlots = (await pool.promise().query(slotsQuery, [battleBox.id]))[0];
@@ -174,7 +174,7 @@ const getStats = async (creature) => {
 		return null;
 	}
 
-	const slot = (await pool.promise().query('SELECT * FROM battleBoxSlots WHERE creatureId = ?;', [creature.id]))[0];
+	const slot = (await pool.promise().query('SELECT * FROM battleBoxSlots WHERE creatureId = ?;', [creature.id]))[0][0];
 	const moves = (await pool.promise().query('SELECT * FROM creatureMovesOwned WHERE creatureId = ? AND equipped = TRUE;', [creature.id]))[0];
 
 	return {

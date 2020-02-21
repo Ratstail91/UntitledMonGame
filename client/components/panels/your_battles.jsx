@@ -57,7 +57,7 @@ class YourBattles extends React.Component {
 							<Dropdown.Menu>
 								{props.team.map((creature, index) => {
 									return (
-										<Dropdown.Item key={`team-${index}`}>{creature.name}</Dropdown.Item>
+										<Dropdown.Item key={`team-${index}`}>{creature.name} {creature.currentHP}/{creature.maxHP}</Dropdown.Item>
 									);
 								})}
 							</Dropdown.Menu>

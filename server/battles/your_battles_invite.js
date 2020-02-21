@@ -3,7 +3,7 @@ const pool = require("../utilities/database.js");
 const { log } = require('../utilities/logging.js');
 
 const { validateSession } = require('../reusable.js');
-const { countTotalBattleBoxItems, getBattleBoxes, activateFirstTwoSlots } = require('./battle_tools.js');
+const { countTotalBattleBoxItems, getBattleBoxes, activateFirstTwoSlots, initializeBattleBox } = require('./battle_tools.js');
 
 const apiYourBattlesInvite = async (req, res) => {
 	//handle all outcomes
@@ -62,13 +62,14 @@ const generateNewBattle = (fields) => new Promise(async (resolve, reject) => {
 	const rand = Math.floor(Math.random() * 2000000000);
 
 	//create the battle object
-	await pool.promise().query('INSERT INTO battles (inviteCode) VALUES (?);', [rand]);
+	await pool.promise().query('INSERT INTO battles (inviteCode, status) VALUES (?, "open");', [rand]);
 	const newBattle = (await pool.promise().query('SELECT * FROM battles WHERE inviteCode = ?;', [rand]))[0][0];
 
 	//update battle box
 	await pool.promise().query('UPDATE battleBoxes SET battleId = ? WHERE id = ?;', [newBattle.id, battleBoxes[fields.index].id]);
 
 	await activateFirstTwoSlots(battleBoxes[fields.index].id);
+	await initializeBattleBox(battleBoxes[fields.index].id);
 
 	//send the invite code
 	return resolve({ fields, inviteCode: rand });
