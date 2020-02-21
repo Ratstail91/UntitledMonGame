@@ -13,7 +13,7 @@ class AdminDisplay extends React.Component {
 		};
 	}
 
-	componentDidUpdate() {
+	componentDidMount() {
 		this.sendAdminRequest('/api/admin');
 	}
 
