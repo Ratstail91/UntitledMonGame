@@ -81,12 +81,16 @@ const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 			yourTopCreature: await getStats(yourTop),
 			yourBottomCreature: await getStats(yourBottom),
 
-			yourTeam: battleBoxSlots.filter(bbs => bbs.activePosition == 'none').map(bbs => { return {
-				bbsId: bbs.id,
-				name: creatures[bbs.boxSlot].nickname || speciesIndex[creatures[bbs.boxSlot].species].name,
-				maxHP: bbs.maximumHealth,
-				currentHP: bbs.currentHealth,
-			}; }),
+			yourTeam: battleBoxSlots.filter(bbs => bbs.activePosition == 'none').map(bbs => {
+				const creature = creatures.filter(c => c.id == bbs.creatureId)[0];
+
+				return {
+					bbsId: bbs.id,
+					name: creature.nickname || speciesIndex[creature.species].name,
+					maxHP: bbs.maximumHealth,
+					currentHP: bbs.currentHealth,
+				};
+			}),
 
 			yourItems: Object.values(itemPopulation),
 
