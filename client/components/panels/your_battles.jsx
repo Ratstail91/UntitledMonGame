@@ -5,12 +5,39 @@ import { Dropdown } from 'react-bootstrap';
 import Button from '../button.jsx';
 
 import { setWarning } from '../../actions/warning.js';
-import { setBattles } from '../../actions/battles.js';
+import { setBattles, setCreature } from '../../actions/battles.js';
 
 class YourBattles extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			actions: [],
+			nextSwap: {},
+		};
+
+		/*
+
+		actions: [
+			{
+				"top": {
+					type: "swap" | "move" | "item"
+
+					swapSlot: 0 | 1 | 2 | 3 | 4 | 5
+
+					moveIndex: 0 | 1 | 2 | 3
+					creature: "top" | "bottom"
+					target: "top" | "bottom"
+
+					itemIdx: "idx"
+				},
+
+				"bottom": {
+					//duplicate of top
+				}
+			}
+		]
+
+		*/
 	}
 
 	componentDidMount() {
@@ -50,14 +77,15 @@ class YourBattles extends React.Component {
 		const YourCreaturePanel = props => {
 			if (!props.creature) {
 				return (
-					<div className='battlePartialPanel'>
+					<div className='battlePartialPanel' style={{flexDirection: 'column', justifyContent: 'center'}}>
+						{this.state.nextSwap[props.positionName] ? <p>Sending Out: {this.state.nextSwap[props.positionName].name} {this.state.nextSwap[props.positionName].currentHP}/{this.state.nextSwap[props.positionName].maxHP}</p> : <p />}
 						<Dropdown>
 							<Dropdown.Toggle>Send Out</Dropdown.Toggle>
 
 							<Dropdown.Menu>
 								{props.team.map((creature, index) => {
 									return (
-										<Dropdown.Item key={`team-${index}`}>{creature.name} {creature.currentHP}/{creature.maxHP}</Dropdown.Item>
+										<Dropdown.Item key={`team-${index}`} eventKey={index} onSelect={key => this.swapToCreature(props.battleIndex, props.positionName, key)}>{creature.name} {creature.currentHP}/{creature.maxHP}</Dropdown.Item>
 									);
 								})}
 							</Dropdown.Menu>
@@ -70,7 +98,7 @@ class YourBattles extends React.Component {
 				<div className='battlePartialPanel'>
 					<div className='break mobile show' />
 
-					<Button style={{flex: '0 1 auto'}}>↩️</Button>
+					<Button onClick={() => this.clearCreature(props.battleIndex, props.positionName)} style={{flex: '0 1 auto'}}>↩️</Button>
 					<div className='panel'>
 						<img style={{flex: '0 1 auto'}} src={`/content/sprites/creatures/${props.creature.frontImage}`} />
 						<span className='centered'><strong>{props.creature.name}</strong></span>
@@ -136,22 +164,22 @@ class YourBattles extends React.Component {
 							<div className='table noMargin'>
 								<div className='row'>
 									<div className='col double'>
-										<div className='panel' style={{width: 'calc(150px * 4.5)'}}>
-											<YourCreaturePanel creature={battle.yourTopCreature} team={battle.yourTeam} items={battle.yourItems} topAttackable={!!battle.enemyTopCreature} bottomAttackable={!!battle.enemyBottomCreature} />
-											<YourCreaturePanel creature={battle.yourBottomCreature} team={battle.yourTeam} items={battle.yourItems} topAttackable={!!battle.enemyTopCreature} bottomAttackable={!!battle.enemyBottomCreature} />
+										<div className='panel' style={{width: 'calc(150px * 4.5)', minHeight: 'calc(150px * 2 + 2em)'}}>
+											<YourCreaturePanel battleIndex={index} positionName={'top'} creature={battle.yourTopCreature} team={battle.yourTeam} items={battle.yourItems} topAttackable={!!battle.enemyTopCreature} bottomAttackable={!!battle.enemyBottomCreature} />
+											<YourCreaturePanel battleIndex={index} positionName={'bottom'} creature={battle.yourBottomCreature} team={battle.yourTeam} items={battle.yourItems} topAttackable={!!battle.enemyTopCreature} bottomAttackable={!!battle.enemyBottomCreature} />
 										</div>
 									</div>
 
 									<div className='col'>
 										<div className='panel'  style={{maxWidth: '350px'}}>
 											<div className='scrollable'>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+												{battle.logs.map( (log, k) => <p key={`${index}-log-${k}`}>{log}</p>)}
 											</div>
-											<Button onClick={e => this.resign(index)}>Resign</Button>
+											<div className='panel' style={{flexDirection: 'row'}}>
+												<Button onClick={e => this.state.actions[index] && this.submit(index)} style={{flex: '1'}} className={this.state.actions[index] ? '' : 'disabled'}>Submit</Button>
+												<div className='gap' />
+												<Button onClick={e => this.resign(index)} style={{flex: '1'}}>Resign</Button>
+											</div>
 										</div>
 									</div>
 
@@ -168,12 +196,67 @@ class YourBattles extends React.Component {
 		);
 	}
 
+	//controller buttons
+	submit(index) {
+		//TODO: (0) does everyone in this battle have an action?
+		if (confirm('Send these battle actions?')) {
+			this.sendYourBattlesRequest('/api/yourbattles/submit', index, this.state.actions[index]);
+
+			//reset
+			this.setState({
+				actions: [],
+				nextSwap: {},
+			});
+		}
+	}
+
 	resign(index) {
 		if (confirm('Quit this battle?')) {
 			this.sendYourBattlesRequest('/api/yourbattles/resign', index);
 		}
 	}
 
+	//util functions
+	clearCreature(battleIndex, positionName) {
+		//graphics
+		this.props.setCreature(battleIndex, positionName, null);
+
+		//for the action
+		const actions = JSON.parse(JSON.stringify(this.state.actions));
+
+		actions[battleIndex] = actions[battleIndex] || {};
+
+		actions[battleIndex][positionName] = {
+			type: "swap",
+			swapSlot: null
+		};
+
+		this.setState({
+			actions: actions
+		});
+	}
+
+	swapToCreature(battleIndex, positionName, swapSlot) {
+		//for the action
+		const actions = JSON.parse(JSON.stringify(this.state.actions));
+		const nextSwap = JSON.parse(JSON.stringify(this.state.nextSwap));
+
+		actions[battleIndex] = actions[battleIndex] || {};
+
+		actions[battleIndex][positionName] = {
+			type: "swap",
+			swapSlot: swapSlot
+		};
+
+		nextSwap[positionName] = this.props.battles[battleIndex].yourTeam[swapSlot];
+
+		this.setState({
+			actions: actions,
+			nextSwap: nextSwap
+		});
+	}
+
+	//request function
 	sendYourBattlesRequest(url, index, meta) {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
@@ -207,6 +290,7 @@ YourBattles.propTypes = {
 	token: PropTypes.number.isRequired,
 	setWarning: PropTypes.func.isRequired,
 	setBattles: PropTypes.func.isRequired,
+	setCreature: PropTypes.func.isRequired,
 };
 
 const mapStoreToProps = (store) => {
@@ -222,6 +306,7 @@ const mapDispatchToProps = (dispatch) => {
 		setWarning: msg => dispatch(setWarning(msg)),
 		setProfile: (username, coins) => dispatch(setProfile(username, coins)),
 		setBattles: (battles) => dispatch(setBattles(battles)),
+		setCreature: (battleIndex, positionName, creature) => dispatch(setCreature(battleIndex, positionName, creature))
 	};
 };
 

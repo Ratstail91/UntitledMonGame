@@ -35,6 +35,7 @@ const apiYourBattles = async (req, res) => {
 
 //TODO: (0) reusable?
 const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
+
 	//get your battles
 	const battleQuery = 'SELECT * FROM battles WHERE id IN (SELECT battleId FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?)) AND status != "open";';
 	const battles = (await pool.promise().query(battleQuery, [fields.id]))[0];
@@ -57,7 +58,7 @@ const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 		const exhaustedItems = await getExhaustedItems(fields.id, battle.id);
 		let itemPopulation = {};
 
-		yourItems.forEach(yourItem => {
+		yourItems.filter(i => i.type == 'consumable').forEach(yourItem => {
 			itemPopulation[yourItem.idx] = {
 				idx: yourItem.idx,
 				name: yourItem.name,
@@ -81,7 +82,8 @@ const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 			yourBottomCreature: await getStats(yourBottom),
 
 			yourTeam: battleBoxSlots.filter(bbs => bbs.activePosition == 'none').map(bbs => { return {
-				name: creatures[bbs.boxSlot].nickname || creatures[bbs.boxSlot].species,
+				bbsId: bbs.id,
+				name: creatures[bbs.boxSlot].nickname || speciesIndex[creatures[bbs.boxSlot].species].name,
 				maxHP: bbs.maximumHealth,
 				currentHP: bbs.currentHealth,
 			}; }),
@@ -91,7 +93,13 @@ const getYourBattles = (fields) => new Promise(async (resolve, reject) => {
 			enemyTopCreature: await getStats(enemyCreatures.top),
 			enemyBottomCreature: await getStats(enemyCreatures.bottom),
 
-			logs: [] //TODO
+			logs: [
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			] //TODO
 		};
 	}));
 
