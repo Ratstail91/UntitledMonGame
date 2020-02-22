@@ -2,7 +2,7 @@ Raise, train and battle creatures from eggs!
 
 Inspired by popular monster battling games, Egg Trainer allows you to buy eggs from the market, hatch them, then train them - each one is different, and even creatures within the same species can vary wildly in strengths.
 
-Once you've trained a set of six powerful creatures, you can battle them against other players in real time!
+Once you've trained a set of six powerful creatures, you can battle them against other players!
 
 Your creatures fight in pairs, with each creature having a choice of four different actions. Some actions will gain benefits or drawbacks depending on the elemental type of your creature, the move, and the opponent's creature.
 
