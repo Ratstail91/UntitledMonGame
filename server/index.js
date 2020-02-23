@@ -32,6 +32,7 @@ pool.getConnection((err, connection) => {
 //TODO: new moves: "dracometeor" (dragon only)
 //TODO: daily weather conditions
 //TODO: (0) get a linter
+//TODO: QOL improvement - you could possibly see a creature's stats by hovering over it's picture.
 
 // Add body parser
 app.use(bodyParser.json());

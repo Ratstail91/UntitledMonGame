@@ -31,11 +31,11 @@ class Inspect extends React.Component {
 			return (
 				<div className='row' style={{borderBottom: '1px solid #e8e8e8', marginBottom: '.5em'}}>
 					<div className='col double'>
-						<p style={{paddingBottom: '0'}}><strong>{props.left}</strong></p>
+						<p className='left' style={{width: '100%', paddingBottom: '0'}}><strong>{props.left}</strong></p>
 					</div>
 
 					<div className='col'>
-						<p style={{paddingBottom: '0'}}>{props.right}</p>
+						<p className='left' style={{width: '100%', paddingBottom: '0'}}>{props.right}</p>
 					</div>
 				</div>
 			);
@@ -48,28 +48,30 @@ class Inspect extends React.Component {
 						<img className='shrink' src={`/content/sprites/creatures/${this.state.species.frontImage}`} style={{maxWidth: '500px', maxHeight: '500px'}} />
 					</div>
 
-					<div className='col table noCollapse'>
-						<Line left={'Name'} right={this.state.species.name} />
-						<Line left={'Nickname'} right={this.state.creature.nickname ? this.state.creature.nickname : '<none>'} />
-						<Line left={'Element'} right={capitalize(this.state.species.element)} />
-						<Line left={'Rarity'} right={capitalize(this.state.species.egg.rarity)} />
+					<div className='col'>
+						<div className='table noCollapse'>
+							<Line left={'Name'} right={this.state.species.name} />
+							<Line left={'Nickname'} right={this.state.creature.nickname ? this.state.creature.nickname : '<none>'} />
+							<Line left={'Element'} right={capitalize(this.state.species.element)} />
+							<Line left={'Rarity'} right={capitalize(this.state.species.egg.rarity)} />
 
-						<Line left={'Species Health'} right={this.state.species.stats.health} />
-						<Line left={'Species Speed'} right={this.state.species.stats.speed} />
-						<Line left={'Species Physical Attack'} right={this.state.species.stats.physicalAttack} />
-						<Line left={'Species Physical Defense'} right={this.state.species.stats.physicalDefense} />
-						<Line left={'Species Magical Attack'} right={this.state.species.stats.magicalAttack} />
-						<Line left={'Species Magical Defense'} right={this.state.species.stats.magicalDefense} />
+							<Line left={'Species Health'} right={this.state.species.stats.health} />
+							<Line left={'Species Speed'} right={this.state.species.stats.speed} />
+							<Line left={'Species Physical Attack'} right={this.state.species.stats.physicalAttack} />
+							<Line left={'Species Physical Defense'} right={this.state.species.stats.physicalDefense} />
+							<Line left={'Species Magical Attack'} right={this.state.species.stats.magicalAttack} />
+							<Line left={'Species Magical Defense'} right={this.state.species.stats.magicalDefense} />
 
-						<Line left={'Genetic Health'} right={`${this.state.creature.geneticPointsHealth}/16`} />
-						<Line left={'Genetic Speed'} right={`${this.state.creature.geneticPointsSpeed}/16`} />
-						<Line left={'Genetic Strength'} right={`${this.state.creature.geneticPointsStrength}/16`} />
-						<Line left={'Genetic Power'} right={`${this.state.creature.geneticPointsPower}/16`} />
+							<Line left={'Genetic Health'} right={`${this.state.creature.geneticPointsHealth}/16`} />
+							<Line left={'Genetic Speed'} right={`${this.state.creature.geneticPointsSpeed}/16`} />
+							<Line left={'Genetic Strength'} right={`${this.state.creature.geneticPointsStrength}/16`} />
+							<Line left={'Genetic Power'} right={`${this.state.creature.geneticPointsPower}/16`} />
 
-						<Line left={'Training Health'} right={`${this.state.creature.statPointsHealth}/16`} />
-						<Line left={'Training Speed'} right={`${this.state.creature.statPointsSpeed}/16`} />
-						<Line left={'Training Strength'} right={`${this.state.creature.statPointsStrength}/16`} />
-						<Line left={'Training Power'} right={`${this.state.creature.statPointsPower}/16`} />
+							<Line left={'Training Health'} right={`${this.state.creature.statPointsHealth}/16`} />
+							<Line left={'Training Speed'} right={`${this.state.creature.statPointsSpeed}/16`} />
+							<Line left={'Training Strength'} right={`${this.state.creature.statPointsStrength}/16`} />
+							<Line left={'Training Power'} right={`${this.state.creature.statPointsPower}/16`} />
+						</div>
 					</div>
 				</div>
 			</div>
