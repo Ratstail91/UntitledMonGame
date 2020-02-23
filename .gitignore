@@ -17,6 +17,7 @@ public/*.html
 public/*.js
 public/*.css
 public/*.map
+public/*.gz
 
 # Non npm lock files
 yarn.lock
