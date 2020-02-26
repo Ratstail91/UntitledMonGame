@@ -105,7 +105,6 @@ app.post('/api/yourbattles', battles.apiYourBattles);
 app.post('/api/yourbattles/invite', battles.apiYourBattlesInvite);
 app.post('/api/yourbattles/join', battles.apiYourBattlesJoin);
 app.post('/api/yourbattles/resign', battles.apiYourBattlesResign);
-app.post('/api/yourbattles/submit', battles.apiYourBattlesSubmit);
 
 const shop = require('./shop/shop.js');
 shop.runDailyShopEggRefresh();

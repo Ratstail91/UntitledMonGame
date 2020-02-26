@@ -10,34 +10,7 @@ import { setBattles, setCreature } from '../../actions/battles.js';
 class YourBattles extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			actions: [],
-			nextSwap: {},
-		};
-
-		/*
-
-		actions: [
-			{
-				"top": {
-					type: "swap" | "move" | "item"
-
-					swapSlot: 0 | 1 | 2 | 3 | 4 | 5
-
-					moveIndex: 0 | 1 | 2 | 3
-					user: "top" | "bottom"
-					target: "top" | "bottom"
-
-					itemIdx: "idx"
-				},
-
-				"bottom": {
-					//duplicate of top
-				}
-			}
-		]
-
-		*/
+		this.state = {};
 	}
 
 	componentDidMount() {
@@ -78,14 +51,13 @@ class YourBattles extends React.Component {
 			if (!props.creature) {
 				return (
 					<div className='battlePartialPanel' style={{flexDirection: 'column', justifyContent: 'center'}}>
-						{this.state.nextSwap[props.positionName] ? <p>Sending Out: {this.state.nextSwap[props.positionName].name} {this.state.nextSwap[props.positionName].currentHP}/{this.state.nextSwap[props.positionName].maxHP}</p> : <p />}
 						<Dropdown>
 							<Dropdown.Toggle>Send Out</Dropdown.Toggle>
 
 							<Dropdown.Menu>
 								{props.team.map((creature, index) => {
 									return (
-										<Dropdown.Item key={`team-${index}`} eventKey={index} onSelect={key => this.swapToCreature(props.battleIndex, props.positionName, key)}>{creature.name} {creature.currentHP}/{creature.maxHP}</Dropdown.Item>
+										<Dropdown.Item key={`team-${index}`} eventKey={index}>{creature.name} {creature.currentHP}/{creature.maxHP}</Dropdown.Item>
 									);
 								})}
 							</Dropdown.Menu>
@@ -98,12 +70,11 @@ class YourBattles extends React.Component {
 				<div className='battlePartialPanel'>
 					<div className='break mobile show' />
 
-					<Button onClick={() => this.clearCreature(props.battleIndex, props.positionName)} style={{flex: '0 1 auto'}}>↩️</Button>
+					<Button>↩️</Button>
 					<div className='panel'>
 						<img style={{flex: '0 1 auto'}} src={`/content/sprites/creatures/${props.creature.frontImage}`} />
 						<span className='centered'><strong>{props.creature.name}</strong></span>
 					</div>
-
 
 					<div className='panel' style={{ maxWidth: '300px', flex: '1'}}>
 						<span className='centered'><strong>HP</strong></span>
@@ -175,8 +146,9 @@ class YourBattles extends React.Component {
 											<div className='scrollable'>
 												{battle.logs.map( (log, k) => <p key={`${index}-log-${k}`}>{log}</p>)}
 											</div>
+
 											<div className='panel' style={{flexDirection: 'row'}}>
-												<Button onClick={e => this.state.actions[index] && this.submit(index)} style={{flex: '1'}} className={this.state.actions[index] ? '' : 'disabled'}>Submit</Button>
+												<Button style={{flex: '1'}} className={'disabled'}>Submit</Button>
 												<div className='gap' />
 												<Button onClick={e => this.resign(index)} style={{flex: '1'}}>Resign</Button>
 											</div>
@@ -197,63 +169,10 @@ class YourBattles extends React.Component {
 	}
 
 	//controller buttons
-	submit(index) {
-		//TODO: (0) does everyone in this battle have an action?
-		if (confirm('Send these battle actions?')) {
-			this.sendYourBattlesRequest('/api/yourbattles/submit', index, this.state.actions[index]);
-
-			//reset
-			this.setState({
-				actions: [],
-				nextSwap: {}, //for "Sending out" display
-			});
-		}
-	}
-
 	resign(index) {
 		if (confirm('Quit this battle?')) {
 			this.sendYourBattlesRequest('/api/yourbattles/resign', index);
 		}
-	}
-
-	//util functions
-	clearCreature(battleIndex, positionName) {
-		//graphics
-		this.props.setCreature(battleIndex, positionName, null);
-
-		//for the action
-		const actions = JSON.parse(JSON.stringify(this.state.actions));
-
-		actions[battleIndex] = actions[battleIndex] || {};
-
-		actions[battleIndex][positionName] = {
-			type: "swap",
-			swapSlot: null
-		};
-
-		this.setState({
-			actions: actions
-		});
-	}
-
-	swapToCreature(battleIndex, positionName, swapSlot) {
-		//for the action
-		const actions = JSON.parse(JSON.stringify(this.state.actions));
-		const nextSwap = JSON.parse(JSON.stringify(this.state.nextSwap));
-
-		actions[battleIndex] = actions[battleIndex] || {};
-
-		actions[battleIndex][positionName] = {
-			type: "swap",
-			swapSlot: swapSlot
-		};
-
-		nextSwap[positionName] = this.props.battles[battleIndex].yourTeam[swapSlot];
-
-		this.setState({
-			actions: actions,
-			nextSwap: nextSwap
-		});
 	}
 
 	//request function

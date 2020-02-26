@@ -20,8 +20,7 @@
 
 		"moves": [ "tackle", "firespit", "babyeyes" ],
 
-		"frontImage": "spitty_sketch.png",
-		"backImage": "spitty_sketch.png"
+		"frontImage": "spitty.png"
 	},
 	"whalephant": {
 		"name": "Whalephant",
@@ -44,8 +43,7 @@
 
 		"moves": [ "splash", "watercannon", "babyeyes", "babyfat", "thunderclap" ],
 
-		"frontImage": "whalephant_sketch.png",
-		"backImage": "whalephant_sketch.png"
+		"frontImage": "whalephant.png"
 	},
 	"neverrat": {
 		"name": "Neverrat",
@@ -68,8 +66,7 @@
 
 		"moves": [ "tackle", "quickbite", "gustofwind", "swoop", "faestep" ],
 
-		"frontImage": "neverrat_sketch.png",
-		"backImage": "neverrat_sketch.png"
+		"frontImage": "neverrat.png"
 	},
 	"slink": {
 		"name": "Slink",
@@ -92,8 +89,7 @@
 
 		"moves": [ "quickbite", "babyeyes", "mindovermatter", "faestep" ],
 
-		"frontImage": "slink_sketch.png",
-		"backImage": "slink_sketch.png"
+		"frontImage": "slink.png"
 	},
 	"puggy": {
 		"name": "Puggy",
@@ -116,8 +112,7 @@
 
 		"moves": [ "tackle", "babyeyes", "babyfat", "flurryofblows", "thunderclap" ],
 
-		"frontImage": "puggy_sketch.png",
-		"backImage": "puggy_sketch.png"
+		"frontImage": "puggy.png"
 	},
 	"predatore": {
 		"name": "Predatore",
@@ -140,8 +135,7 @@
 
 		"moves": [ "tackle", "meteor", "gustofwind", "flurryofblows", "swoop", "razorblades" ],
 
-		"frontImage": "predatore_sketch.png",
-		"backImage": "predatore_sketch.png"
+		"frontImage": "predatore.png"
 	},
 	"pixi": {
 		"name": "Pixi",
@@ -164,8 +158,7 @@
 
 		"moves": [ "meteor", "flurryofblows", "swoop", "dust", "shadowball" ],
 
-		"frontImage": "pixi_sketch.png",
-		"backImage": "pixi_sketch.png"
+		"frontImage": "pixi.png"
 	},
 	"lure": {
 		"name": "Lure",
@@ -188,8 +181,7 @@
 
 		"moves": [ "splash", "watercannon", "quickbite", "flash" ],
 
-		"frontImage": "lure_sketch.png",
-		"backImage": "lure_sketch.png"
+		"frontImage": "lure.png"
 	},
 	"dropbear": {
 		"name": "Dropbear",
@@ -212,7 +204,6 @@
 
 		"moves": [ "babyeyes", "babyfat", "makedark", "shadowball" ],
 
-		"frontImage": "dropbear_sketch.png",
-		"backImage": "dropbear_sketch.png"
+		"frontImage": "dropbear.png"
 	}
 }

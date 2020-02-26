@@ -7,7 +7,6 @@ const { apiYourBattles } = require('./your_battles.js');
 const { apiYourBattlesInvite } = require('./your_battles_invite.js');
 const { apiYourBattlesJoin } = require('./your_battles_join.js');
 const { apiYourBattlesResign } = require('./your_battles_resign.js');
-const { apiYourBattlesSubmit } = require('./your_battles_submit.js');
 
 module.exports = {
 	apiYourBattleBoxes,
@@ -19,5 +18,4 @@ module.exports = {
 	apiYourBattlesInvite,
 	apiYourBattlesJoin,
 	apiYourBattlesResign,
-	apiYourBattlesSubmit,
 };
