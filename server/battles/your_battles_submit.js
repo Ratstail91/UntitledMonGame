@@ -23,6 +23,7 @@ const apiYourBattlesSubmit = async (req, res) => {
 		.then(validateSession)
 		.then(getYourBattles)
 		.then(handleSubmission)
+		.then(processPendingBattleActions)
 		.then(getYourBattles)
 		.then(fields => { return { msg: { battles: fields.battleStructure }, extra: ''}; })
 		.then(handleSuccess)
@@ -35,26 +36,38 @@ const handleSubmission = (fields) => new Promise(async (resolve, reject) => {
 		return reject({ msg: 'No meta field for your battles submit', extra: '' });
 	}
 
-	//closure
 	const handleSubmissionAction = async (action, position) => {
-		//no action taken in this position
 		if (!action) {
 			return;
 		}
 
 		switch(action.type) {
-			case 'swap':
+			case 'swap': {
 				if (action.swapSlot !== null && !fields.battleStructure[fields.index].yourTeam[action.swapSlot]) {
 					return reject({ msg: 'swapSlot out of range', extra: action.swapSlot });
 				}
 
-				await pool.promise().query('UPDATE battleBoxSlots SET activePosition = "none" WHERE battleBoxId IN (SELECT id FROM battleBoxes WHERE battleId = ? AND profileId IN (SELECT id FROM profiles WHERE accountId = ?)) AND activePosition = ?', [fields.battleStructure[fields.index].id, fields.id, position]);
+				await pool.promise().query(
+					'INSERT INTO pendingBattleActions (actionType, battleId, userSlotId, swapSlot, position) VALUES ("swap", ?, ?, ?, ?);',
+					[
+						fields.battleStructure[fields.index].id,
+						position === 'top' ? fields.battleStructure[fields.index].yourTopCreature.bbsId : fields.battleStructure[fields.index].yourBottomCreature.bbsId,
+						action.swapSlot ? fields.battleStructure[fields.index].yourTeam[action.swapSlot].bbsId : null,
+						position
+					]
+				);
+			}
+			return;
 
-				if (action.swapSlot) {
-					await pool.promise().query('UPDATE battleBoxSlots SET activePosition = ? WHERE id = ?;', [position, fields.battleStructure[fields.index].yourTeam[action.swapSlot].bbsId]);
-				}
+			case 'move': {
+				//TODO
+			}
+			return;
 
-				return;
+			case 'item': {
+				//TODO
+			}
+			return;
 
 			default:
 				return reject({ msg: 'Unknown action type', extra: [action.type] });
@@ -79,9 +92,29 @@ const handleSubmission = (fields) => new Promise(async (resolve, reject) => {
 	return resolve(fields);
 });
 
+const processPendingBattleActions = (fields) => new Promise(async (resolve, reject) => {
+	const pendingBattleActions = (await pool.promise().query('SELECT * FROM pendingBattleActions WHERE battleId = ?;', [fields.battleStructure[fields.index].id]))[0];
+
+	//count the number of participants with submitted actions
+	let population = {};
+	await Promise.all(pendingBattleActions.map(async (action) => {
+		const profileId = (await pool.promise().query('SELECT profileId FROM battleBoxes WHERE id IN (SELECT battleBoxId FROM battleBoxSlots WHERE id = ?);', action.userSlotId || action.swapSlot))[0][0].profileId;
+		population[profileId] = profileId;
+	}));
+
+	console.log('battle population: ', population);
+
+	if (Object.keys(population).length >= 2) {
+		// (0) execute the pending actions
+	}
+
+	return resolve(fields);
+});
+
 module.exports = {
 	apiYourBattlesSubmit,
 
 	//for testing
 	handleSubmission,
+	processPendingBattleActions,
 };

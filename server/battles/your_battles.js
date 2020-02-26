@@ -190,6 +190,7 @@ const getStats = async (creature) => {
 	const moves = (await pool.promise().query('SELECT * FROM creatureMovesOwned WHERE creatureId = ? AND equipped = TRUE;', [creature.id]))[0];
 
 	return {
+		bbsId: slot.id,
 		frontImage: speciesIndex[creature.species].frontImage, //TODO: cosmetics
 		name: creature.nickname || speciesIndex[creature.species].name,
 		maxHP: slot.maximumHealth,

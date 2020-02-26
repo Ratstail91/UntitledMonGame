@@ -11,3 +11,11 @@ Boxel - pixellated video game character. Actually, boxel sounds better as a cosm
 Stagamizer - stegasaurus with stag horns
 Topple - a turtle that spins like a spinning top, with razors along the edge of his shell. He spins in a spike on his back, maybe?
 Manta Ray
+
+
+-------------------------
+
+To get the emails into a .csv:
+
+	mysql -u eggtrainer -p eggtrainer -e "SELECT username, email, accountType, promotions FROM accounts;" -B | tr '\t' ',' > eggtrainer.csv
+

@@ -25,7 +25,7 @@ class YourBattles extends React.Component {
 					swapSlot: 0 | 1 | 2 | 3 | 4 | 5
 
 					moveIndex: 0 | 1 | 2 | 3
-					creature: "top" | "bottom"
+					user: "top" | "bottom"
 					target: "top" | "bottom"
 
 					itemIdx: "idx"
@@ -205,7 +205,7 @@ class YourBattles extends React.Component {
 			//reset
 			this.setState({
 				actions: [],
-				nextSwap: {},
+				nextSwap: {}, //for "Sending out" display
 			});
 		}
 	}
