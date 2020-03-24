@@ -48,7 +48,7 @@
 	"neverrat": {
 		"name": "Neverrat",
 		"element": "grass",
-		"description": "Rarely seen during the daytime, it spends its time the hollows of trees, usually sleeping.",
+		"description": "Rarely seen during the day, it spends its time in the hollows of trees, usually sleeping.",
 
 		"egg": {
 			"rarity": "common",
