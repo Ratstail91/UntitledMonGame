@@ -39,8 +39,8 @@ const { CronJob } = require('cron');
 
 const runWeeklyShopItemRefresh = () => {
 	shopRefresh(); //run on start
-	const dailyJob = new CronJob('0 0 0 0 * *', shopRefresh);
-	dailyJob.start();
+	const weeklyJob = new CronJob('0 0 0 * * 0', shopRefresh);
+	weeklyJob.start();
 };
 
 const shopRefresh = async () => {

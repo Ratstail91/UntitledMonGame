@@ -141,6 +141,9 @@ module.exports = env => {
 			historyApiFallback: true,
 			hot: true,
 			injectHot: true
+		},
+		watchOptions: {
+			ignored: /(node_modules)/
 		}
 	};
 };

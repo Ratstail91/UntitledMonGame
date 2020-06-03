@@ -22,7 +22,7 @@ const isThrottled = (email) => {
 }
 
 //clear the memory once a day
-let job = new CronJob('0 7 * * * *', () => {
+let job = new CronJob('0 0 7 * * *', () => {
 	emails = [];
 });
 
