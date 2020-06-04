@@ -56,6 +56,8 @@ class MovesSelect extends React.Component {
 			return null;
 		}
 
+		//DOCS: movesIndex is an array of moves that exist.
+
 		return (
 			<div className='panel table' style={{flexDirection: 'row'}}>
 				<div className='row'>

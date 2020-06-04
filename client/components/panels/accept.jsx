@@ -6,6 +6,8 @@ import Button from '../button.jsx';
 import { setWarning } from '../../actions/warning.js';
 import { setBattleBoxes } from '../../actions/battles.js';
 
+//TODO: needs a better name, "accept" is far too generic
+//DOCS: Accepts a challenge from another player
 class Accept extends React.Component {
 	constructor(props) {
 		super(props);
@@ -26,6 +28,7 @@ class Accept extends React.Component {
 		//preprocess the battleboxes
 		let battleBoxArray = JSON.parse(JSON.stringify(this.props.battleBoxes || []));
 
+		//make sure each battlebox fits a certain schema
 		battleBoxArray = battleBoxArray.map( (battleBox, idx) => {
 			if (!battleBox) {
 				battleBox = {};
@@ -50,6 +53,7 @@ class Accept extends React.Component {
 			return battleBox;
 		});
 
+		//use the above schema to display battle boxes on the accept screen
 		return (
 			<div>
 				<h1>Select your box</h1>

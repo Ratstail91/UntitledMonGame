@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { setWarning } from '../../actions/warning.js';
 import { setProfile } from '../../actions/profile.js';
 
+//TODO: this needs a better name
 class YourProfile extends React.Component {
 	constructor(props) {
 		super(props);
