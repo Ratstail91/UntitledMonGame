@@ -17,7 +17,6 @@ const pool = mysql.createPool({
 })
 
 pool.on("connection", (connection) => {
-	
 	connection.on("error", (err) => {
 		log(`MySQL connection error ${err}`)
 	});

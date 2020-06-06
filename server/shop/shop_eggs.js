@@ -38,6 +38,7 @@ const getShopEggs = () => new Promise((resolve, reject) => {
 const { CronJob } = require('cron');
 
 const runDailyShopEggRefresh = () => {
+	shopRefresh();
 	const dailyJob = new CronJob('0 0 0 * * *', shopRefresh);
 	dailyJob.start();
 };

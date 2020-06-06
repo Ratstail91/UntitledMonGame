@@ -22,18 +22,6 @@ pool.getConnection((err, connection) => {
 	connection.release();
 });
 
-//TODO: (1) validation as middleware
-//TODO: hatching times based on rarity
-//TODO: individualize the creatures using abilities, personalities, etc.
-//TODO: upgrade to typescript
-//TODO: fix the order dependency
-//TODO: (9) cosmetics
-//TODO: "babyeyes", "babyfat", "faestep", "dust", "makedark" needs a status effect
-//TODO: new moves: "dracometeor" (dragon only)
-//TODO: daily weather conditions
-//TODO: (0) get a linter
-//TODO: QOL improvement - you could possibly see a creature's stats by hovering over it's picture.
-
 // Add body parser
 app.use(bodyParser.json());
 
@@ -50,6 +38,7 @@ app.get('/api/newsheaders', news.apiNewsHeaders);
 const { runSoftlockPicker } = require('./softlock_picker.js');
 runSoftlockPicker();
 
+//public-facing only
 const gameplay = require('./gameplay/gameplay.js');
 app.get('/api/creatures', gameplay.apiCreatures);
 app.get('/api/items', gameplay.apiItems);

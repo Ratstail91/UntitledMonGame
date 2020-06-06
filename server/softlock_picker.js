@@ -24,8 +24,7 @@ const runSoftlockPicker = () => {
 			let totalValue = 0;
 
 			//get the minimum value of the eggs
-			totalValue += 200 * (await pool.promise().query('SELECT COUNT(*) AS total FROM creatures WHERE profileId = ?;', [ profile.profileId ]))[0][0].total;
-			totalValue += 200 * (await pool.promise().query('SELECT COUNT(*) AS total FROM creatureEggs WHERE profileId = ?;', [ profile.profileId ]))[0][0].total;
+			totalValue += 100 * (await pool.promise().query('SELECT COUNT(*) AS total FROM creatureEggs WHERE profileId = ?;', [ profile.profileId ]))[0][0].total;
 
 			//get the value of items
 			const itemsOwned = (await pool.promise().query('SELECT idx FROM items WHERE profileId = ?', [ profile.profileId ]))[0];
@@ -33,6 +32,7 @@ const runSoftlockPicker = () => {
 
 			//subtract minQuantities
 			totalValue -= itemIndex['incubator'].value;
+			//NOTE: battleboxes should be here, but they're premiums
 
 			//final check
 			if (profile.coins + totalValue < 500) {

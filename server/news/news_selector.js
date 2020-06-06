@@ -35,7 +35,7 @@ const readFileHeaders = ({ msg }) => new Promise((resolve, reject) => {
 
 	const firstLinePromises = msg.fileNames.map( fn => firstline(path.join(fpath, fn)) );
 
-	const firstNot = (str, char) => {
+	const firstNot = (str, char) => { //find the first characte rthat is NOT "char"
 		let i = 0;
 		while (str[i] && str[i] == char) i++;
 		return i;

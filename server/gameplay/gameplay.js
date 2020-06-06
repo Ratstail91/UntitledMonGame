@@ -6,16 +6,19 @@ const premiumIndex = require('./premium_index.json');
 const movesIndex = require('./moves.json');
 const elementsIndex = require('./elements.json');
 
+//utilities
+const zipObj = xs => ys => xs.reduce( (obj, x, i) => ({ ...obj, [x]: ys[i] }), {});
+
 //creatures
 const apiCreatures = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	}
 
 	const handleSuccess = (obj) => {
-//		log(obj.msg, obj.extra.toString());
+		//log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 	}
 
@@ -27,44 +30,36 @@ const apiCreatures = async (req, res) => {
 };
 
 const getCreatureInformationFromJSON = (req) => new Promise((resolve, reject) => {
-	if (req.query.creature && species[req.query.creature]) {
-		const result = {};
-
-		result[req.query.species] = species[req.query.creature];
-
-		return resolve({ msg: result, extra: req.query.creature });
-	}
-
+	//these don't return the idx, they assume you already have the idx
 	if (!req.query.creature) {
 		return resolve({ msg: species, extra: '' });
 	}
 
-	if (req.query.creature.length) {
-		result = {};
-		return resolve({ msg: req.query.creature.reduce((acc, idx, index, array) => {
-			if (typeof acc === 'string') {
-				result[array[0]] = species[acc];
-			}
+	const keys = req.query.creature.split(',');
 
-			result[array[index]] = species[idx];
+	const values = keys.map(idx => {
+		if (!species[idx]) {
+			return null;
+		}
 
-			return result;
-		}), extra: '' });
-	}
+		return species[idx];
+	});
 
-	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
+	const result = zipObj(keys)(values);
+
+	return resolve({ msg: result, extra: '' });
 });
 
 //items
 const apiItems = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	}
 
 	const handleSuccess = (obj) => {
-//		log(obj.msg, obj.extra.toString());
+		//log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 	}
 
@@ -76,44 +71,39 @@ const apiItems = async (req, res) => {
 };
 
 const getItemInformationFromJSON = (req) => new Promise((resolve, reject) => {
-	if (req.query.item && (itemIndex[req.query.item] || premiumIndex[req.query.item])) {
-		const result = {};
-
-		result[req.query.item] = itemIndex[req.query.item] || premiumIndex[req.query.item];
-
-		return resolve({ msg: result, extra: req.query.item });
-	}
-
 	if (!req.query.item) {
 		return resolve({ msg: { ...itemIndex, ...premiumIndex }, extra: '' });
 	}
 
-	if (req.query.item.length) {
-		result = {};
-		return resolve({ msg: req.query.item.reduce((acc, idx, index, array) => {
-			if (typeof acc === 'string') {
-				result[array[0]] = itemIndex[acc] || premiumIndex[acc];
-			}
+	const keys = req.query.item.split(',');
 
-			result[array[index]] = itemIndex[idx] || premiumIndex[idx];
+	const values = keys.map(idx => {
+		if (!itemIndex[idx] && !premiumIndex[idx]) {
+			return null;
+		}
 
-			return result;
-		}), extra: '' });
-	}
+		if (itemIndex[idx]) {
+			return itemIndex[idx];
+		} else {
+			return premiumIndex[idx];
+		}
+	});
 
-	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
+	const result = zipObj(keys)(values);
+
+	return resolve({ msg: result, extra: '' });
 });
 
 //moves
 const apiMoves = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	}
 
 	const handleSuccess = (obj) => {
-//		log(obj.msg, obj.extra.toString());
+		//log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 	}
 
@@ -125,43 +115,34 @@ const apiMoves = async (req, res) => {
 };
 
 const getMoveInformationFromJSON = (req) => new Promise((resolve, reject) => {
-	if (req.query.move && movesIndex[req.query.move]) {
-		const result = {};
-
-		result[req.query.move] = movesIndex[req.query.move];
-
-		return resolve({ msg: result, extra: req.query.move });
-	}
-
 	if (!req.query.move) {
 		return resolve({ msg: movesIndex, extra: '' });
 	}
 
-	if (req.query.move.length) {
-		result = {};
-		return resolve({ msg: req.query.move.reduce((acc, idx, index, array) => {
-			if (typeof acc === 'string') {
-				result[array[0]] = movesIndex[acc];
-			}
+	const keys = req.query.move.split(',');
 
-			result[array[index]] = movesIndex[idx];
+	const values = keys.map(idx => {
+		if (!movesIndex[idx]) {
+			return null;
+		}
 
-			return result;
-		}), extra: '' });
-	}
+		return movesIndex[idx];
+	});
 
-	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
+	const result = zipObj(keys)(values);
+
+	return resolve({ msg: result, extra: '' });
 });
 
 const apiElements = async (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	}
 
 	const handleSuccess = (obj) => {
-//		log(obj.msg, obj.extra.toString());
+		//log(obj.msg, obj.extra.toString());
 		res.status(200).json(obj.msg);
 	}
 
@@ -173,32 +154,23 @@ const apiElements = async (req, res) => {
 };
 
 const getElementInformationFromJSON = (req) => new Promise((resolve, reject) => {
-	if (req.query.element && elementsIndex[req.query.element]) {
-		const result = {};
-
-		result[req.query.element] = elementsIndex[req.query.element];
-
-		return resolve({ msg: result, extra: req.query.element });
-	}
-
 	if (!req.query.element) {
 		return resolve({ msg: elementsIndex, extra: '' });
 	}
 
-	if (req.query.element.length) {
-		result = {};
-		return resolve({ msg: req.query.element.reduce((acc, idx, index, array) => {
-			if (typeof acc === 'string') {
-				result[array[0]] = elementsIndex[acc];
-			}
+	const keys = req.query.element.split(',');
 
-			result[array[index]] = elementsIndex[idx];
+	const values = keys.map(idx => {
+		if (!elementsIndex[idx]) {
+			return null;
+		}
 
-			return result;
-		}), extra: '' });
-	}
+		return elementsIndex[idx];
+	})
 
-	return reject({ msg: 'Unknown command', extra: JSON.stringify(req.query) });
+	const result = zipObj(keys)(values);
+
+	return resolve({ msg: result, extra: '' });
 });
 
 module.exports = {

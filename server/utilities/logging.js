@@ -1,4 +1,4 @@
-const pool = require('./database.js')
+const pool = require('./database.js');
 
 const log = (msg, ...args) => {
 	if (typeof msg == 'object') {
