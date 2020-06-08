@@ -1,0 +1,19 @@
+# docker-compose.yml
+version: '3.6'
+
+services:
+  db:
+    image: mariadb
+    #container_name: db
+    restart: unless-stopped
+    #user: "1001:1001"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=dbname
+    ports:
+      - 3306:3306
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080

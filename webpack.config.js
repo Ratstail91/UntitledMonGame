@@ -13,7 +13,7 @@ module.exports = env => {
 
 	return {
 		mode: env,
-		entry: `./client/index${prod ? '' : '_dev'}.jsx`,
+		entry: `./client/index${prod ? '' : '_dev'}.tsx`,
 		output: {
 			path: path.resolve(__dirname, 'public'),
 			filename: '[name].[hash].js',
@@ -21,8 +21,23 @@ module.exports = env => {
 			publicPath: '/'
 		},
 		devtool: 'source-map',
+		resolve: {
+            extensions: ['.ts', '.tsx', '.js', '.jsx', '.txt'],
+        },
 		module: {
 			rules: [
+				{
+					test: /\.(ts|tsx)?$/,
+					exclude: /node_modules/,
+					use: [
+						{
+							loader: 'ts-loader',
+							options: {
+								configFile: "client/tsconfig.json"
+							},
+						}
+					]
+				},
 				{
 					test: /\.(js|jsx)$/,
 					exclude: /(node_modules)/,
@@ -39,15 +54,21 @@ module.exports = env => {
 				{
 					test: /\.(css)$/,
 					use: [
-						MiniCssExtractPlugin.loader, //one CSS file for every js file
+						// If prod extract css, else include it into js bundle
+						...(prod ? [MiniCssExtractPlugin.loader]: ['style-loader'] ),
 						"css-loader",
 						{
 							loader: 'postcss-loader',
 							options: {
 								plugins: (loader) => [
 									require('postcss-import')({ root: loader.resourcePath }),
-									require('postcss-preset-env')(),
-									require('cssnano')(),
+									...(prod
+                                        ? [
+                                            // If not dev then build with these
+                                            require('postcss-preset-env')(),
+											require('cssnano')(),
+                                        ]
+                                        : []),
 								]
 							}
 						}
@@ -88,30 +109,34 @@ module.exports = env => {
 			new CleanWebpackPlugin({
 				cleanOnceBeforeBuildPatterns: ['*', '!content*']
 			}),
-			new MiniCssExtractPlugin({
-				filename: "[name].[hash].css"
-			}),
 			new HtmlWebpackPlugin({
 				template: "./client/template.html",
 				minify: {
-					collapseWhitespace: true,
-					removeComments: true,
-					removeAttributeQuotes: true
+					collapseWhitespace: prod,
+					removeComments: prod,
+					removeAttributeQuotes: prod
 				}
-			}),
-			new CompressionWebpackPlugin({
-				compressionOptions: {
-					level: 9,
-				},
-				threshold: 1 //size in bytes
 			}),
 			new BundleAnalyzerPlugin({
 				analyzerMode: env === 'analyzer' ? 'server' : 'disabled'
-			})
+			}),
+			// Disable compression and css extraction on dev builds
+			...(prod) ? [
+				new MiniCssExtractPlugin({
+					filename: "[name].[hash].css"
+				}),
+				new CompressionWebpackPlugin({
+					compressionOptions: {
+						level: 9,
+					},
+					threshold: 1 //size in bytes
+				}),
+            ] : []
+			
 		],
 		devServer: {
 			contentBase: path.resolve(__dirname, 'public'),
-			compress: false,
+			compress: true,
 			port: 3001,
 			proxy: {
 				'/api/': 'http://localhost:3000/'

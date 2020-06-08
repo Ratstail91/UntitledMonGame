@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../button.jsx';
 
-import { setWarning } from '../../actions/warning.js';
-import { setBattleBoxes } from '../../actions/battles.js';
+import { setWarning } from '../../actions/warning';
+import { setBattleBoxes } from '../../actions/battles';
 
 //TODO: needs a better name, "accept" is far too generic
 //DOCS: Accepts a challenge from another player
@@ -133,6 +133,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-Accept = connect(mapStoreToProps, mapDispatchToProps)(Accept);
-
-export default Accept;
+export default connect(mapStoreToProps, mapDispatchToProps)(Accept);
