@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown/with-html';
 import PropTypes from 'prop-types';
-import { setWarning } from '../../actions/warning.js';
+import { setWarning } from '../../actions/warning';
 
 class Markdown extends React.Component {
 	constructor(props) {

@@ -1,4 +1,4 @@
-import { SET_WARNING } from "../actions/warning.js";
+import { SET_WARNING } from "../actions/warning";
 
 const initialStore = {
 	text: '',

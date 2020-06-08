@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-import { setWarning } from '../../actions/warning.js';
-import { setCreatures } from '../../actions/profile.js';
-import { setInspect } from '../../actions/inspect.js';
-import { setBattleBoxes } from '../../actions/battles.js';
+import { setWarning } from '../../actions/warning';
+import { setCreatures } from '../../actions/profile';
+import { setInspect } from '../../actions/inspect';
+import { setBattleBoxes } from '../../actions/battles';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { accountReducer } from './account.js';
-import { profileReducer } from './profile.js';
-import { inspectReducer } from './inspect.js';
-import { battlesReducer } from './battles.js';
-import { warningReducer } from './warning.js';
+import { accountReducer } from './account';
+import { profileReducer } from './profile';
+import { inspectReducer } from './inspect';
+import { battlesReducer } from './battles';
+import { warningReducer } from './warning';
 
 //compile all reducers together
 export default combineReducers({

@@ -3,16 +3,41 @@ import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-import { setWarning } from '../../actions/warning.js';
-import { setProfile } from '../../actions/profile.js';
-import { setEggs } from '../../actions/profile.js';
+import { setWarning } from '../../actions/warning';
+import { setProfile } from '../../actions/profile';
+import { setEggs } from '../../actions/profile';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-class YourEggs extends React.Component {
-	constructor(props) {
+
+export interface OwnProps {
+	
+}
+
+interface StateProps {
+	id: number;
+	token: number;
+	eggs: any;
+}
+	
+interface DispatchProps {
+	setWarning: Function;
+	setEggs: Function;
+	setProfile: Function;
+}
+   
+// All of the props combined
+type Props = StateProps & DispatchProps & OwnProps
+   
+// Internal state
+interface State {
+	// internalComponentStateField: string
+}
+
+class YourEggs extends React.Component<Props, State> {
+	constructor(props:Props) {
 		super(props);
 		this.state = {};
 	}
@@ -42,7 +67,7 @@ class YourEggs extends React.Component {
 								<div className='break' />
 
 								<Dropdown>
-									<Dropdown.Toggle>Actions</Dropdown.Toggle>
+									<Dropdown.Toggle id="actions">Actions</Dropdown.Toggle>
 
 									<Dropdown.Menu>
 										<Dropdown.Item className={egg.hatchTime ? 'disabled' : ''} onClick={e => { e.preventDefault(); this.eggAction(idx, 'incubate'); }}>Incubate</Dropdown.Item>
@@ -58,7 +83,7 @@ class YourEggs extends React.Component {
 		);
 	}
 
-	sendYourEggsRequest(url, index) {
+	sendYourEggsRequest(url, index?) {
 		//build the XHR
 		const xhr = new XMLHttpRequest();
 
@@ -104,13 +129,6 @@ class YourEggs extends React.Component {
 	}
 }
 
-YourEggs.propTypes = {
-	id: PropTypes.number.isRequired,
-	token: PropTypes.number.isRequired,
-	setWarning: PropTypes.func.isRequired,
-	setEggs: PropTypes.func.isRequired,
-};
-
 const mapStoreToProps = (store) => {
 	return {
 		id: store.account.id,
@@ -121,12 +139,10 @@ const mapStoreToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		setWarning: msg => dispatch(setWarning(msg)),
-		setProfile: (username, coins) => dispatch(setProfile(username, coins)),
+		setWarning: (msg: string) => dispatch(setWarning(msg)),
+		setProfile: (username:string, coins: number) => dispatch(setProfile(username, coins)),
 		setEggs: (eggs) => dispatch(setEggs(eggs)),
 	};
 };
 
-YourEggs = connect(mapStoreToProps, mapDispatchToProps)(YourEggs);
-
-export default YourEggs;
+export default connect<StateProps, DispatchProps, OwnProps>(mapStoreToProps, mapDispatchToProps)(YourEggs);

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { setWarning } from '../../actions/warning.js';
+import { setWarning } from '../../actions/warning';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);

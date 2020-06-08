@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { setWarning } from '../../actions/warning.js';
+import { setWarning } from '../../actions/warning';
 
 class NewsSelector extends React.Component {
 	constructor(props) {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import { setWarning } from '../../actions/warning.js';
-import { setCreatures } from '../../actions/profile.js';
-import { setBattleBoxes } from '../../actions/battles.js';
-import { setBattles } from '../../actions/battles.js';
+import { setWarning } from '../../actions/warning';
+import { setCreatures } from '../../actions/profile';
+import { setBattleBoxes } from '../../actions/battles';
+import { setBattles } from '../../actions/battles';
 
 class YourBattleBoxes extends React.Component {
 	constructor(props) {

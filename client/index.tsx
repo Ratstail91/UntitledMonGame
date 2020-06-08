@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import App from './components/app.jsx';
+import App from './components/app';
 
-import reducer from './reducers/reducer.js';
+import reducer from './reducers/reducer';
 
 //persistence
 let ACCOUNT = 'account.eggtrainer';
-let account = localStorage.getItem(ACCOUNT);
+let account:any = localStorage.getItem(ACCOUNT);
 account = account ? JSON.parse(account) : {};
 
 //BUGFIX: Reloading on the move selection page loses the creature ID

@@ -2,10 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import Button from '../button.jsx';
+import Button from '../button';
 
 //panels
-import SignupPanel from '../panels/signup.jsx';
+import SignupPanel from '../panels/signup';
 
 class Signup extends React.Component {
 	constructor(props) {

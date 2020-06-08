@@ -2,7 +2,7 @@ import {
 	SET_BATTLE_BOXES,
 	SET_BATTLES,
 	SET_CREATURE,
-} from "../actions/battles.js";
+} from "../actions/battles";
 
 const initialStore = {
 	battleBoxes: [],

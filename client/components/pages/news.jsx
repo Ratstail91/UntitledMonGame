@@ -1,9 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import NewsSelector from '../panels/news_selector.jsx';
-import Markdown from '../panels/markdown.jsx';
+import NewsSelector from '../panels/news_selector';
+import Markdown from '../panels/markdown';
 
 class News extends React.Component {
 	constructor(props) {

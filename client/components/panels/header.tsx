@@ -1,11 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import LogoutButton from './logout_button.jsx';
+import LogoutButton from './logout_button';
+import { RouterProps, RouteComponentProps } from 'react-router';
+import { Dispatch } from 'redux';
 
-class Header extends React.Component {
+export interface OwnProps {
+	// propFromParent: number
+}
+
+interface StateProps {
+	loggedIn: boolean
+}
+	
+interface DispatchProps {
+	// onSomeEvent: () => void
+}
+   
+// All of the props combined
+type Props = StateProps & DispatchProps & OwnProps & RouteComponentProps
+   
+// Internal state
+interface State {
+	// internalComponentStateField: string
+}
+
+class Header extends React.Component<Props, State> {
 	render() {
 		if (this.props.loggedIn) {
 			return this.renderLoggedIn();
@@ -49,18 +71,19 @@ class Header extends React.Component {
 	}
 };
 
-function mapStoreToProps(store) {
+function mapStoreToProps(store, ownProps: OwnProps): StateProps {
 	return {
 		loggedIn: store.account.id !== undefined && store.account.id !== 0
 	}
 };
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch<any>,  ownProps: OwnProps): DispatchProps {
 	return {
 		//
 	}
 };
+ 
 
-Header = connect(mapStoreToProps, mapDispatchToProps)(Header);
-
-export default withRouter(Header);
+export default withRouter(
+	connect<StateProps, DispatchProps, OwnProps>(mapStoreToProps, mapDispatchToProps)(Header)
+);

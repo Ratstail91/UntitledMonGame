@@ -8,14 +8,14 @@ import '../style/shared.css';
 
 //warning manipulation
 import { connect } from 'react-redux';
-import { setWarning } from '../actions/warning.js';
+import { setWarning } from '../actions/warning';
 
 //components
-import Warning from './panels/warning.jsx';
-import Header from './panels/header.jsx';
-import Footer from './panels/footer.jsx';
+import Warning from './panels/warning';
+import Header from './panels/header';
+import Footer from './panels/footer';
 
-import MarkdownWrapper from './pages/markdown_wrapper.jsx';
+import MarkdownWrapper from './pages/markdown_wrapper';
 
 //lazy route loading (with error handling)
 let LazyRoute = (lazyProps) => {
@@ -73,30 +73,30 @@ class App extends React.Component {
 				<div className='central'>
 					<Warning />
 					<Switch>
-						<LazyRoute exact path='/' component={() => import('./pages/home.jsx')} />
+						<LazyRoute exact path='/' component={() => import('./pages/home')} />
 
-						<LazyRoute exact path='/news' component={() => import('./pages/news.jsx')} />
-						<LazyRoute exact path='/news/:article' component={() => import('./pages/news.jsx')} />
+						<LazyRoute exact path='/news' component={() => import('./pages/news')} />
+						<LazyRoute exact path='/news/:article' component={() => import('./pages/news')} />
 
-						<LazyRoute path='/signup' component={() => import('./pages/signup.jsx')} />
-						<LazyRoute path='/login' component={() => import('./pages/login.jsx')} />
-						<LazyRoute path='/passwordchange' component={() => import('./pages/password_change.jsx')} />
-						<LazyRoute path='/passwordrecover' component={() => import('./pages/password_recover.jsx')} />
-						<LazyRoute path='/passwordreset' component={() => import('./pages/password_reset.jsx')} />
+						<LazyRoute path='/signup' component={() => import('./pages/signup')} />
+						<LazyRoute path='/login' component={() => import('./pages/login')} />
+						<LazyRoute path='/passwordchange' component={() => import('./pages/password_change')} />
+						<LazyRoute path='/passwordrecover' component={() => import('./pages/password_recover')} />
+						<LazyRoute path='/passwordreset' component={() => import('./pages/password_reset')} />
 
-						<LazyRoute path='/yourprofile' component={() => import('./pages/your_profile.jsx')} />
-						<LazyRoute path='/inspect' component={() => import('./pages/inspect.jsx')} />
-						<LazyRoute path='/movesselect' component={() => import('./pages/moves_select.jsx')} />
-						<LazyRoute path='/shop' component={() => import('./pages/shop.jsx')} />
-						<LazyRoute path='/challenge' component={() => import('./pages/challenge.jsx')} />
+						<LazyRoute path='/yourprofile' component={() => import('./pages/your_profile')} />
+						<LazyRoute path='/inspect' component={() => import('./pages/inspect')} />
+						<LazyRoute path='/movesselect' component={() => import('./pages/moves_select')} />
+						<LazyRoute path='/shop' component={() => import('./pages/shop')} />
+						<LazyRoute path='/challenge' component={() => import('./pages/challenge')} />
 
-						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings.jsx')} />
+						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings')} />
 						<LazyRoute path='/privacypolicy' component={async () => () => <MarkdownWrapper url={require('../markdown/privacy_policy.md').default} />} />
 						<LazyRoute path='/credits' component={async () => () => <MarkdownWrapper url={require('../markdown/credits.md').default} />} />
 
-						<LazyRoute path='/admin' component={() => import('./pages/admin.jsx')} />
+						<LazyRoute path='/admin' component={() => import('./pages/admin')} />
 
-						<LazyRoute path='*' component={() => import('./pages/page_not_found.jsx')} />
+						<LazyRoute path='*' component={() => import('./pages/page_not_found')} />
 					</Switch>
 				</div>
 			<Footer />
