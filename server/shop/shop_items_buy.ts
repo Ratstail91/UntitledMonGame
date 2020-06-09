@@ -38,7 +38,7 @@ export const apiShopItemsBuy = async (req, res) => {
 export const determineSelectedItem = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM shopItems WHERE shopSlot = ?;';
 	return pool.promise().query(query, [fields.index])
-		.then((results:any) => results[0].length == 1 ? resolve({ ...fields, item: results[0][0] }) : reject({ msg: 'determineSelectedItem error', extra: fields.index }))
+		.then((results: any) => results[0].length == 1 ? resolve({ ...fields, item: results[0][0] }) : reject({ msg: 'determineSelectedItem error', extra: fields.index }))
 		.catch(e => reject({ msg: 'determineSelectedItem error', extra: e }))
 	;
 });

@@ -22,8 +22,8 @@ module.exports = env => {
 		},
 		devtool: 'source-map',
 		resolve: {
-            extensions: ['.ts', '.tsx', '.js', '.jsx', '.txt'],
-        },
+			extensions: ['.ts', '.tsx', '.js', '.jsx', '.txt'],
+		},
 		module: {
 			rules: [
 				{
@@ -63,12 +63,12 @@ module.exports = env => {
 								plugins: (loader) => [
 									require('postcss-import')({ root: loader.resourcePath }),
 									...(prod
-                                        ? [
-                                            // If not dev then build with these
-                                            require('postcss-preset-env')(),
+										? [
+											// If not dev then build with these
+											require('postcss-preset-env')(),
 											require('cssnano')(),
-                                        ]
-                                        : []),
+										]
+										: []),
 								]
 							}
 						}
@@ -131,7 +131,7 @@ module.exports = env => {
 					},
 					threshold: 1 //size in bytes
 				}),
-            ] : []
+			] : []
 			
 		],
 		devServer: {

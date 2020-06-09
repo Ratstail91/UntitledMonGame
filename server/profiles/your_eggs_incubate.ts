@@ -61,7 +61,7 @@ export const runEggHatchJob = () => {
 		const query = 'SELECT * FROM creatureEggs WHERE incubationTime IS NOT NULL AND incubationTime < NOW();';
 		pool.promise().query(query)
 			.then(results => results[0])
-			.then((eggs:any) => {
+			.then((eggs: any) => {
 				eggs.forEach(async egg => {
 					const queryHatch = 'INSERT INTO creatures (profileId, species, geneticPointsHealth, geneticPointsSpeed, geneticPointsStrength, geneticPointsPower) VALUES (?, ?, ?, ?, ?, ?);';
 					await pool.promise().query(queryHatch, [egg.profileId, egg.species, egg.geneticPointsHealth, egg.geneticPointsSpeed, egg.geneticPointsStrength, egg.geneticPointsPower]);

@@ -11,7 +11,7 @@ import premiumIndex from './gameplay/premium_index.json';
 export const validateSession = (fields) => new Promise(async (resolve, reject) => {
 	const query = 'SELECT * FROM sessions WHERE accountId = ? AND token = ?;';
 	return pool.promise().query(query, [fields.id, fields.token])
-		.then((results:any) => results[0].length > 0 ? fields : reject({ msg: 'Session Timed Out', extra: fields }))
+		.then((results: any) => results[0].length > 0 ? fields : reject({ msg: 'Session Timed Out', extra: fields }))
 		.then(fields => { logActivity(fields.id); resolve(fields); })
 		.catch(e => reject({ msg: 'validateSession error', extra: e }))
 	;
@@ -31,7 +31,7 @@ export const getYourEggs = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT *, TIMEDIFF(incubationTime, NOW()) AS hatchTime FROM creatureEggs WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
-		.then((eggs:any) => resolve({ eggs: eggs.map(egg => { return { id: egg.id, element: species[egg.species].element, hatchTime: egg.hatchTime }}), ...fields }))
+		.then((eggs: any) => resolve({ eggs: eggs.map(egg => { return { id: egg.id, element: species[egg.species].element, hatchTime: egg.hatchTime }}), ...fields }))
 		.catch(e => reject({ msg: 'getYourEggs error', extra: e }))
 	;
 });
@@ -50,7 +50,7 @@ export const getYourCreatures = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT *, TIMEDIFF(trainingTime, NOW()) AS trainingTime FROM creatures WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) AND id NOT IN (SELECT creatureId FROM battleBoxSlots) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
-		.then((creatures:any) => resolve({ creatures: creatures.map(creature => {
+		.then((creatures: any) => resolve({ creatures: creatures.map(creature => {
 			return {
 				id: creature.id,
 				species: creature.species,
@@ -80,7 +80,7 @@ export const getYourItems = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT id, idx FROM items WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])
-		.then((items:any) => resolve({ items: items.map(item => { return { idx: item.idx, id: item.id, ... (itemIndex[item.idx] || premiumIndex[item.idx]) }}), ...fields }))
+		.then((items: any) => resolve({ items: items.map(item => { return { idx: item.idx, id: item.id, ... (itemIndex[item.idx] || premiumIndex[item.idx]) }}), ...fields }))
 		.catch(e => reject({ msg: 'getYourItems error', extra: e }))
 	;
 });

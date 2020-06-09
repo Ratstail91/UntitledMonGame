@@ -2,7 +2,8 @@ import pool from '../utilities/database';
 
 import speciesIndex from '../gameplay/species.json';
 
-export const clamp = (x, lower, upper) => {
+//utilities
+const clamp = (x, lower, upper) => {
     return Math.max(lower, Math.min(upper, x));
 }
 
@@ -12,7 +13,7 @@ export const countTotalBattleBoxItems = async (accountId) => {
 };
 
 export const getBattleBoxes = async (accountId) => {
-	let battleBoxes:any  = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [accountId]))[0];
+	let battleBoxes: any  = (await pool.promise().query('SELECT * FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;', [accountId]))[0];
 	const totalBattleBoxes = await countTotalBattleBoxItems(accountId);
 
 	//if there are more item battleboxes than DB battle boxes
@@ -29,7 +30,7 @@ export const getBattleBoxes = async (accountId) => {
 	return battleBoxes;
 };
 
-export const getBattleBoxSlots = async (boxId):Promise<any> => {
+export const getBattleBoxSlots = async (boxId): Promise<any> => {
 	return (await pool.promise().query('SELECT * FROM battleBoxSlots WHERE battleBoxId = ? ORDER BY boxSlot ASC;', boxId))[0];
 };
 

@@ -30,7 +30,7 @@ export const getInformationFromDatabase = (req) => new Promise( async (resolve, 
 	//get the saved data
 	let signupsQuery = 'SELECT * FROM signups WHERE email = ?;';
 	return pool.promise().query(signupsQuery, [req.query.email])
-		.then((results:any) => {
+		.then((results: any) => {
 			if (results[0].length === 1) {
 				resolve(results[0][0]);
 			} else {

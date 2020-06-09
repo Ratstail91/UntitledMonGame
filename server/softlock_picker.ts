@@ -27,7 +27,7 @@ export const runSoftlockPicker = () => {
 			totalValue += 100 * (await pool.promise().query('SELECT COUNT(*) AS total FROM creatureEggs WHERE profileId = ?;', [ profile.profileId ]))[0][0].total;
 
 			//get the value of items
-			const itemsOwned:any  = (await pool.promise().query('SELECT idx FROM items WHERE profileId = ?', [ profile.profileId ]))[0];
+			const itemsOwned: any  = (await pool.promise().query('SELECT idx FROM items WHERE profileId = ?', [ profile.profileId ]))[0];
 			itemsOwned.forEach(async item => totalValue += itemIndex[ item.idx ] ? itemIndex[ item.idx ].value : 0);
 
 			//subtract minQuantities

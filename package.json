@@ -7,16 +7,14 @@
     "start": "forever -a -o forever.log -e error.log start build/index.js",
     "restart": "forever -a -o forever.log -e error.log restart build/index.js",
     "stop": "forever stop build/index.js",
-    "node": "node build/index.js",
-    "build": "npm run webpack-production && npm run build:server",
+    "build": "npm run build:server && npm run build client",
     "build:server": "tsc --build server/tsconfig.json",
-    "webpack": "webpack --mode=development --env=development --config webpack.config.js",
-    "webpack-production": "webpack --mode=production --env=production --config webpack.config.js",
-    "pull": "git pull && npm run webpack-production && npm restart",
+    "build:client": "webpack --mode=production --env=production --config webpack.config.js",
+    "pull": "git pull && npm run build && npm restart",
     "dev": "concurrently npm:watch:server npm:watch:client",
-    "analyzer": "webpack --mode=production --env=analyzer --config webpack.config.js",
     "watch:server": "ts-node-dev --project server/tsconfig.json --respawn server/index.ts",
-    "watch:client": "webpack-dev-server --mode=development --env=development --config webpack.config.js"
+    "watch:client": "webpack-dev-server --mode=development --env=development --config webpack.config.js",
+    "analyzer": "webpack --mode=production --env=analyzer --config webpack.config.js"
   },
   "repository": {
     "type": "git",

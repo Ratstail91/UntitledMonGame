@@ -25,7 +25,7 @@ export const apiYourBattleBoxesRemove = async (req, res) => {
 		.then(removeFromBattleBox)
 		.then(getBattleBoxStructure)
 		.then(getYourCreatures)
-		.then((fields:any) => { return { msg: { creatures: fields.creatures, battleBoxes: fields.structure }, extra: ''}; })
+		.then((fields: any) => { return { msg: { creatures: fields.creatures, battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

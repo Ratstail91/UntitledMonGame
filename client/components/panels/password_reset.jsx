@@ -24,12 +24,12 @@ class PasswordReset extends React.Component {
 				<form action='/api/passwordreset' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
 						<label htmlFor='password'>Password:</label>
-						<input id='password' type='password' name='password' value={this.state.password} onChange={this.updatePassword.bind(this)} />
+						<input required id='password' type='password' name='password' value={this.state.password} onChange={this.updatePassword.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='retype'>Retype Password:</label>
-						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
+						<input required id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
 					<Button type='submit'>New Password</Button>

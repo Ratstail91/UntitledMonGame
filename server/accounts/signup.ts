@@ -22,7 +22,7 @@ export const apiSignup = async (req, res) => {
 		res.end();
 	}
 
-	return formidablePromise(req, res)
+	return formidablePromise(req)
 		.then(validateSignup)
 		.then(saveToDatabase)
 		.then(sendSignupEmail)

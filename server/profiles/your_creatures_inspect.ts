@@ -23,7 +23,7 @@ export const apiYourCreaturesInspect = async (req, res) => {
 		.then(validateSession)
 		.then(checkForMagnifyingGlass)
 		.then(determineSelectedCreature)
-		.then((fields:any) => { return { msg: { creature: fields.creature, species: species[fields.creature.species] }, extra: ''}; })
+		.then((fields: any) => { return { msg: { creature: fields.creature, species: species[fields.creature.species] }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

@@ -29,7 +29,7 @@ export const getShopPremiums = () => new Promise((resolve, reject) => {
 	const query = 'SELECT idx FROM shopPremiums ORDER BY shopSlot;';
 	return pool.promise().query(query)
 		.then(results => results[0])
-		.then((rows:any) => rows.map(row => premium[row.idx]))
+		.then((rows: any) => rows.map(row => premium[row.idx]))
 		.then(premiums => resolve(premiums))
 		.catch(e => reject({ msg: 'getShopPremiums error', extra: e }))
 	;

@@ -16,7 +16,7 @@ class Signup extends React.Component {
 			password: '',
 			retype: '',
 			code: props.code || '',
-			promotions: false,
+			promotions: true,
 		};
 	}
 
@@ -28,22 +28,22 @@ class Signup extends React.Component {
 				<form action='/api/signup' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
 						<label htmlFor='email'>Email:</label>
-						<input id='email' type='email' name='email' value={this.state.email} onChange={this.updateEmail.bind(this)} />
+						<input required id='email' type='email' name='email' value={this.state.email} onChange={this.updateEmail.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='username'>User Name:</label>
-						<input id='username' required type='text' name='username' value={this.state.username} onChange={this.updateUsername.bind(this)} />
+						<input required id='username' type='text' name='username' value={this.state.username} onChange={this.updateUsername.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='password'>Password:</label>
-						<input id='password' required type='password' name='password' value={this.state.password} onChange={this.updatePassword.bind(this)} />
+						<input required id='password' type='password' name='password' value={this.state.password} onChange={this.updatePassword.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='retype'>Retype Password:</label>
-						<input id='retype' required type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
+						<input required id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
 					<div>
@@ -56,7 +56,7 @@ class Signup extends React.Component {
 						<input id='promotions' type='checkbox' name='promotions' value={this.state.promotions} onChange={this.updatePromotions.bind(this)} className='checkbox' />
 					</div>
 
-					<Button type='submit' disabled={!this.state.email | !this.state.password | !this.state.retype |!this.state.username}>Sign Up</Button>
+					<Button type='submit' disabled={!this.state.email  || !this.state.username || !this.state.password || !this.state.retype}>Sign Up</Button>
 				</form>
 			</div>
 		);

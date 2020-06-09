@@ -36,7 +36,7 @@ export const updatePrivacySettings = (fields) => new Promise(async (resolve, rej
 	const query = 'UPDATE accounts SET promotions = ? WHERE id = ?;';
 
 	return pool.promise().query(query, [fields.promotions ? true : false, fields.id])
-		.then((results:any) => results[0].affectedRows > 0 ? resolve(fields) : reject({ msg: 'updatePrivacySettings error', extra: 'affected rows = 0' }))
+		.then((results: any) => results[0].affectedRows > 0 ? resolve(fields) : reject({ msg: 'updatePrivacySettings error', extra: 'affected rows = 0' }))
 		.catch(e => reject({ msg: 'updatePrivacySettings error', extra: e }))
 	;
 });

@@ -42,7 +42,7 @@ export const readFileHeaders = ({ msg }) => new Promise((resolve, reject) => {
 	};
 
 	return Promise.all(firstLinePromises)
-		.then((firstlines:any) => firstlines.map( fl => fl.slice(firstNot(fl, '#')) ))
+		.then((firstlines: any) => firstlines.map( fl => fl.slice(firstNot(fl, '#')) ))
 		.then(firstlines => firstlines.map( fl => fl.trim() ))
 		.then(firstLines => resolve({ msg: { ...msg, firstLines }, extra: '' }))
 		.catch(e => reject({ msg: 'readFileHeaders error', extra: e }))

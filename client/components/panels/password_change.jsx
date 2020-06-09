@@ -24,17 +24,17 @@ class PasswordChange extends React.Component {
 				<form action='/api/passwordchange' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
 						<label htmlFor='oldpassword'>Old Password:</label>
-						<input id='oldpassword' type='password' name='oldpassword' value={this.state.oldPassword} onChange={this.updateOldPassword.bind(this)} />
+						<input required id='oldpassword' type='password' name='oldpassword' value={this.state.oldPassword} onChange={this.updateOldPassword.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='newpassword'>New Password:</label>
-						<input id='newpassword' type='password' name='newpassword' value={this.state.newPassword} onChange={this.updateNewPassword.bind(this)} />
+						<input required id='newpassword' type='password' name='newpassword' value={this.state.newPassword} onChange={this.updateNewPassword.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='retype'>Retype New Password:</label>
-						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
+						<input required id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
 					<Button type='submit'>Change Password</Button>

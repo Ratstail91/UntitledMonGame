@@ -42,7 +42,7 @@ import { CronJob } from 'cron';
 const job = new CronJob('0 0 * * * *', async () => {
 	const query = 'DELETE FROM accounts WHERE deletionTime < now();';
 	pool.promise().query(query)
-		.then((results:any) => {
+		.then((results: any) => {
 			if (results[0].affectedRows > 0) {
 				log('Accounts deleted');
 			}

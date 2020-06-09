@@ -23,7 +23,7 @@ export const apiYourBattleBoxes = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(getBattleBoxStructure)
-		.then((fields:any) => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
+		.then((fields: any) => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

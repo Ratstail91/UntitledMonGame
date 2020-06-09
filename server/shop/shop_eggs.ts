@@ -29,7 +29,7 @@ export const getShopEggs = () => new Promise((resolve, reject) => {
 	const query = 'SELECT species FROM shopEggs ORDER BY shopSlot;';
 	return pool.promise().query(query)
 		.then(results => results[0])
-		.then((eggs:any) => eggs.map(egg => { return { element: species[egg.species].element, rarity: species[egg.species].egg.rarity, value: species[egg.species].egg.value }; }))
+		.then((eggs: any) => eggs.map(egg => { return { element: species[egg.species].element, rarity: species[egg.species].egg.rarity, value: species[egg.species].egg.value }; }))
 		.then(eggs => resolve(eggs))
 		.catch(e => reject({ msg: 'getShopEggs error', extra: e }))
 	;

@@ -22,7 +22,7 @@ export const apiLogin = async (req, res) => {
 		res.end();
 	}
 
-	return formidablePromise(req, res)
+	return formidablePromise(req)
 		.then(validateLoginFields)
 		.then(validateLoginPassword)
 		.then(unmarkAccountForDeletion)

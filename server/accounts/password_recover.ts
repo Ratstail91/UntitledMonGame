@@ -42,7 +42,7 @@ export const checkEmailExists = ({ fields }) => new Promise((resolve, reject) =>
 	//check email is attached to an account
 	const query = 'SELECT * FROM accounts WHERE email = ?;';
 	return pool.promise().query(query, [fields.email])
-		.then((results:any ) => results[0].length === 1 ? resolve(results[0][0]) : reject({ msg: 'Email not found', extra: '' }))
+		.then((results: any) => results[0].length === 1 ? resolve(results[0][0]) : reject({ msg: 'Email not found', extra: '' }))
 		.catch(e => reject({ msg: 'checkEmailExists error', extra: e }))
 	;
 });

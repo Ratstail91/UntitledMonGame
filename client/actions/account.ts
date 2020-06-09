@@ -2,7 +2,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SESSION_CHANGE = 'SESSION_CHANGE';
 
-export const login = (id: number , token: number) => {
+export const login = (id: number, token: number) => {
 	return {
 		type: LOGIN,
 		id: id,

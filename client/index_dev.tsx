@@ -9,7 +9,6 @@ import App from './components/app';
 
 import reducer from './reducers/reducer';
 
-
 //persistence
 let ITEM_NAME = 'account.eggtrainer';
 let account:any  = localStorage.getItem(ITEM_NAME);

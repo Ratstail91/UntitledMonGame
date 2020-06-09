@@ -24,7 +24,7 @@ export const apiPasswordReset = async (req, res) => {
 		res.end();
 	};
 
-	return formidablePromise(req, res)
+	return formidablePromise(req)
 		.then(validateCredentials)
 		.then(validateToken)
 		.then(changePassword)
@@ -53,7 +53,7 @@ export const validateToken = (fields) => new Promise((resolve, reject) => {
 	//get the account from this email
 	const query = 'SELECT * FROM accounts WHERE email = ? AND id IN (SELECT passwordRecover.accountId FROM passwordRecover WHERE token = ?);';
 	return pool.promise().query(query, [fields.email, fields.token])
-		.then((results:any) => results[0].length === 1 ? resolve({ accountRecord: results[0][0], fields: fields }) : reject({ msg: 'Invalid reset data (incorrect parameters/database state)', extra: fields.email }))
+		.then((results: any) => results[0].length === 1 ? resolve({ accountRecord: results[0][0], fields: fields }) : reject({ msg: 'Invalid reset data (incorrect parameters/database state)', extra: fields.email }))
 		.catch(e => reject({ msg: 'validateToken error', extra: e }))
 	;
 });
@@ -64,7 +64,7 @@ export const changePassword = ({ accountRecord, fields }) => new Promise(async (
 
 	const updateQuery = 'UPDATE IGNORE accounts SET hash = ? WHERE id = ?;';
 	return pool.promise().query(updateQuery, [hash, accountRecord.id])
-		.then((result:any) => result[0].affectedRows > 0 ? resolve({ msg: 'Password updated successfully ', accountRecord: accountRecord }) : reject({msg: 'Failed to update password', extra: 'affectedRows == 0' }))
+		.then((result: any) => result[0].affectedRows > 0 ? resolve({ msg: 'Password updated successfully ', accountRecord: accountRecord }) : reject({msg: 'Failed to update password', extra: 'affectedRows == 0' }))
 		.catch(e => reject({ msg: 'Failed to update password', extra: e }))
 	;
 });

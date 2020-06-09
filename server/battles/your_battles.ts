@@ -27,7 +27,7 @@ export const apiYourBattles = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(getYourBattles)
-		.then((fields:any) => { return { msg: { battles: fields.battleStructure }, extra: ''}; })
+		.then((fields: any) => { return { msg: { battles: fields.battleStructure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;
@@ -38,7 +38,7 @@ export const getYourBattles = (fields) => new Promise(async (resolve, reject) =>
 
 	//get your battles
 	const battleQuery = 'SELECT * FROM battles WHERE id IN (SELECT battleId FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?)) AND status != "open";';
-	const battles: any = (await pool.promise().query(battleQuery, [fields.id]))[0];
+	const battles = (await pool.promise().query(battleQuery, [fields.id]))[0];
 
 	const battleBoxes = await getBattleBoxes(fields.id);
 
@@ -49,14 +49,14 @@ export const getYourBattles = (fields) => new Promise(async (resolve, reject) =>
 		//get the box & slots for this battle
 		const battleBox = battleBoxes.filter(bb => bb.battleId == battle.id)[0];
 		const battleBoxSlots = await getBattleBoxSlots(battleBox.id);
-		const creatures:any = await Promise.all(battleBoxSlots.map(async bbs => (await pool.promise().query('SELECT * FROM creatures WHERE id = ?;', bbs.creatureId))[0][0] ));
+		const creature = await Promise.all(battleBoxSlots.map(async bbs => (await pool.promise().query('SELECT * FROM creatures WHERE id = ?;', bbs.creatureId))[0][0] ));
 		const enemyCreatures = await getEnemyCreatures(fields.id, battle.id);
 
 		const yourTop = creatures.filter(c => { const s = battleBoxSlots.filter(bbs => bbs.activePosition == 'top')[0]; return s && c.id == s.creatureId; })[0];
 		const yourBottom = creatures.filter(c => { const s = battleBoxSlots.filter(bbs => bbs.activePosition == 'bottom')[0]; return s && c.id == s.creatureId; })[0];
 
 		//get the exhausted items from this battle
-		const exhaustedItems: any = await getExhaustedItems(fields.id, battle.id);
+		const exhaustedItems = await getExhaustedItems(fields.id, battle.id);
 		let itemPopulation = {};
 
 		yourItems.filter(i => i.type == 'consumable').forEach(yourItem => {
@@ -165,7 +165,7 @@ export const getEnemyCreatures = async (notAccountId, battleId) => {
 	}process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); });
 
 	const slotsQuery = 'SELECT * FROM battleBoxSlots WHERE battleBoxId = ?;';
-	const battleBoxSlots:any  = (await pool.promise().query(slotsQuery, [battleBox.id]))[0];
+	const battleBoxSlots  = (await pool.promise().query(slotsQuery, [battleBox.id]))[0];
 
 	const t = battleBoxSlots.filter(bbs => bbs.activePosition == 'top')[0];
 	const b = battleBoxSlots.filter(bbs => bbs.activePosition == 'bottom')[0];

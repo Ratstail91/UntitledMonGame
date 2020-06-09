@@ -37,7 +37,7 @@ export const apiShopEggsBuy = async (req, res) => {
 export const determineSelectedEgg = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM shopEggs WHERE shopSlot = ?;';
 	return pool.promise().query(query, [fields.index])
-		.then((results:any) => results[0].length == 1 ? resolve({ ...fields, egg: results[0][0] }) : reject({ msg: 'determineSelectedEgg error', extra: fields.index }))
+		.then((results: any) => results[0].length == 1 ? resolve({ ...fields, egg: results[0][0] }) : reject({ msg: 'determineSelectedEgg error', extra: fields.index }))
 		.catch(e => reject({ msg: 'determineSelectedEgg error', extra: e }))
 	;
 });

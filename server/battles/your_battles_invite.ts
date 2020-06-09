@@ -21,7 +21,7 @@ export const apiYourBattlesInvite = async (req, res) => {
 	return new Promise((resolve, reject) => resolve(req.body))
 		.then(validateSession)
 		.then(generateNewBattle)
-		.then((fields:any) => { return { msg: { inviteCode: fields.inviteCode }, extra: ''}; })
+		.then((fields: any) => { return { msg: { inviteCode: fields.inviteCode }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

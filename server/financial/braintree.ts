@@ -24,7 +24,7 @@ export const apiGenerateClientToken = (req, res) => new Promise((resolve, reject
 
 export const apiCheckout = (req, res) => new Promise(async (resolve, reject) => {
 	//verify the session
-	const result:any = (await validateSession(req.body).catch(e => e));
+	const result: any = (await validateSession(req.body).catch(e => e));
 	if (!result.id) {
 		res.status(400).write('Failed Premium Validation');
 		res.end();

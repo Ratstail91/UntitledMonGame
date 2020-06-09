@@ -30,7 +30,7 @@ export const apiYourBattleBoxesInsert = async (req, res) => {
 		.then(getBattleBoxStructure)
 		.then(getYourCreatures)
 
-		.then((fields:any) => { return { msg: { creatures: fields.creatures, battleBoxes: fields.structure }, extra: ''}; })
+		.then((fields: any) => { return { msg: { creatures: fields.creatures, battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

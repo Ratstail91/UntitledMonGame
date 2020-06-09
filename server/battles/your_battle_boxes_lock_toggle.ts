@@ -28,7 +28,7 @@ export const apiYourBattleBoxesLockToggle = async (req, res) => {
 
 		.then(getBattleBoxStructure)
 
-		.then((fields:any) => { return { msg: { battleBoxes: fields.structure }, extra: '' }; })
+		.then((fields: any) => { return { msg: { battleBoxes: fields.structure }, extra: '' }; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

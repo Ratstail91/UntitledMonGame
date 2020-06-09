@@ -22,7 +22,7 @@ export const apiYourCreaturesTrainCancel = async (req, res) => {
 		.then(determineSelectedCreature)
 		.then(cancelTrainSelectedCreature)
 		.then(getYourCreatures)
-		.then((fields:any) => { return { msg: { creatures: fields.creatures }, extra: ''}; })
+		.then((fields: any) => { return { msg: { creatures: fields.creatures }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

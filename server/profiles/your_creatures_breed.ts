@@ -133,8 +133,8 @@ export const breedPair = (pair) => new Promise((resolve, reject) => {
 		'geneticPointsStrength': [pair.strengthA, pair.strengthB],
 		'geneticPointsPower': [pair.powerA, pair.powerB],
 	};
-	let geneticsResults: any = {
-		//
+	let geneticsResults = {
+		//EMPTY
 	};
 
 	const randomKey = () => Object.keys(geneticsMix)[Math.floor(Math.random() * Object.keys(geneticsMix).length)];

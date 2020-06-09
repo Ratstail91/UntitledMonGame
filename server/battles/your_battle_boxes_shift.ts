@@ -24,7 +24,7 @@ export const apiYourBattleBoxesShift = async (req, res) => {
 		.then(validateSession)
 		.then(switchBattleBoxSlots)
 		.then(getBattleBoxStructure)
-		.then((fields:any) => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
+		.then((fields: any) => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
 		.catch(handleRejection)
 	;

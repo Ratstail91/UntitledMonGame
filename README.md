@@ -27,5 +27,3 @@ Art by Aternova
 ## Patrons
 
 * Seth Robinson
-* Chossy Mills
-

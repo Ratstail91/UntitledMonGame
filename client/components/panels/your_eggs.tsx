@@ -67,7 +67,7 @@ class YourEggs extends React.Component<Props, State> {
 								<div className='break' />
 
 								<Dropdown>
-									<Dropdown.Toggle id="actions">Actions</Dropdown.Toggle>
+									<Dropdown.Toggle id={`actions-${idx}`}>Actions</Dropdown.Toggle>
 
 									<Dropdown.Menu>
 										<Dropdown.Item className={egg.hatchTime ? 'disabled' : ''} onClick={e => { e.preventDefault(); this.eggAction(idx, 'incubate'); }}>Incubate</Dropdown.Item>
