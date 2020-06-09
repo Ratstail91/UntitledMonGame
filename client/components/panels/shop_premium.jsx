@@ -6,8 +6,8 @@ import paypal from 'paypal-checkout';
 import client from 'braintree-web/client';
 import paypalCheckout from 'braintree-web/paypal-checkout';
 
-import { setWarning } from '../../actions/warning.js';
-import { setProfile } from '../../actions/profile.js';
+import { setWarning } from '../../actions/warning';
+import { setProfile } from '../../actions/profile';
 
 class ShopPremium extends React.Component {
 	constructor(props) {

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-import { setWarning } from '../../actions/warning.js';
-import { setProfile } from '../../actions/profile.js';
-import { setItems } from '../../actions/profile.js';
+import { setWarning } from '../../actions/warning';
+import { setProfile } from '../../actions/profile';
+import { setItems } from '../../actions/profile';
 
 class YourItems extends React.Component {
 	constructor(props) {

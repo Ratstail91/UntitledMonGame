@@ -3,7 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //panels
-import PasswordChangePanel from '../panels/password_change.jsx';
+import PasswordChangePanel from '../panels/password_change';
 
 class PasswordChange extends React.Component {
 	constructor(props) {

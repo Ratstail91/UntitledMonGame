@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { setWarning } from '../../actions/warning.js';
-import { setProfile } from '../../actions/profile.js';
+import { setWarning } from '../../actions/warning';
+import { setProfile } from '../../actions/profile';
 
 //TODO: this needs a better name
 class YourProfile extends React.Component {

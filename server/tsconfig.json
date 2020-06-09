@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2017"],
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "target": "ES6",
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "noImplicitAny": false,
+    "outDir": "../build",
+    
+  },
+  "compileOnSave": true
+}

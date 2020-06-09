@@ -2,10 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import { logout } from '../../actions/account.js';
-import { setWarning } from '../../actions/warning.js';
+import { logout } from '../../actions/account';
+import { setWarning } from '../../actions/warning';
 
 class DeleteAccount extends React.Component {
 	constructor(props) {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Button from '../button.jsx';
+import Button from '../button';
 
 //panels
-import YourProfilePanel from '../panels/your_profile.jsx';
-import MovesSelectPanel from '../panels/moves_select.jsx';
+import YourProfilePanel from '../panels/your_profile';
+import MovesSelectPanel from '../panels/moves_select';
 
 class MovesSelect extends React.Component {
 	constructor(props) {

@@ -3,8 +3,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //panels
-import PrivacyPolicyPanel from '../panels/privacy_settings.jsx';
-import DeleteAccountPanel from '../panels/delete_account.jsx';
+import PrivacyPolicyPanel from '../panels/privacy_settings';
+import DeleteAccountPanel from '../panels/delete_account';
 
 class PrivacySettings extends React.Component {
 	constructor(props) {

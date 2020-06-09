@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import { logout } from '../../actions/account.js';
+import { logout } from '../../actions/account';
 
 class LogoutButton extends React.Component {
 	constructor(props) {

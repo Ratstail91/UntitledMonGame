@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 //panels
-import PasswordRecoverPanel from '../panels/password_recover.jsx';
+import PasswordRecoverPanel from '../panels/password_recover';
 
 class PasswordRecover extends React.Component {
 	constructor(props) {

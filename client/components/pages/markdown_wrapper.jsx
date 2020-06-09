@@ -1,5 +1,5 @@
 import React from 'react';
-import Markdown from '../panels/markdown.jsx';
+import Markdown from '../panels/markdown';
 
 class MarkdownWrapper extends React.Component {
 	constructor(props) {

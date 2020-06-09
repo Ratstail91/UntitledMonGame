@@ -2,12 +2,12 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import Button from '../button.jsx';
+import Button from '../button';
 
 //panels
-import LoginPanel from '../panels/login.jsx';
-import SignupPanel from '../panels/signup.jsx';
-import AcceptPanel from '../panels/accept.jsx';
+import LoginPanel from '../panels/login';
+import SignupPanel from '../panels/signup';
+import AcceptPanel from '../panels/accept';
 
 class Challenge extends React.Component {
 	constructor(props) {

@@ -21,3 +21,6 @@ public/*.gz
 
 # Non npm lock files
 yarn.lock
+
+# typescript build
+build

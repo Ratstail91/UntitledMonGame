@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 
 //panels
-import YourProfilePanel from '../panels/your_profile.jsx';
+import YourProfilePanel from '../panels/your_profile';
 
-import ShopEggs from '../panels/shop_eggs.jsx';
-import ShopItems from '../panels/shop_items.jsx';
-import ShopPremium from '../panels/shop_premium.jsx';
+import ShopEggs from '../panels/shop_eggs';
+import ShopItems from '../panels/shop_items';
+import ShopPremium from '../panels/shop_premium';
 
 class Shop extends React.Component {
 	constructor(props) {

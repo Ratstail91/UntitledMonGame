@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import { setWarning } from '../../actions/warning.js';
+import { setWarning } from '../../actions/warning';
 
 class AdminDisplay extends React.Component {
 	constructor(props) {
@@ -23,7 +23,7 @@ class AdminDisplay extends React.Component {
 				<div className='panel scrollable'>
 					{this.state.snapshotRecords.map((record, idx) => {
 						return (
-							<div key={idx}><p>Accounts: {record.activeAccounts}/{record.totalAccounts} -> {record.activeProfiles}/{record.totalProfiles}</p></div>
+							<div key={idx}><p>Accounts: {record.activeAccounts}/{record.totalAccounts} &gt; {record.activeProfiles}/{record.totalProfiles}</p></div>
 						);
 					})}
 				</div>
@@ -73,6 +73,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-AdminDisplay = connect(mapStoreToProps, mapDispatchToProps)(AdminDisplay);
-
-export default AdminDisplay;
+export default connect(mapStoreToProps, mapDispatchToProps)(AdminDisplay);

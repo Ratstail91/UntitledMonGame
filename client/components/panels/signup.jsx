@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '../button.jsx';
+import Button from '../button';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { setWarning } from '../../actions/warning.js';
-import { validateEmail } from '../../utilities/validate_email.js';
+import { setWarning } from '../../actions/warning';
+import { validateEmail } from '../../utilities/validate_email';
 
 class Signup extends React.Component {
 	constructor(props) {
@@ -28,22 +28,22 @@ class Signup extends React.Component {
 				<form action='/api/signup' method='post' onSubmit={this.submit.bind(this)}>
 					<div>
 						<label htmlFor='email'>Email:</label>
-						<input id='email' type='text' name='email' value={this.state.email} onChange={this.updateEmail.bind(this)} />
+						<input id='email' type='email' name='email' value={this.state.email} onChange={this.updateEmail.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='username'>User Name:</label>
-						<input id='username' type='text' name='username' value={this.state.username} onChange={this.updateUsername.bind(this)} />
+						<input id='username' required type='text' name='username' value={this.state.username} onChange={this.updateUsername.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='password'>Password:</label>
-						<input id='password' type='password' name='password' value={this.state.password} onChange={this.updatePassword.bind(this)} />
+						<input id='password' required type='password' name='password' value={this.state.password} onChange={this.updatePassword.bind(this)} />
 					</div>
 
 					<div>
 						<label htmlFor='retype'>Retype Password:</label>
-						<input id='retype' type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
+						<input id='retype' required type='password' name='retype' value={this.state.retype} onChange={this.updateRetype.bind(this)} />
 					</div>
 
 					<div>
@@ -56,7 +56,7 @@ class Signup extends React.Component {
 						<input id='promotions' type='checkbox' name='promotions' value={this.state.promotions} onChange={this.updatePromotions.bind(this)} className='checkbox' />
 					</div>
 
-					<Button type='submit' disabled={!this.state.email}>Sign Up</Button>
+					<Button type='submit' disabled={!this.state.email | !this.state.password | !this.state.retype |!this.state.username}>Sign Up</Button>
 				</form>
 			</div>
 		);

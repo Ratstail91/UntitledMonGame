@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Button from '../button.jsx';
+import Button from '../button';
 
 //panels
-import YourProfilePanel from '../panels/your_profile.jsx';
-import InspectPanel from '../panels/inspect.jsx';
+import YourProfilePanel from '../panels/your_profile';
+import InspectPanel from '../panels/inspect';
 
 class Inspect extends React.Component {
 	constructor(props) {

@@ -1,4 +1,4 @@
-import { SET_INSPECT } from "../actions/inspect.js";
+import { SET_INSPECT } from "../actions/inspect";
 
 const initialStore = {
 	index: -1

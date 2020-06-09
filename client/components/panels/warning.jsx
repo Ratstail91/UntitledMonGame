@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setWarning } from '../../actions/warning.js';
+import { setWarning } from '../../actions/warning';
 
 class Warning extends React.Component {
 	constructor(props) {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import { setWarning } from '../../actions/warning.js';
+import { setWarning } from '../../actions/warning';
 
 class PasswordChange extends React.Component {
 	constructor(props) {

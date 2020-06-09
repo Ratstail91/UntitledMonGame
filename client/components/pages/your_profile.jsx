@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 
 //panels
-import YourProfilePanel from '../panels/your_profile.jsx';
+import YourProfilePanel from '../panels/your_profile';
 
-import YourCreatures from '../panels/your_creatures.jsx';
-import YourEggs from '../panels/your_eggs.jsx';
-import YourItems from '../panels/your_items.jsx';
-import YourBattleBoxes from '../panels/your_battle_boxes.jsx';
-import YourBattles from	 '../panels/your_battles.jsx';
+import YourCreatures from '../panels/your_creatures';
+import YourEggs from '../panels/your_eggs';
+import YourItems from '../panels/your_items';
+import YourBattleBoxes from '../panels/your_battle_boxes';
+import YourBattles from	 '../panels/your_battles';
 
 class YourProfile extends React.Component {
 	constructor(props) {

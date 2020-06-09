@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from '../button.jsx';
+import Button from '../button';
 
-import { setWarning } from '../../actions/warning.js';
-import { login } from '../../actions/account.js';
-import { validateEmail } from '../../utilities/validate_email.js';
+import { setWarning } from '../../actions/warning';
+import { login } from '../../actions/account';
+import { validateEmail } from '../../utilities/validate_email';
 
 class Login extends React.Component {
 	constructor(props) {
@@ -24,12 +24,12 @@ class Login extends React.Component {
 				<form action='/api/login' method='post' onSubmit={ this.submit.bind(this) } >
 					<div>
 						<label htmlFor='email'>Email:</label>
-						<input id='email' type='text' name='email' value={this.state.email} onChange={ this.updateEmail.bind(this) } />
+						<input required id='email' type='email' name='email' value={this.state.email} onChange={ this.updateEmail.bind(this) } />
 					</div>
 
 					<div>
 						<label htmlFor='password'>Password:</label>
-						<input id='password' type='password' name='password' value={this.state.password} onChange={ this.updatePassword.bind(this) } />
+						<input required id='password' type='password' name='password' value={this.state.password} onChange={ this.updatePassword.bind(this) } />
 					</div>
 
 					<Button type='submit' disabled={!this.state.email}>Login</Button>

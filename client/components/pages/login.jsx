@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Button from '../button.jsx';
+import Button from '../button';
 
 //panels
-import LoginPanel from '../panels/login.jsx';
+import LoginPanel from '../panels/login';
 
 class Login extends React.Component {
 	constructor(props) {

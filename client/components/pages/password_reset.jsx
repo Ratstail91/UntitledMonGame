@@ -3,7 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import queryString from 'query-string';
 
 //panels
-import PasswordResetPanel from '../panels/password_reset.jsx';
+import PasswordResetPanel from '../panels/password_reset';
 
 class PasswordReset extends React.Component {
 	constructor(props) {

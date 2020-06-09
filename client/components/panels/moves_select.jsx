@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '../button.jsx';
+import Button from '../button';
 import PropTypes from 'prop-types';
 
-import { setWarning } from '../../actions/warning.js';
-import { setProfile } from '../../actions/profile.js';
-import { setCreatures } from '../../actions/profile.js';
+import { setWarning } from '../../actions/warning';
+import { setProfile } from '../../actions/profile';
+import { setCreatures } from '../../actions/profile';
 
 const capitalize = str => {
 	return str.charAt(0).toUpperCase() + str.slice(1);
