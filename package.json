@@ -7,7 +7,7 @@
     "start": "forever -a -o forever.log -e error.log start build/index.js",
     "restart": "forever -a -o forever.log -e error.log restart build/index.js",
     "stop": "forever stop build/index.js",
-    "build": "npm run build:server && npm run build client",
+    "build": "npm run build:server && npm run build:client",
     "build:server": "tsc --build server/tsconfig.json",
     "build:client": "webpack --mode=production --env=production --config webpack.config.js",
     "pull": "git pull && npm run build && npm restart",

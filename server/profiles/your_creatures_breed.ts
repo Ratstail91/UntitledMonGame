@@ -133,7 +133,7 @@ export const breedPair = (pair) => new Promise((resolve, reject) => {
 		'geneticPointsStrength': [pair.strengthA, pair.strengthB],
 		'geneticPointsPower': [pair.powerA, pair.powerB],
 	};
-	let geneticsResults = {
+	let geneticsResults: any = {
 		//EMPTY
 	};
 
