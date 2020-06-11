@@ -22,7 +22,7 @@ jobs:
           node_version: ${{ matrix.node_version }}
       
       - name: npm install, lint
-      - run: |
+        run: |
           npm install
           npm run linter
           npm run build
