@@ -1,4 +1,4 @@
-![Nodejs CI](https://github.com/Ratstail91/EggTrainer/workflows/Nodejs%20CI/badge.svg)
+[![Nodejs CI](https://github.com/Ratstail91/EggTrainer/workflows/Nodejs%20CI/badge.svg)](https://github.com/Ratstail91/EggTrainer/actions)
 
 # Egg Trainer
 
