@@ -7,7 +7,7 @@ import { getYourProfile } from '../profiles/your_profile';
 
 import species from '../gameplay/species.json';
 
-export const apiShopEggsBuy = async (req, res) => {
+export const apiShopEggsBuy = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, /* obj.extra.toString() */));

@@ -7,7 +7,7 @@ import pool from '../utilities/database';
 
 import { validateSession } from '../reusable';
 
-export const apiDeleteAccount = async (req, res) => {
+export const apiDeleteAccount = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -28,7 +28,7 @@ export const apiDeleteAccount = async (req, res) => {
 	;
 };
 
-export const markAccountForDeletion = (fields) => new Promise(async (resolve, reject) => {
+export const markAccountForDeletion = (fields) => new Promise((resolve, reject) => {
 	const query = 'UPDATE accounts SET deletionTime = now() + interval 2 day WHERE id = ?;';
 	return pool.promise().query(query, [fields.id])
 		.then(() => resolve({ msg: 'Account marked for deletion', extra: [fields.id] }))
@@ -39,7 +39,7 @@ export const markAccountForDeletion = (fields) => new Promise(async (resolve, re
 //delete the accounts marked for deletion
 import { CronJob } from 'cron';
 
-const job = new CronJob('0 0 * * * *', async () => {
+const job = new CronJob('0 0 * * * *', () => {
 	const query = 'DELETE FROM accounts WHERE deletionTime < now();';
 	pool.promise().query(query)
 		.then((results: any) => {

@@ -10,7 +10,7 @@ import elementsIndex from './elements.json';
 const zipObj = xs => ys => xs.reduce( (obj, x, i) => ({ ...obj, [x]: ys[i] }), {});
 
 //creatures
-export const apiCreatures = async (req, res) => {
+export const apiCreatures = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
@@ -51,7 +51,7 @@ export const getCreatureInformationFromJSON = (req) => new Promise((resolve, rej
 });
 
 //items
-export const apiItems = async (req, res) => {
+export const apiItems = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
@@ -95,7 +95,7 @@ export const getItemInformationFromJSON = (req) => new Promise((resolve, reject)
 });
 
 //moves
-export const apiMoves = async (req, res) => {
+export const apiMoves = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
@@ -134,7 +134,7 @@ export const getMoveInformationFromJSON = (req) => new Promise((resolve, reject)
 	return resolve({ msg: result, extra: '' });
 });
 
-export const apiElements = async (req, res) => {
+export const apiElements = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));

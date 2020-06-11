@@ -13,7 +13,7 @@ const capitalize = str => {
 
 
 export interface OwnProps {
-	
+	//
 }
 
 interface StateProps {
@@ -21,16 +21,16 @@ interface StateProps {
 	token: number;
 	eggs: any;
 }
-	
+
 interface DispatchProps {
 	setWarning: Function;
 	setEggs: Function;
 	setProfile: Function;
 }
-   
+
 // All of the props combined
 type Props = StateProps & DispatchProps & OwnProps
-   
+
 // Internal state
 interface State {
 	// internalComponentStateField: string
@@ -125,6 +125,9 @@ class YourEggs extends React.Component<Props, State> {
 					this.sendYourEggsRequest('/api/youreggs/sell', index);
 				}
 				return;
+
+			default:
+				throw 'Unknown egg action taken';
 		}
 	}
 }

@@ -7,7 +7,7 @@ import { validateSession, determineSelectedCreature, getCreatureMoves } from '..
 import species from '../gameplay/species.json';
 import moves from '../gameplay/moves.json';
 
-export const apiYourCreaturesMovesEquip = async (req, res) => {
+export const apiYourCreaturesMovesEquip = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -33,7 +33,7 @@ export const apiYourCreaturesMovesEquip = async (req, res) => {
 	;
 };
 
-export const checkMaxMovesEquipped = (fields) => new Promise(async (resolve, reject) => {
+export const checkMaxMovesEquipped = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT COUNT(*) AS total FROM creatureMovesOwned WHERE creatureId = ? AND equipped = TRUE;';
 	return pool.promise().query(query, [fields.creature.id])
 		.then(results => results[0][0].total)
@@ -43,7 +43,7 @@ export const checkMaxMovesEquipped = (fields) => new Promise(async (resolve, rej
 });
 
 //WARNING: duplication-ish
-export const checkForSelectedMoveOwned = (fields) => new Promise(async (resolve, reject) => {
+export const checkForSelectedMoveOwned = (fields) => new Promise((resolve, reject) => {
 	if (!species[fields.creature.species].moves.includes(fields.move)) {
 		return reject({ msg: `The creature ${fields.creature.species} can't learn the move ${fields.move}.`, extra: '' });
 	}

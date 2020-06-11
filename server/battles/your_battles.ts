@@ -11,7 +11,7 @@ import movesIndex from '../gameplay/moves.json';
 import itemIndex from '../gameplay/item_index.json';
 import premiumIndex from '../gameplay/premium_index.json';
 
-export const apiYourBattles = async (req, res) => {
+export const apiYourBattles = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -162,7 +162,7 @@ export const getEnemyCreatures = async (notAccountId, battleId) => {
 
 	if (!battleBox) {
 		return { top: null, bottom: null };
-	}process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); });
+	}
 
 	const slotsQuery = 'SELECT * FROM battleBoxSlots WHERE battleBoxId = ?;';
 	const battleBoxSlots: any  = (await pool.promise().query(slotsQuery, [battleBox.id]))[0];

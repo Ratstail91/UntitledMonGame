@@ -6,7 +6,7 @@ import { validateSession, determineSelectedEgg, getYourEggs } from '../reusable'
 
 import species from '../gameplay/species.json';
 
-export const apiYourEggsIncubate = async (req, res) => {
+export const apiYourEggsIncubate = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -57,7 +57,7 @@ export const incubateSelectedEgg = (fields) => new Promise((resolve, reject) => 
 import { CronJob } from 'cron';
 
 export const runEggHatchJob = () => {
-	const job = new CronJob('* * * * * *', async () => {
+	const job = new CronJob('* * * * * *', () => {
 		const query = 'SELECT * FROM creatureEggs WHERE incubationTime IS NOT NULL AND incubationTime < NOW();';
 		pool.promise().query(query)
 			.then(results => results[0])

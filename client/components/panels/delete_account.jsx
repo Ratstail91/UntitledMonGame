@@ -86,14 +86,14 @@ DeleteAccount.propTypes = {
 	onClick: PropTypes.func
 };
 
-function mapStoreToProps(store) {
+const mapStoreToProps = (store) => {
 	return {
 		id: store.account.id,
 		token: store.account.token
 	}
 };
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
 	return {
 		setWarning: (msg) => { dispatch(setWarning(msg)) },
 		logout: () => { dispatch(logout()) }

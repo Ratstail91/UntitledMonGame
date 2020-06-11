@@ -4,7 +4,7 @@ import { log } from '../utilities/logging';
 
 import species from '../gameplay/species.json';
 
-export const apiShopEggs = async (req, res) => {
+export const apiShopEggs = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

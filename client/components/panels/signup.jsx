@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { setWarning } from '../../actions/warning';
-import { validateEmail } from '../../utilities/validate_email';
+import validateEmail from '../../utilities/validate_email';
 
 class Signup extends React.Component {
 	constructor(props) {

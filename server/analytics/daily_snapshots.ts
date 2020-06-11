@@ -2,7 +2,7 @@ import { log } from '../utilities/logging';
 import pool from "../utilities/database";
 import { CronJob } from 'cron';
 
-export function runDailySnapshots(){
+export const runDailySnapshots = () => {
 	const dailyJob = new CronJob('0 0 0 * * *', () => {
 		const query = 'INSERT INTO dailySnapshots \
 		(totalAccounts, activeAccounts, totalProfiles, activeProfiles) VALUES (\

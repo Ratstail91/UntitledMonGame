@@ -4,7 +4,7 @@ import { log } from '../utilities/logging';
 
 import itemIndex from '../gameplay/item_index.json';
 
-export const apiShopItems = async (req, res) => {
+export const apiShopItems = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

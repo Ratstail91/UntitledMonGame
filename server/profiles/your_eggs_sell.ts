@@ -7,7 +7,7 @@ import { getYourProfile } from './your_profile';
 
 import species from '../gameplay/species.json';
 
-export const apiYourEggsSell = async (req, res) => {
+export const apiYourEggsSell = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

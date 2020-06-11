@@ -155,6 +155,9 @@ class YourCreatures extends React.Component {
 					this.sendYourCreaturesRequest('/api/yourcreatures/release', index);
 				}
 				return;
+
+			default:
+				throw 'Unknown creature action taken';
 		}
 	}
 }

@@ -7,7 +7,7 @@ import { validateSession, determineSelectedCreature, getCreatureMoves } from '..
 import species from '../gameplay/species.json';
 import moves from '../gameplay/moves.json';
 
-export const apiYourCreaturesMoves = async (req, res) => {
+export const apiYourCreaturesMoves = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

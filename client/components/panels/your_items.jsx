@@ -87,6 +87,9 @@ class YourItems extends React.Component {
 					this.sendYourItemsRequest('/api/youritems/sell', index);
 				}
 				return;
+
+			default:
+				throw 'Unknown item action taken';
 		}
 	}
 }

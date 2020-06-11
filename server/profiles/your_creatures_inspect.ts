@@ -6,7 +6,7 @@ import { validateSession, determineSelectedCreature } from '../reusable';
 
 import species from '../gameplay/species.json';
 
-export const apiYourCreaturesInspect = async (req, res) => {
+export const apiYourCreaturesInspect = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

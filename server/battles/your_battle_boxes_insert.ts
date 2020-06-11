@@ -7,7 +7,7 @@ import { countTotalBattleBoxItems, getBattleBoxes } from './battle_tools';
 
 import { getBattleBoxStructure } from './your_battle_boxes';
 
-export const apiYourBattleBoxesInsert = async (req, res) => {
+export const apiYourBattleBoxesInsert = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

@@ -12,7 +12,7 @@ import pool from '../utilities/database';
 
 import { validateSession } from '../reusable';
 
-export const apiPasswordChange = async (req, res) => {
+export const apiPasswordChange = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

@@ -75,6 +75,9 @@ class Challenge extends React.Component {
 					</div>
 				);
 			}
+
+			default:
+				throw 'Unknown display state on the challenge screen';
 		}
 	}
 };

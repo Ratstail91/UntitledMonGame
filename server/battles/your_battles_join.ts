@@ -5,7 +5,7 @@ import { log } from '../utilities/logging';
 import { validateSession } from '../reusable';
 import { countTotalBattleBoxItems, getBattleBoxes, getBattleBoxSlots, activateFirstTwoSlots, initializeBattleBox } from './battle_tools';
 
-export const apiYourBattlesJoin = async (req, res) => {
+export const apiYourBattlesJoin = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

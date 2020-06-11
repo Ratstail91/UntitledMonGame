@@ -7,7 +7,7 @@ import { getYourProfile } from '../profiles/your_profile';
 
 import itemIndex from '../gameplay/item_index.json';
 
-export const apiShopItemsBuy = async (req, res) => {
+export const apiShopItemsBuy = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

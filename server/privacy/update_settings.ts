@@ -9,7 +9,7 @@ import pool from '../utilities/database';
 import { validateSession } from '../reusable';
 import { sendPrivacySettings } from './settings';
 
-export const apiUpdateSettings = async (req, res) => {
+export const apiUpdateSettings = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -32,7 +32,7 @@ export const apiUpdateSettings = async (req, res) => {
 	;
 };
 
-export const updatePrivacySettings = (fields) => new Promise(async (resolve, reject) => {
+export const updatePrivacySettings = (fields) => new Promise((resolve, reject) => {
 	const query = 'UPDATE accounts SET promotions = ? WHERE id = ?;';
 
 	return pool.promise().query(query, [fields.promotions ? true : false, fields.id])

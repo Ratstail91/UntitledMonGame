@@ -8,7 +8,7 @@ import premiumIndex from './gameplay/premium_index.json';
 //@ts-nocheck
 
 //reusable
-export const validateSession = (fields) => new Promise(async (resolve, reject) => {
+export const validateSession = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM sessions WHERE accountId = ? AND token = ?;';
 	return pool.promise().query(query, [fields.id, fields.token])
 		.then((results: any) => results[0].length > 0 ? fields : reject({ msg: 'Session Timed Out', extra: fields }))

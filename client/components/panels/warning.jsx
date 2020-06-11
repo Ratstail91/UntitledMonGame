@@ -15,6 +15,7 @@ class Warning extends React.Component {
 			);
 		}
 
+		// eslint-disable-next-line no-console
 		console.log('WARNING: ', this.props.text);
 
 		//render the warning

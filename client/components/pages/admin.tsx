@@ -14,14 +14,14 @@ export interface OwnProps {
 interface StateProps {
 	loggedIn: boolean
 }
-	
+
 interface DispatchProps {
 	// onSomeEvent: () => void
 }
-   
+
 // All of the props combined
 type Props = StateProps & DispatchProps & OwnProps & RouteComponentProps
-   
+
 // Internal state
 interface State {
 	// internalComponentStateField: string
@@ -49,13 +49,13 @@ class Admin extends React.Component<Props, State> {
 	}
 };
 
-function mapStoreToProps(store, ownProps: OwnProps): StateProps {
+const mapStoreToProps = (store, ownProps: OwnProps): StateProps => {
 	return {
 		loggedIn: store.account.id !== undefined && store.account.id !== 0
 	}
 };
 
-function mapDispatchToProps(dispatch: Dispatch<any>,  ownProps: OwnProps): DispatchProps {
+const mapDispatchToProps = (dispatch: Dispatch<any>,  ownProps: OwnProps): DispatchProps => {
 	return {
 		//
 	}

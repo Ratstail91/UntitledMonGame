@@ -9,7 +9,7 @@ import validateEmail from '../utilities/validate_email';
 import formidablePromise from '../utilities/formidable_promise';
 import pool from '../utilities/database';
 
-export const apiLogin = async (req, res) => {
+export const apiLogin = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -74,7 +74,7 @@ export const validateLoginPassword = (fields) => new Promise( async (resolve, re
 	;
 });
 
-export const unmarkAccountForDeletion = (accountRecord) => new Promise(async (resolve, reject) => {
+export const unmarkAccountForDeletion = (accountRecord) => new Promise((resolve, reject) => {
 	//for setting things back to normal
 	const query = 'UPDATE accounts SET deletionTime = NULL WHERE id = ?;';
 	return pool.promise().query(query, [accountRecord.id])
@@ -95,6 +95,8 @@ export const checkAccountType = (accountRecord) => new Promise(async (resolve, r
 		case "moderator":
 		case "alpha":
 			return resolve(accountRecord);
+		default:
+			;
 	}
 
 	//TODO: update this message later
@@ -152,7 +154,7 @@ export const apiLogout = (req, res) => {
 //delete the sessions for inactive accounts
 import { CronJob } from 'cron';
 
-const job = new CronJob('0 0 0 * * *', async () => {
+const job = new CronJob('0 0 0 * * *', () => {
 	const query = 'DELETE FROM sessions WHERE accountId IN (SELECT id FROM accounts WHERE lastActivityTime < NOW() - interval 2 day);';
 	pool.promise().query(query)
 		.catch(e => log('Session deletion error: ', e));

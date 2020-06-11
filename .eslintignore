@@ -1,0 +1,13 @@
+# don't ever lint node_modules
+node_modules
+
+# don't lint build output
+build
+public
+
+#ignore hacky script files
+scripts
+
+#config files
+webpack.config.js
+.eslintrc.js

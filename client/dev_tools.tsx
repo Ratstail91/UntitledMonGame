@@ -8,4 +8,3 @@ export default createDevTools(
 		<LogMonitor theme='tomorrow' />
 	</DockMonitor>
 );
-

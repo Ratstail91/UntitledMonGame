@@ -4,7 +4,7 @@ import { log } from '../utilities/logging';
 
 import premium from '../gameplay/premium_index.json';
 
-export const apiShopPremiums = async (req, res) => {
+export const apiShopPremiums = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

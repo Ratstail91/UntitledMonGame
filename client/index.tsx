@@ -18,7 +18,7 @@ let INSPECT = 'inspect.eggtrainer';
 let inspect = localStorage.getItem(INSPECT);
 inspect = inspect ? JSON.parse(inspect) : {};
 
-var store = createStore(
+let store = createStore(
 	reducer,
 	{ account, inspect }, //initial state
 	applyMiddleware(thunk)

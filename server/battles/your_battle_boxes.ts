@@ -7,7 +7,7 @@ import { countTotalBattleBoxItems, getBattleBoxes } from './battle_tools';
 
 import species from '../gameplay/species.json';
 
-export const apiYourBattleBoxes = async (req, res) => {
+export const apiYourBattleBoxes = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -39,7 +39,7 @@ export const getBattleBoxStructure = (fields) => new Promise(async (resolve, rej
 	;
 });
 
-export const getAllOfYourBattleBoxSlots = (fields) => new Promise(async (resolve, reject) => {
+export const getAllOfYourBattleBoxSlots = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM battleBoxSlots WHERE battleBoxId IN (SELECT id FROM battleBoxes WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?)) ORDER BY battleBoxId;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => results[0])

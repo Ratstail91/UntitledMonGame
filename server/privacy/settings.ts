@@ -8,7 +8,7 @@ import pool from '../utilities/database';
 
 import { validateSession } from '../reusable';
 
-export const apiSettings = async (req, res) => {
+export const apiSettings = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -29,7 +29,7 @@ export const apiSettings = async (req, res) => {
 	;
 };
 
-export const sendPrivacySettings = (res) => (fields) => new Promise(async (resolve, reject) => {
+export const sendPrivacySettings = (res) => (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM accounts WHERE id = ?;';
 	return pool.promise().query(query, [fields.id])
 		.then(results => res.status(200).json({ promotions: results[0][0].promotions }))

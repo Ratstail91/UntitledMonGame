@@ -7,7 +7,7 @@ import { validateSession, determineSelectedCreature, getCreatureMoves } from '..
 import species from '../gameplay/species.json';
 import moves from '../gameplay/moves.json';
 
-export const apiYourCreaturesMovesBuy = async (req, res) => {
+export const apiYourCreaturesMovesBuy = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -34,7 +34,7 @@ export const apiYourCreaturesMovesBuy = async (req, res) => {
 	;
 };
 
-export const checkForSelectedMove = (fields) => new Promise(async (resolve, reject) => {
+export const checkForSelectedMove = (fields) => new Promise((resolve, reject) => {
 	if (!species[fields.creature.species].moves.includes(fields.move) || !moves[fields.move]) {
 		return reject({ msg: `The creature ${fields.creature.species} can't learn the move ${fields.move}.`, extra: '' });
 	}

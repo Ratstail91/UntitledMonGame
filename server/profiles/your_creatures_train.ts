@@ -4,7 +4,7 @@ import { log } from '../utilities/logging';
 
 import { validateSession, getYourCreatures, determineSelectedCreature } from '../reusable';
 
-export const apiYourCreaturesTrain = async (req, res) => {
+export const apiYourCreaturesTrain = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -68,7 +68,7 @@ export const trainSelectedCreature = (fields) => new Promise((resolve, reject) =
 import { CronJob } from 'cron';
 
 export const runTrainJob = () => {
-	const job = new CronJob('* * * * * *', async () => {
+	const job = new CronJob('* * * * * *', () => {
 		const query = 'SELECT * FROM creatures WHERE trainingTime IS NOT NULL AND trainingTime < NOW();';
 		pool.promise().query(query)
 			.then(results => results[0])
@@ -105,14 +105,4 @@ export const runTrainJob = () => {
 	});
 
 	job.start();
-};
-
-module.exports = {
-	apiYourCreaturesTrain,
-	runTrainJob,
-
-	//for testing
-	checkForOtherTraining,
-	checkStatTotal,
-	trainSelectedCreature,
 };

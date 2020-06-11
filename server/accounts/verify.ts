@@ -3,7 +3,7 @@ import pool from '../utilities/database';
 
 import { grantSignupRewards } from './signup_rewards';
 
-export const apiVerify = async (req, res) => {
+export const apiVerify = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -26,7 +26,7 @@ export const apiVerify = async (req, res) => {
 	;
 }
 
-export const getInformationFromDatabase = (req) => new Promise( async (resolve, reject) => {
+export const getInformationFromDatabase = (req) => new Promise((resolve, reject) => {
 	//get the saved data
 	let signupsQuery = 'SELECT * FROM signups WHERE email = ?;';
 	return pool.promise().query(signupsQuery, [req.query.email])
@@ -40,7 +40,7 @@ export const getInformationFromDatabase = (req) => new Promise( async (resolve, 
 	;
 });
 
-export const verifyToken = (req) => (signupRecord) => new Promise( async (resolve, reject) => {
+export const verifyToken = (req) => (signupRecord) => new Promise((resolve, reject) => {
 	if (req.query.verify != signupRecord.verify) {
 		reject({msg: 'Verification failed!', extra: [req.query.email, req.query.verify, signupRecord.verify]});
 	} else {
@@ -48,7 +48,7 @@ export const verifyToken = (req) => (signupRecord) => new Promise( async (resolv
 	}
 });
 
-export const createAccount = (signupRecord) => new Promise( async (resolve, reject) => {
+export const createAccount = (signupRecord) => new Promise((resolve, reject) => {
 	//BUGFIX: a delay to prevent the fail message appearing to the end user
 	setTimeout(async () => {
 		log('Trying to create account', signupRecord.email);

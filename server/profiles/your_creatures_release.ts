@@ -4,7 +4,7 @@ import { log } from '../utilities/logging';
 
 import { validateSession, determineSelectedCreature, getYourCreatures } from '../reusable';
 
-export const apiYourCreaturesRelease = async (req, res) => {
+export const apiYourCreaturesRelease = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

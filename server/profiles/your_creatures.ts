@@ -6,7 +6,7 @@ import { validateSession, getYourCreatures } from '../reusable';
 
 import species from '../gameplay/species.json';
 
-export const apiYourCreatures = async (req, res) => {
+export const apiYourCreatures = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -27,5 +27,3 @@ export const apiYourCreatures = async (req, res) => {
 		.catch(handleRejection)
 	;
 };
-
-//TODO: implement nicknames

@@ -2,7 +2,7 @@ import { log } from '../utilities/logging';
 
 import { validateSession, getYourEggs } from '../reusable';
 
-export const apiYourEggs = async (req, res) => {
+export const apiYourEggs = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

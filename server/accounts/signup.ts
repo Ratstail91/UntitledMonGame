@@ -9,7 +9,7 @@ import validateEmail from '../utilities/validate_email';
 import formidablePromise from '../utilities/formidable_promise';
 import pool from '../utilities/database';
 
-export const apiSignup = async (req, res) => {
+export const apiSignup = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
@@ -53,7 +53,7 @@ export const validateSignup = ({ fields }) => new Promise(async (resolve, reject
 	const existsQuery = 'SELECT (SELECT COUNT(*) FROM accounts WHERE email = ?) AS email, (SELECT COUNT(*) FROM accounts WHERE username = ?) AS username;';
 	const exists = await pool.promise().query(existsQuery, [fields.email, fields.username])
 		.then((results) => new Promise((resolve, reject) => {
-		  results[0][0].email === 0 ? resolve(results) : reject('Email already registered!')
+			results[0][0].email === 0 ? resolve(results) : reject('Email already registered!')
 		} ))
 		.then((results) => new Promise((resolve, reject) => {
 			results[0][0].username === 0 ? resolve(results) : reject('Username already registered!')

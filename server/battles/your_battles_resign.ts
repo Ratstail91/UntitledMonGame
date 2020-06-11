@@ -6,7 +6,7 @@ import { validateSession } from '../reusable';
 
 import { getYourBattles } from './your_battles';
 
-export const apiYourBattlesResign = async (req, res) => {
+export const apiYourBattlesResign = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));

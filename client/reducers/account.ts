@@ -16,9 +16,9 @@ export const accountReducer = (store: AccountStore = initialStore, action) => {
 			let newStore = {
 				...store,
 				id: action.id,
-				token: action.token	
+				token: action.token
 			}
-			
+
 			return newStore;
 		}
 
@@ -28,7 +28,7 @@ export const accountReducer = (store: AccountStore = initialStore, action) => {
 		case SESSION_CHANGE: {
 			let newStore = {
 				...store,
-				token: action.token	
+				token: action.token
 			}
 
 			return newStore;

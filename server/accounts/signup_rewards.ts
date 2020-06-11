@@ -24,6 +24,8 @@ export const grantSignupRewards = (signupRecord) => new Promise(async (resolve, 
 			break;
 
 		//...
+		default:
+			;
 	}
 
 	//mark this code as used

@@ -11,7 +11,7 @@ import validateEmail from '../utilities/validate_email';
 import formidablePromise from '../utilities/formidable_promise';
 import pool from '../utilities/database';
 
-export const apiPasswordReset = async (req, res) => {
+export const apiPasswordReset = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
 		res.status(400).write(log(obj.msg, obj.extra.toString()));
