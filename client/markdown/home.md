@@ -10,6 +10,13 @@ You can also breed creatures to produce new eggs, some of which are extremely ra
 
 What will you hatch next?
 
+<div class="centered">
+	<img src="/content/sprites/creatures/slink.png" style="width:200px" />
+	<img src="/content/sprites/creatures/cosmetics/seasonlong-spring.png" style="width:200px" />
+	<img src="/content/sprites/creatures/spitty.png" style="width:200px" />
+</div>
+
+
 <hr />
 
 **Please send bug reports here**: [krgamestudios@gmail.com](mailto:krgamestudios@gmail.com)
