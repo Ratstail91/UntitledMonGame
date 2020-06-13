@@ -33,7 +33,7 @@ class MovesSelect extends React.Component {
 
 	componentDidUpdate() {
 		if (Object.keys(this.state.movesIndex).length == 0 && Object.keys(this.state.available).length != 0) {
-			this.sendRequest(`/api/moves?${this.state.available.map(m => 'move=' + m).join('&')}`, 'GET', null, json => this.setState({ movesIndex: json }));
+			this.sendRequest(`/api/moves?move=${this.state.available.join(',')}`, 'GET', null, json => this.setState({ movesIndex: json }));
 		}
 	}
 
