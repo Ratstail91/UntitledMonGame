@@ -91,8 +91,10 @@ class App extends React.Component {
 						<LazyRoute path='/challenge' component={() => import('./pages/challenge')} />
 
 						<LazyRoute path='/privacysettings' component={() => import('./pages/privacy_settings')} />
-						<LazyRoute path='/privacypolicy' component={new Promise(() => <MarkdownWrapper url={require('../markdown/privacy_policy.md').default} />)} />
-						<LazyRoute path='/credits' component={new Promise(() => <MarkdownWrapper url={require('../markdown/credits.md').default} />)} />
+						{ /* eslint-disable-next-line require-await */ }
+						<LazyRoute path='/privacypolicy' component={async () => () => <MarkdownWrapper url={require('../markdown/privacy_policy.md').default} />} />
+						{ /* eslint-disable-next-line require-await */ }
+						<LazyRoute path='/credits' component={async () => () => <MarkdownWrapper url={require('../markdown/credits.md').default} />} />
 
 						<LazyRoute path='/admin' component={() => import('./pages/admin')} />
 
