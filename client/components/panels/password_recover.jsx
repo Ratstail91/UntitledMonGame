@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import validateEmail from '../../utilities/validate_email';
+import validateEmail from '../../../common/utilities/validate_email';
 import PropTypes from 'prop-types';
 import Button from '../button';
 

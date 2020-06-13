@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 //utilities
 //utilities
 import { log, logActivity } from '../utilities/logging';
-import validateEmail from '../utilities/validate_email';
+import validateEmail from '../../common/utilities/validate_email';
 import formidablePromise from '../utilities/formidable_promise';
 import pool from '../utilities/database';
 

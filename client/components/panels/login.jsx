@@ -5,7 +5,7 @@ import Button from '../button';
 
 import { setWarning } from '../../actions/warning';
 import { login } from '../../actions/account';
-import validateEmail from '../../utilities/validate_email';
+import validateEmail from '../../../common/utilities/validate_email';
 
 class Login extends React.Component {
 	constructor(props) {
