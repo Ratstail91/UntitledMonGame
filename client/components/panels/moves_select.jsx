@@ -49,7 +49,16 @@ class MovesSelect extends React.Component {
 		const rowStyle = {
 			borderBottom: '1px solid #e8e8e8',
 			marginBottom: '.5em',
-			alignItems: 'center'
+			alignItems: 'center',
+			maxWidth: '480px'
+		};
+
+		const rightColStyle = {
+			flex: '0 1 auto',
+			maxWidth: '128px',
+			margin: '0',
+			padding: '0',
+			alignItems: 'flex-end'
 		};
 
 		if (this.props.creatures.length == 0) {
@@ -89,7 +98,7 @@ class MovesSelect extends React.Component {
 											<p className='mobile show'>{this.state.movesIndex[move].damage} damage</p>
 										</div>
 
-										<div className='col'>
+										<div className='col' style={rightColStyle}>
 											<Button onClick={e => {
 												e.preventDefault();
 												e.persist();
@@ -117,7 +126,7 @@ class MovesSelect extends React.Component {
 											<p className='mobile show'>{this.state.movesIndex[move].damage} damage</p>
 										</div>
 
-										<div className='col'>
+										<div className='col' style={rightColStyle}>
 										<Button onClick={e => { e.preventDefault(); e.persist(); e.target.setAttribute('disabled', 'disabled'); this.sendRequest('/api/yourcreatures/moves/unequip', 'POST', { index: this.props.index, move: move }, json => { this.setState(json); e.target.removeAttribute('disabled'); } )}}>Unequip</Button>
 										</div>
 									</div>
@@ -134,7 +143,7 @@ class MovesSelect extends React.Component {
 										<p className='mobile show'>{this.state.movesIndex[move].damage} damage</p>
 									</div>
 
-									<div className='col'>
+									<div className='col' style={rightColStyle}>
 										<Button onClick={e => { e.preventDefault(); e.persist(); e.target.setAttribute('disabled', 'disabled'); this.sendRequest('/api/yourcreatures/moves/equip', 'POST', { index: this.props.index, move: move }, json => { this.setState(json); e.target.removeAttribute('disabled'); } )}}>Equip</Button>
 									</div>
 								</div>
