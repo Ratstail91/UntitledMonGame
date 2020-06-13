@@ -16,7 +16,6 @@ What will you hatch next?
 	<img src="/content/sprites/creatures/spitty.png" style="width:200px" />
 </div>
 
-
 <hr />
 
 **Please send bug reports here**: [krgamestudios@gmail.com](mailto:krgamestudios@gmail.com)

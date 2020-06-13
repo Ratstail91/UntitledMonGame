@@ -11,7 +11,7 @@ import { validateSession } from '../reusable';
 export const apiSettings = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	};
 

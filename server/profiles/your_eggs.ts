@@ -5,7 +5,7 @@ import { validateSession, getYourEggs } from '../reusable';
 export const apiYourEggs = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	}
 

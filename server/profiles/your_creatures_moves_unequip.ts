@@ -10,7 +10,7 @@ import moves from '../gameplay/moves.json';
 export const apiYourCreaturesMovesUnequip = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	}
 

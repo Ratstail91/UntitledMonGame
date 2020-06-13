@@ -12,7 +12,7 @@ import pool from '../utilities/database';
 export const apiLogin = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
-		res.status(400).write(log(obj.msg, obj.extra.toString()));
+		res.status(400).write(log(obj.msg, obj.extra ? obj.extra.toString() : ''));
 		res.end();
 	}
 
