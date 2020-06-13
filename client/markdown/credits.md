@@ -11,6 +11,7 @@ Special Thanks
 * FrozenAlex
 * LogicMonkey
 * wicked_delite
+* All of my alpha testers!
 
 Patrons
 ---
