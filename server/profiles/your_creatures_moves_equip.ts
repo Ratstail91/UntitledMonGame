@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, determineSelectedCreature, getCreatureMoves } from '../reusable';
+import { determineSelectedCreature, getCreatureMoves } from '../reusable';
 
 import species from '../gameplay/species.json';
 import moves from '../gameplay/moves.json';
@@ -21,7 +21,6 @@ export const apiYourCreaturesMovesEquip = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(determineSelectedCreature)
 		.then(checkMaxMovesEquipped)
 		.then(checkForSelectedMoveOwned)

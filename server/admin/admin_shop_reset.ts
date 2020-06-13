@@ -2,8 +2,6 @@
 import { log } from '../utilities/logging';
 import pool from '../utilities/database';
 
-import { validateSession } from '../reusable';
-
 export const apiAdminShopReset = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
@@ -18,7 +16,6 @@ export const apiAdminShopReset = (req, res) => {
 	};
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(refreshShop)
 		.then(fields => { return { msg: 'success', extra: '' }; })
 		.then(handleSuccess)

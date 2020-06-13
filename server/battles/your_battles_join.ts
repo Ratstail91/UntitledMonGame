@@ -2,7 +2,6 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession } from '../reusable';
 import { countTotalBattleBoxItems, getBattleBoxes, getBattleBoxSlots, activateFirstTwoSlots, initializeBattleBox } from './battle_tools';
 
 export const apiYourBattlesJoin = (req, res) => {
@@ -19,7 +18,6 @@ export const apiYourBattlesJoin = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(joinBattle)
 		.then(fields => { return { msg: { msg: 'Success' }, extra: ''}; })
 		.then(handleSuccess)

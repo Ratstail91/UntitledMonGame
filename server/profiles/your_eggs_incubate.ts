@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, determineSelectedEgg, getYourEggs } from '../reusable';
+import { determineSelectedEgg, getYourEggs } from '../reusable';
 
 import species from '../gameplay/species.json';
 
@@ -20,7 +20,6 @@ export const apiYourEggsIncubate = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(checkCanIncubate)
 		.then(determineSelectedEgg)
 		.then(incubateSelectedEgg)

@@ -2,7 +2,6 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession } from '../reusable';
 import { countTotalBattleBoxItems, getBattleBoxes, activateFirstTwoSlots, initializeBattleBox } from './battle_tools';
 
 export const apiYourBattlesInvite = (req, res) => {
@@ -19,7 +18,6 @@ export const apiYourBattlesInvite = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(generateNewBattle)
 		.then((fields: any) => { return { msg: { inviteCode: fields.inviteCode }, extra: ''}; })
 		.then(handleSuccess)

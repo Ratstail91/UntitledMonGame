@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, getYourItems } from '../reusable';
+import { getYourItems } from '../reusable';
 
 import { getBattleBoxes, getBattleBoxSlots } from './battle_tools';
 
@@ -25,7 +25,6 @@ export const apiYourBattles = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getYourBattles)
 		.then((fields: any) => { return { msg: { battles: fields.battleStructure }, extra: ''}; })
 		.then(handleSuccess)

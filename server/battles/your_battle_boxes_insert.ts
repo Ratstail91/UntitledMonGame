@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, getYourCreatures, determineSelectedCreature } from '../reusable';
+import { getYourCreatures, determineSelectedCreature } from '../reusable';
 import { countTotalBattleBoxItems, getBattleBoxes } from './battle_tools';
 
 import { getBattleBoxStructure } from './your_battle_boxes';
@@ -21,7 +21,6 @@ export const apiYourBattleBoxesInsert = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(determineSelectedCreature)
 		.then(getBattleBoxStructure)
 

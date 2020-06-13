@@ -2,7 +2,6 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession } from '../reusable';
 import { getBattleBoxes } from './battle_tools';
 
 import { getBattleBoxStructure } from './your_battle_boxes';
@@ -21,7 +20,6 @@ export const apiYourBattleBoxesLockToggle = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getBattleBoxStructure)
 
 		.then(toggleBattleBoxLock)

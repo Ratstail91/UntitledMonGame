@@ -10,8 +10,6 @@ import { log } from '../utilities/logging';
 import formidablePromise from '../utilities/formidable_promise';
 import pool from '../utilities/database';
 
-import { validateSession } from '../reusable';
-
 export const apiPasswordChange = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
@@ -27,7 +25,6 @@ export const apiPasswordChange = (req, res) => {
 
 	return formidablePromise(req)
 		.then(({fields}) => fields)
-		.then(validateSession)
 		.then(validateAccount)
 		.then(validatePassword)
 		.then(changePassword)

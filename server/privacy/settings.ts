@@ -6,8 +6,6 @@ import { log } from '../utilities/logging';
 import formidablePromise from '../utilities/formidable_promise';
 import pool from '../utilities/database';
 
-import { validateSession } from '../reusable';
-
 export const apiSettings = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
@@ -22,7 +20,6 @@ export const apiSettings = (req, res) => {
 	};
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(sendPrivacySettings(res))
 		.then(handleSuccess)
 		.catch(handleRejection)

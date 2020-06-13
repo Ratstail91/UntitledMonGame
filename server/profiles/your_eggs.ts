@@ -1,6 +1,6 @@
 import { log } from '../utilities/logging';
 
-import { validateSession, getYourEggs } from '../reusable';
+import { getYourEggs } from '../reusable';
 
 export const apiYourEggs = (req, res) => {
 	//handle all outcomes
@@ -16,7 +16,6 @@ export const apiYourEggs = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getYourEggs)
 		.then(fields => { return { msg: fields, extra: ''}; })
 		.then(handleSuccess)

@@ -1,7 +1,6 @@
 import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
-import { validateSession } from '../reusable';
 
 import braintree from 'braintree';
 
@@ -23,14 +22,6 @@ export const apiGenerateClientToken = (req, res) => new Promise((resolve, reject
 });
 
 export const apiCheckout = (req, res) => new Promise(async (resolve, reject) => {
-	//verify the session
-	const result: any = (await validateSession(req.body).catch(e => e));
-	if (!result.id) {
-		res.status(400).write('Failed Premium Validation');
-		res.end();
-		return;
-	}
-
 	const premiumRecord = (await pool.promise().query('SELECT * FROM shopPremiums WHERE shopSlot = ?;', [req.body.index]))[0][0];
 
 	if (!premiumRecord) {

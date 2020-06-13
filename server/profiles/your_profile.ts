@@ -2,8 +2,6 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession } from '../reusable';
-
 export const apiYourProfile = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
@@ -18,7 +16,6 @@ export const apiYourProfile = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getYourProfile)
 		.then(profile => { return { msg: profile, extra: '' }; })
 		.then(handleSuccess)

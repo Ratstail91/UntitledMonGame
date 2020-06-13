@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, determineSelectedEgg, getYourEggs } from '../reusable';
+import { determineSelectedEgg, getYourEggs } from '../reusable';
 import { getYourProfile } from './your_profile';
 
 import species from '../gameplay/species.json';
@@ -21,7 +21,6 @@ export const apiYourEggsSell = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(determineSelectedEgg)
 		.then(addCoins)
 		.then(sellEgg)

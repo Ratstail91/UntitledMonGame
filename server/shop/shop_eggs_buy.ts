@@ -2,7 +2,6 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession } from '../reusable';
 import { getYourProfile } from '../profiles/your_profile';
 
 import species from '../gameplay/species.json';
@@ -21,7 +20,6 @@ export const apiShopEggsBuy = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(determineSelectedEgg)
 		.then(checkCoins)
 		.then(subtractCoins)

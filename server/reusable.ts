@@ -8,15 +8,6 @@ import premiumIndex from './gameplay/premium_index.json';
 //@ts-nocheck
 
 //reusable
-export const validateSession = (fields) => new Promise((resolve, reject) => {
-	const query = 'SELECT * FROM sessions WHERE accountId = ? AND token = ?;';
-	return pool.promise().query(query, [fields.id, fields.token])
-		.then((results: any) => results[0].length > 0 ? fields : reject({ msg: 'Session Timed Out', extra: fields }))
-		.then(fields => { logActivity(fields.id); resolve(fields); })
-		.catch(e => reject({ msg: 'validateSession error', extra: e }))
-	;
-});
-
 export const determineSelectedEgg = (fields) => new Promise((resolve, reject) => {
 	const query = 'SELECT * FROM creatureEggs WHERE profileId IN (SELECT id FROM profiles WHERE accountId = ?) ORDER BY id;';
 	return pool.promise().query(query, [fields.id])

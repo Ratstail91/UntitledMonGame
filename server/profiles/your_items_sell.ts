@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, determineSelectedItem, getYourItems } from '../reusable';
+import { determineSelectedItem, getYourItems } from '../reusable';
 import { getYourProfile } from './your_profile';
 
 import itemIndex from '../gameplay/item_index.json';
@@ -21,7 +21,6 @@ export const apiYourItemsSell = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(determineSelectedItem)
 		.then(checkMinQuantity)
 		.then(addCoins)

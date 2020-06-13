@@ -53,7 +53,7 @@ class Signup extends React.Component {
 
 					<div className='checkboxContainer'>
 						<label htmlFor='promotions' style={{paddingLeft: '20px'}}>Allow Promo Emails:</label>
-						<input id='promotions' type='checkbox' name='promotions' value={this.state.promotions} onChange={this.updatePromotions.bind(this)} className='checkbox' />
+						<input id='promotions' type='checkbox' name='promotions' value={this.state.promotions} defaultChecked={true} onChange={this.updatePromotions.bind(this)} className='checkbox' />
 					</div>
 
 					<Button type='submit' disabled={!this.state.email  || !this.state.username || !this.state.password || !this.state.retype}>Sign Up</Button>

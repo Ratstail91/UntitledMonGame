@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, getYourCreatures } from '../reusable';
+import { getYourCreatures } from '../reusable';
 
 import species from '../gameplay/species.json';
 
@@ -20,7 +20,6 @@ export const apiYourCreatures = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getYourCreatures)
 		.then(fields => { return { msg: fields, extra: ''}; })
 		.then(handleSuccess)

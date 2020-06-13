@@ -7,6 +7,7 @@ const app = express();
 const http = require('http').Server(app);
 import bodyParser from 'body-parser';
 import path from 'path';
+import validateSession from './middleware/validate_session';
 
 //utilities
 import { log } from './utilities/logging';
@@ -51,9 +52,13 @@ app.post('/api/signup', accounts.apiSignup);
 app.get('/api/verify', accounts.apiVerify);
 app.post('/api/login', accounts.apiLogin);
 app.post('/api/logout', accounts.apiLogout);
-app.post('/api/passwordchange', accounts.apiPasswordChange);
 app.post('/api/passwordrecover', accounts.apiPasswordRecover);
 app.post('/api/passwordreset', accounts.apiPasswordReset);
+
+//everything beneath this needs validation
+app.use(validateSession); //NOTE: position is important
+
+app.post('/api/passwordchange', accounts.apiPasswordChange); //belongs under "accounts" just above
 
 import profiles from './profiles/profiles';
 

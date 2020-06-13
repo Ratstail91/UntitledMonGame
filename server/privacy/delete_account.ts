@@ -5,8 +5,6 @@ require('dotenv').config();
 import { log } from '../utilities/logging';
 import pool from '../utilities/database';
 
-import { validateSession } from '../reusable';
-
 export const apiDeleteAccount = (req, res) => {
 	//handle all outcomes
 	const handleRejection = (obj) => {
@@ -21,7 +19,6 @@ export const apiDeleteAccount = (req, res) => {
 	};
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(markAccountForDeletion)
 		.then(handleSuccess)
 		.catch(handleRejection)

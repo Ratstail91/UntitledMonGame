@@ -6,7 +6,6 @@ import { log } from '../utilities/logging';
 import formidablePromise from '../utilities/formidable_promise';
 import pool from '../utilities/database';
 
-import { validateSession } from '../reusable';
 import { sendPrivacySettings } from './settings';
 
 export const apiUpdateSettings = (req, res) => {
@@ -24,7 +23,6 @@ export const apiUpdateSettings = (req, res) => {
 
 	return formidablePromise(req)
 		.then(({fields}) => fields)
-		.then(validateSession)
 		.then(updatePrivacySettings)
 		.then(sendPrivacySettings(res))
 		.then(handleSuccess)

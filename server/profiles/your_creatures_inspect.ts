@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, determineSelectedCreature } from '../reusable';
+import { determineSelectedCreature } from '../reusable';
 
 import species from '../gameplay/species.json';
 
@@ -20,7 +20,6 @@ export const apiYourCreaturesInspect = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(checkForMagnifyingGlass)
 		.then(determineSelectedCreature)
 		.then((fields: any) => { return { msg: { creature: fields.creature, species: species[fields.creature.species] }, extra: ''}; })

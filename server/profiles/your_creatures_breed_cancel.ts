@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, determineSelectedCreature, getYourCreatures } from '../reusable';
+import { determineSelectedCreature, getYourCreatures } from '../reusable';
 
 export const apiYourCreaturesBreedCancel = (req, res) => {
 	//handle all outcomes
@@ -18,7 +18,6 @@ export const apiYourCreaturesBreedCancel = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(determineSelectedCreature)
 		.then(cancelBreedSelectedCreature)
 		.then(getYourCreatures)

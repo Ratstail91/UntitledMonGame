@@ -2,8 +2,6 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession } from '../reusable';
-
 import { getYourBattles } from './your_battles';
 
 export const apiYourBattlesResign = (req, res) => {
@@ -20,7 +18,6 @@ export const apiYourBattlesResign = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getYourBattles)
 		.then(resignFromBattle)
 		.then(getYourBattles)

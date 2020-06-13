@@ -2,7 +2,7 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession, getYourItems } from '../reusable';
+import { getYourItems } from '../reusable';
 
 export const apiYourItems = (req, res) => {
 	//handle all outcomes
@@ -18,7 +18,6 @@ export const apiYourItems = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getYourItems)
 		.then(fields => { return { msg: fields, extra: ''}; })
 		.then(handleSuccess)

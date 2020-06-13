@@ -2,7 +2,6 @@ import pool from '../utilities/database';
 
 import { log } from '../utilities/logging';
 
-import { validateSession } from '../reusable';
 import { countTotalBattleBoxItems, getBattleBoxes } from './battle_tools';
 
 import species from '../gameplay/species.json';
@@ -21,7 +20,6 @@ export const apiYourBattleBoxes = (req, res) => {
 	}
 
 	return new Promise((resolve, reject) => resolve(req.body))
-		.then(validateSession)
 		.then(getBattleBoxStructure)
 		.then((fields: any) => { return { msg: { battleBoxes: fields.structure }, extra: ''}; })
 		.then(handleSuccess)
