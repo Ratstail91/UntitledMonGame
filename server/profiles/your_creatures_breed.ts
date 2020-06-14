@@ -81,7 +81,7 @@ export const runBreedingJob = () => {
 
 		await pool.promise().query(query)
 			.then(results => results[0])
-			.then((pairs:any) => pairs.forEach(pair => {
+			.then((pairs: any) => pairs.forEach(pair => {
 				if (!done[pair.idA] && !done[pair.idB]) {
 					done[pair.idA] = true;
 					done[pair.idB] = true;
