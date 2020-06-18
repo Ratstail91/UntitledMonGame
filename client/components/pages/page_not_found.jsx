@@ -8,12 +8,14 @@ class PageNotFound extends React.Component {
 
 	render() {
 		const style = {
-			justifyContent: 'center'
+			justifyContent: 'center',
+			alignItems: 'center'
 		};
 
 		return (
 			<div className='page centered' style={style}>
 				<h1>Page Not Found</h1>
+				<img src='/content/404.png' width='500px' />
 				<Link to='/'>Return Home</Link>
 			</div>
 		);

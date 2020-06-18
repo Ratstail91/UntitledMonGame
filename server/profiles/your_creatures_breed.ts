@@ -65,72 +65,66 @@ export const markAsBreeding = (fields) => new Promise((resolve, reject) => {
 import { CronJob } from 'cron';
 
 export const runBreedingJob = () => {
-	const job = new CronJob('0 0 */12 * * *', async () => {
-		const query = '\
-			SELECT * FROM\
-				(SELECT id AS idA, species AS speciesA, profileId AS profileIdA, geneticPointsHealth AS healthA, geneticPointsSpeed AS speedA, geneticPointsStrength AS strengthA, geneticPointsPower AS powerA FROM creatures WHERE breeding = TRUE ORDER BY id ASC) AS a\
-			JOIN\
-				(SELECT id AS idB, species AS speciesB, profileId AS profileIdB, geneticPointsHealth AS healthB, geneticPointsSpeed AS speedB, geneticPointsStrength AS strengthB, geneticPointsPower AS powerB FROM creatures WHERE breeding = TRUE ORDER BY id DESC) AS b\
-			ON\
-				a.profileIdA = b.profileIdB\
-			WHERE\
-				a.idA <> b.idB\
-			;\
-		';
-		const done = [];
+	const twiceADayJob: CronJob = new CronJob('* * */12 * * *', async () => {
+		const query: string = 'SELECT * FROM creatures WHERE breeding = TRUE ORDER BY profileId;';
+		const breedingCreatures: any = (await pool.promise().query(query))[0];
 
-		await pool.promise().query(query)
-			.then(results => results[0])
-			.then((pairs: any) => pairs.forEach(pair => {
-				if (!done[pair.idA] && !done[pair.idB]) {
-					done[pair.idA] = true;
-					done[pair.idB] = true;
-					breedPair(pair);
-				}
-			}))
-			.catch(e => log('runBreedingJob error', e))
-		;
+		for (let i = 0; i < breedingCreatures.length; /* DO NOTHING */) {
+			//this profile
+			const profileId: number = breedingCreatures[i].profileId;
+
+			if (breedingCreatures[i + 1] && breedingCreatures[i + 1].profileId == profileId) {
+				await breedPair(breedingCreatures[i], breedingCreatures[i + 1]);
+			}
+
+			//increment 'i'
+			while (breedingCreatures[i] && breedingCreatures[i].profileId == profileId) {
+				i++;
+			}
+		}
 	});
 
-	job.start();
+	twiceADayJob.start();
 };
 
-export const breedPair = (pair) => new Promise((resolve, reject) => {
-	//for use below
-	const rarities = { 'common': 1, 'uncommon': 2, 'rare': 3, 'mythic': 4 };
-	const rarity = Math.min(rarities[speciesIndex[pair.speciesA].egg.rarity], rarities[speciesIndex[pair.speciesB].egg.rarity]);
 
-	//determine profileId
-	let profileId = pair.profileIdA;
+export const breedPair = (mother, father) => {
+	//determine new egg's rarity
+	const rarities = { 'common': 1, 'uncommon': 2, 'rare': 3, 'mythic': 4 };
+	const rarity = Math.min(rarities[speciesIndex[mother.species].egg.rarity], rarities[speciesIndex[father.species].egg.rarity]);
 
 	//TODO: test this when more creatures are implemented
 
-	//determine species
+	//determine the species
 	let species;
-	if (pair.speciesA == pair.speciesB) {
-		species = pair.speciesA;
-	} else if (speciesIndex[pair.speciesA].element == speciesIndex[pair.speciesB].element) {
+	if (mother.species == father.species) {
+		species = mother.species;
+	}
+
+	else if (speciesIndex[mother.species].element == speciesIndex[father.species].element) {
 		//randomized within this element and equal or below this rarity
-		const filteredKeys = Object.keys(speciesIndex).filter(key => speciesIndex[key].element == speciesIndex[pair.speciesA].element && rarities[speciesIndex[key].egg.rarity] <= rarity);
+		const filteredKeys = Object.keys(speciesIndex).filter(key => speciesIndex[key].element == speciesIndex[mother.species].element && rarities[speciesIndex[key].egg.rarity] <= rarity);
 		species = filteredKeys[Math.floor(Math.random() * filteredKeys.length)];
-	} else {
+	}
+
+	else {
 		//randomize equal or below this rarity
 		const filteredKeys = Object.keys(speciesIndex).filter(key => rarities[speciesIndex[key].egg.rarity] <= rarity);
 		species = filteredKeys[Math.floor(Math.random() * filteredKeys.length)];
 	}
 
 	if (Math.floor(Math.random() * 20) == 0) {
-		//finally, small chance of mutation equal or below rarity
-		const filteredKeys = Object.keys(speciesIndex).filter(key => rarities[speciesIndex[key].egg.rarity] <= rarity);
+		//finally, small chance of mutation to a creature one rarity above
+		const filteredKeys = Object.keys(speciesIndex).filter(key => rarities[speciesIndex[key].egg.rarity] = Math.min(rarity + 1, rarities['common'])); //TODO: update "common" to "uncommon" when uncommons are added
 		species = filteredKeys[Math.floor(Math.random() * filteredKeys.length)];
 	}
 
 	//genetics
-	let geneticsMix = {
-		'geneticPointsHealth': [pair.healthA, pair.healthB],
-		'geneticPointsSpeed': [pair.speedA, pair.speedB],
-		'geneticPointsStrength': [pair.strengthA, pair.strengthB],
-		'geneticPointsPower': [pair.powerA, pair.powerB],
+	let geneticsMix: object = {
+		'geneticPointsHealth': [mother.geneticPointsHealth, father.geneticPointsHealth],
+		'geneticPointsSpeed': [mother.geneticPointsSpeed, father.geneticPointsSpeed],
+		'geneticPointsStrength': [mother.geneticPointsStrength, father.geneticPointsStrength],
+		'geneticPointsPower': [mother.geneticPointsPower, father.geneticPointsPower],
 	};
 	let geneticsResults: any = {
 		//EMPTY
@@ -156,6 +150,6 @@ export const breedPair = (pair) => new Promise((resolve, reject) => {
 
 	//finally, make egg
 	const query = 'INSERT INTO creatureEggs (profileId, species, geneticPointsHealth, geneticPointsSpeed, geneticPointsStrength, geneticPointsPower) VALUES (?, ?, ?, ?, ?, ?);';
-	return pool.promise().query(query, [profileId, species, geneticsResults.geneticPointsHealth, geneticsResults.geneticPointsSpeed, geneticsResults.geneticPointsStrength, geneticsResults.geneticPointsPower])
+	return pool.promise().query(query, [mother.profileId, species, geneticsResults.geneticPointsHealth, geneticsResults.geneticPointsSpeed, geneticsResults.geneticPointsStrength, geneticsResults.geneticPointsPower])
 		.catch(e => log('breedPair error', e));
-});
+};
