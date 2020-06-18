@@ -77,7 +77,7 @@ export const runBreedingJob = () => {
 			const profileId: number = breedingCreatures[i].profileId;
 
 			//get this profile's egg count
-			const eggData: number = eggCounts.find(ec => ec.profileId == profileId);
+			const eggData: any = eggCounts.find(ec => ec.profileId == profileId);
 
 			if (breedingCreatures[i + 1] && breedingCreatures[i + 1].profileId == profileId && (!eggData || eggData.total < 20)) {
 				await breedPair(breedingCreatures[i], breedingCreatures[i + 1]);
