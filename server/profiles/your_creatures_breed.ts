@@ -66,14 +66,20 @@ import { CronJob } from 'cron';
 
 export const runBreedingJob = () => {
 	const twiceADayJob: CronJob = new CronJob('* * */12 * * *', async () => {
-		const query: string = 'SELECT * FROM creatures WHERE breeding = TRUE ORDER BY profileId;';
-		const breedingCreatures: any = (await pool.promise().query(query))[0];
+		const breedingQuery: string = 'SELECT * FROM creatures WHERE breeding = TRUE ORDER BY profileId;';
+		const breedingCreatures: any = (await pool.promise().query(breedingQuery))[0];
+
+		const countQuery: string = 'SELECT profileId, COUNT(*) AS total FROM creatureEggs GROUP BY profileId;';
+		const eggCounts: any = (await pool.promise().query(countQuery))[0];
 
 		for (let i = 0; i < breedingCreatures.length; /* DO NOTHING */) {
 			//this profile
 			const profileId: number = breedingCreatures[i].profileId;
 
-			if (breedingCreatures[i + 1] && breedingCreatures[i + 1].profileId == profileId) {
+			//get this profile's egg count
+			const eggData: number = eggCounts.find(ec => ec.profileId == profileId);
+
+			if (breedingCreatures[i + 1] && breedingCreatures[i + 1].profileId == profileId && (!eggData || eggData.total < 20)) {
 				await breedPair(breedingCreatures[i], breedingCreatures[i + 1]);
 			}
 
@@ -86,7 +92,6 @@ export const runBreedingJob = () => {
 
 	twiceADayJob.start();
 };
-
 
 export const breedPair = (mother, father) => {
 	//determine new egg's rarity
