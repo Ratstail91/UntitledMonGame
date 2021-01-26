@@ -156,7 +156,7 @@
 
 	"faestep": {
 		"name": "Fae Step",
-		"description": "Thee user increases their speed.",
+		"description": "The user increases their speed.",
 
 		"type": "physical",
 		"element": "fae",
