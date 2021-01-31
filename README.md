@@ -18,7 +18,7 @@ What will you hatch next?
 
 Designed and Developed by Kayne Ruse, KR Game Studios
 
-Art by Aternova
+Art by Gábor Kristóf "HighLanderPony" Pintér, Aternova
 
 ## Special Thanks
 
